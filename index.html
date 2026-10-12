@@ -1258,6 +1258,14 @@ body.lite-mode .flash{
   margin-left:2px !important;
 }
 
+
+.rules-note{
+  margin-top:8px;
+  color:#aebfd2;
+  font-size:12px;
+  line-height:1.5;
+}
+
 </style>
 </head>
 <body>
@@ -1282,8 +1290,8 @@ body.lite-mode .flash{
   </div>
 
   <div class="help">
-    待ち牌を、リズムで選ぶ。2牌＝順子を完成させる待ち牌、5牌＝リャンメンを残す切る牌、8牌＝リャンメンカンチャンの有効牌を選択。<br>
-    流れるのは牌と ◀ ▶ のみ。正解牌はいつ押してもGOOD、中央の判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点。
+    流れてくる麻雀の形を見て、正解牌をクリックするトレーニング。手牌・補助牌のどちらからでも回答できます。<br>
+    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周、SURVIVALはMISS 3回まで無限に続きます。
   </div>
 
   <div class="problem-types">
@@ -1338,16 +1346,20 @@ body.lite-mode .flash{
   <section class="rules-panel" aria-label="ゲームルール">
     <h2>ルール</h2>
     <div class="rules-grid">
-      <div><b>回答</b><span>流れてくる問題の正解牌をクリック。補助牌からも回答できます。</span></div>
-      <div><b>GOOD</b><span>正解ならいつ押してもGOOD。手牌枚数に応じて+400〜+1000 SCORE。</span></div>
-      <div><b>PERFECT</b><span>手牌中央が中央ライン付近にあるとPERFECT。手牌枚数に応じて+700〜+1600 SCORE。</span></div>
-      <div><b>MISS CLICK</b><span>誤クリックはMISS回数に入らず、SCORE -100。</span></div>
-      <div><b>MISS</b><span>問題が画面下まで流れ切るとMISS。</span></div>
-      <div><b>SURVIVAL</b><span>MISS 3回でゲームオーバー。問題は無限に出題されます。各ジャンルはそのジャンル内の全問題を1周出し切ってから、同じジャンルの2周目に入ります。 問題種を1つでも外して開始した場合は「サバイバル(カスタム)」として表示・ポストします。出題頻度はLv.4でMAXになり、それ以降は4問ごとに速度下限が0.1×ずつ上昇します。</span></div>
-      <div><b>速度</b><span>左上のスライダーで調整。Shift / ×2ボタンを押している間は2倍速。</span></div>
+      <div><b>回答</b><span>流れてくる問題の正解牌をクリックします。手牌そのものと、上に表示される補助牌のどちらからでも回答できます。</span></div>
+      <div><b>GOOD</b><span>正解するとGOOD。問題の手牌枚数に応じて得点が入ります。</span></div>
+      <div><b>PERFECT</b><span>◀ 手牌 ▶ の中央が画面中央の判定ライン付近にあるとPERFECT。GOODより高得点です。</span></div>
+      <div><b>MISS CLICK</b><span>誤った牌を押しても問題は続行します。MISS回数には入りませんが、SCORE -100です。</span></div>
+      <div><b>MISS</b><span>問題が画面下まで流れ切るとMISSになります。</span></div>
+      <div><b>NORMAL</b><span>選択した問題種の問題を1周します。問題種はゲーム開始前にON/OFFできます。</span></div>
+      <div><b>SURVIVAL</b><span>MISS 3回でゲームオーバー。問題は無限に出題され、各問題種はその種類の問題を1周出し切ってから次の周回に入ります。問題種を1つでも外して開始すると「サバイバル(カスタム)」になります。</span></div>
+      <div><b>難易度上昇</b><span>SURVIVALは4問ごとに出題頻度が上昇し、FREQUENCY Lv.4でMAX。その後は4問ごとに最低速度が0.1×ずつ上がり、最大4.0×です。</span></div>
+      <div><b>速度</b><span>左上のスライダーで調整できます。Shift / ×2ボタンを押している間だけ2倍速になります。重なり防止の出題間隔は通常速度を基準に計算します。</span></div>
+      <div><b>一時停止</b><span>右上の一時停止ボタンから停止・再開できます。ゲーム中にブラウザ外や別タブへ移ると自動で一時停止し、ゲーム画面も隠れます。</span></div>
+      <div><b>START</b><span>ゲーム開始後はRESTART表示になり、押すと同じモードを最初からやり直します。</span></div>
     </div>
 
-    <div class="rules-grid extra-lite-rule"><div><b>LIGHT MODE</b><span>ONにすると花火・発光・影などの演出を軽量化します。ゲーム内容、判定、得点、速度は変わりません。</span></div>
+    <div class="rules-grid extra-lite-rule"><div><b>LIGHT MODE</b><span>ONにすると花火・発光・影・一部フラッシュなどを軽量化し、ブラウザ負荷を抑えます。ゲーム内容、判定、得点、速度は変わりません。</span></div>
     </div>
 
     <h3 class="rules-subtitle">問題ごとの配点</h3>
@@ -1357,16 +1369,17 @@ body.lite-mode .flash{
       <div><b>8枚問題</b><span>GOOD +800 / PERFECT +1300</span><em>33問</em></div>
       <div><b>11枚問題</b><span>GOOD +1000 / PERFECT +1600</span><em>22問</em></div>
     </div>
+    <div class="rules-note">※ 弱ターツ落としは1枚目・2枚目をそれぞれ判定し、それぞれGOOD / PERFECTの得点が入ります。</div>
 
     <h3 class="rules-subtitle">問題種と正解牌</h3>
     <div class="problem-rule-list">
-      <div><b>ペンチャン・カンチャン</b><span>2枚の待ち形を完成させる牌を選びます。例：12なら3、24なら3。</span></div>
-      <div><b>リャンメン化</b><span>5枚形から1枚切り、より良いリャンメン形を残す牌が正解です。</span></div>
-      <div><b>リャンメンカンチャン</b><span>8枚形から、リャンメン＋カンチャンの受け入れを最大限活かす牌を選びます。</span></div>
-      <div><b>サンメンチャン化</b><span>8枚形から、3種類の牌で完成するサンメンチャン形にするための牌を選びます。</span></div>
-      <div><b>一盃口＋1枚</b><span>一盃口になる6枚形に余分な1枚が加わった形です。その余分な1枚が正解です。</span></div>
-      <div><b>弱ターツ落とし</b><span>4つの2枚ブロックのうち、ペンチャンまたはカンチャンの2枚を両方選びます。2枚とも選ぶと正解です。</span></div>
-      <div><b>順子＋リャンメン残し</b><span>6枚形から1枚切り、完成順子を残しつつリャンメン形も残る牌を選びます。</span></div>
+      <div><b>ペンチャン・カンチャン</b><span>2枚のペンチャン・カンチャンを順子に完成させる1枚を選びます。例：12なら3、24なら3。</span></div>
+      <div><b>リャンメン化</b><span>5枚形から1枚切り、リャンメン形を残すために切る牌を選びます。</span></div>
+      <div><b>リャンメンカンチャン</b><span>8枚形から1枚切り、リャンメン＋カンチャンの形を残す牌を選びます。</span></div>
+      <div><b>サンメンチャン化</b><span>8枚形から1枚切り、3種類の待ちを持つサンメンチャン形を残す牌を選びます。</span></div>
+      <div><b>一盃口＋1枚</b><span>一盃口になる6枚形に1枚加わった形から、一盃口の形を残すために切る牌を選びます。</span></div>
+      <div><b>弱ターツ落とし</b><span>複数のターツから弱いペンチャン・カンチャンを2枚とも選んで落とします。1枚目と2枚目をそれぞれGOOD / PERFECT判定し、1枚目の後は◀ 手牌 ▶ が白枠へ移動します。</span></div>
+      <div><b>順子＋リャンメン残し</b><span>順子を含む形から1枚切り、完成順子とリャンメンを両方残す牌を選びます。</span></div>
     </div>
   </section>
 
@@ -2723,11 +2736,13 @@ postXResultBtn.addEventListener("click",()=>{
   const text=[
     `麻雀牌トレーニング ${survivalLabelJa()}`,
     `解いた問題数：${survivalSolvedCount}問`,
-    `SCORE：${score}`
+    `SCORE：${score}`,
+    "",
+    "#麻雀 #麻雀牌トレーニング"
   ].join("\n");
 
-  const pageUrl=(location.protocol==="http:" || location.protocol==="https:") ? location.href : "";
-  const intent="https://twitter.com/intent/tweet?text="+encodeURIComponent(text)+(pageUrl ? "&url="+encodeURIComponent(pageUrl) : "");
+  const pageUrl="https://hokusai7.github.io/mahjong-rhythm/";
+  const intent="https://twitter.com/intent/tweet?text="+encodeURIComponent(text)+"&url="+encodeURIComponent(pageUrl);
   window.open(intent,"_blank","noopener,noreferrer");
 });
 
