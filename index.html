@@ -1932,7 +1932,7 @@ body{
           <option value="2">2：Meteorite</option>
           <option value="3">3：Somehow (Prod. Khaim)</option>
         </select>
-        <b id="bgmTrackLabel">1/3</b>
+        
       </label>
       <label><span>BACKGROUND</span>
         <select id="backgroundThemeSelect">
@@ -1943,7 +1943,7 @@ body{
           <option value="mono">モノクロ</option>
           <option value="space">宇宙紺</option>
         </select>
-        <b id="backgroundThemeLabel">夜青</b>
+        
       </label>
       <label><span>OUTER BG</span>
         <select id="outerThemeSelect">
@@ -1954,7 +1954,7 @@ body{
           <option value="mono">モノクロ</option>
           <option value="space">宇宙紺</option>
         </select>
-        <b id="outerThemeLabel">夜青</b>
+        
       </label>
       <label class="mute-setting"><input id="muteAudio" type="checkbox"><span>MUTE</span></label>
     </div>
@@ -2164,14 +2164,12 @@ const endlessFrequencySetting=document.getElementById("endlessFrequencySetting")
 const endlessFrequencySettingValue=document.getElementById("endlessFrequencySettingValue");
 const seVolumeInput=document.getElementById("seVolume"), seVolumeValue=document.getElementById("seVolumeValue");
 const bgmVolumeInput=document.getElementById("bgmVolume"), bgmVolumeValue=document.getElementById("bgmVolumeValue");
-const bgmTrackSelect=document.getElementById("bgmTrackSelect"), bgmTrackLabel=document.getElementById("bgmTrackLabel");
+const bgmTrackSelect=document.getElementById("bgmTrackSelect");
 const bgmPlayer=document.getElementById("bgmPlayer");
 const bgmPlayer2=document.getElementById("bgmPlayer2");
 const bgmPlayer3=document.getElementById("bgmPlayer3");
 const backgroundThemeSelect=document.getElementById("backgroundThemeSelect");
-const backgroundThemeLabel=document.getElementById("backgroundThemeLabel");
 const outerThemeSelect=document.getElementById("outerThemeSelect");
-const outerThemeLabel=document.getElementById("outerThemeLabel");
 const muteAudioInput=document.getElementById("muteAudio");
 let idx=0,score=0,combo=0,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
 let spawnDueAt=0;
@@ -2330,7 +2328,6 @@ function applyOuterTheme(theme){
   outerTheme=safe;
   document.body.setAttribute("data-outer-theme",safe);
   if(outerThemeSelect) outerThemeSelect.value=safe;
-  if(outerThemeLabel) outerThemeLabel.textContent=OUTER_THEME_LABELS[safe];
 }
 
 function applyBackgroundTheme(theme){
@@ -2338,7 +2335,6 @@ function applyBackgroundTheme(theme){
   backgroundTheme=safe;
   document.body.setAttribute("data-bg-theme",safe);
   if(backgroundThemeSelect) backgroundThemeSelect.value=safe;
-  if(backgroundThemeLabel) backgroundThemeLabel.textContent=BACKGROUND_THEME_LABELS[safe];
 }
 
 function currentSettings(){
@@ -2421,7 +2417,6 @@ function applySavedSettings(){
     }
     bgmTrackSelect.value=selectedBgmTrack;
   }
-  if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
   applyBackgroundTheme(backgroundTheme);
   applyOuterTheme(outerTheme);
   if(muteAudioInput) muteAudioInput.checked=audioMuted;
@@ -4314,8 +4309,7 @@ if(bgmVolumeInput){
 if(bgmTrackSelect){
   bgmTrackSelect.addEventListener("change",()=>{
     selectedBgmTrack=bgmTrackSelect.value;
-    if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
-    pauseBgm();
+      pauseBgm();
     if(running && !paused) restartBgm();
     saveSettings();
   });
