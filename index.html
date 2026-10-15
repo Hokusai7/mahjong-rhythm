@@ -1856,9 +1856,6 @@ body[data-bg-theme="space"]{
     <h1>麻雀牌リズム</h1>
     <div class="ctrl">
       <span>テンポ</span>
-      <button id="bpmMinus" class="btn">−5</button>
-      <b id="bpmLabel">50 BPM</b>
-      <button id="bpmPlus" class="btn">＋5</button>
     </div>
     <button id="startNormal" class="btn mode-switch-top">ノーマル</button>
     <button id="startSurvival" class="btn mode-switch-top">サバイバル</button>
@@ -2116,7 +2113,6 @@ const modeHudNormal=document.getElementById('modeHudNormal'), modeHudSurvival=do
 const modeHudStart=document.getElementById('modeHudStart');
 const modeHudPause=document.getElementById('modeHudPause');
 const hudScore=document.getElementById('hudScore'), hudMiss=document.getElementById('hudMiss'), hudMissWrap=document.getElementById('hudMissWrap');
-const bpmMinusBtn=document.getElementById("bpmMinus"), bpmPlusBtn=document.getElementById("bpmPlus");
 const countdownOverlay=document.getElementById("countdownOverlay"), countdownText=document.getElementById("countdownText");
 const finalStats=document.getElementById("finalStats"), finalBest=document.getElementById("finalBest");
 const bestRecordSummary=document.getElementById("bestRecordSummary");
@@ -2138,7 +2134,7 @@ const bgmPlayer3=document.getElementById("bgmPlayer3");
 const backgroundThemeSelect=document.getElementById("backgroundThemeSelect");
 const backgroundThemeLabel=document.getElementById("backgroundThemeLabel");
 const muteAudioInput=document.getElementById("muteAudio");
-let idx=0,score=0,combo=0,bpm=50,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
+let idx=0,score=0,combo=0,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
 let spawnDueAt=0;
 let spawnDelayFactor=1;
 let gameQuestions = [];
@@ -2202,12 +2198,10 @@ let audioMuted=false;
 let sessionStats=null;
 const SETTINGS_KEY="mahjongRhythmSettingsV1";
 const BEST_KEY="mahjongRhythmBestV1";
-const SURVIVAL_START_BPM=20;
 const SURVIVAL_STEP_QUESTIONS=4;
 const SURVIVAL_MAX_FREQUENCY_LEVEL=4;
-const SURVIVAL_BPM_INCREMENT=10;
 const SURVIVAL_MAX_MISS=3;
-const travelBase=5200; // 落下速度の基準。BPMとは完全に独立
+const travelBase=5200; // 落下速度の基準。他のテンポ設定とは独立
 const honors=["東","南","西","北","白","發","中"];
 
 function emptyKindStats(){
@@ -2581,8 +2575,6 @@ function updateModeUi(){
     endlessSettings.style.display=selectedIsEndless ? "" : "none";
   }
 
-  bpmMinusBtn.disabled = running && isSurvivalRules;
-  bpmPlusBtn.disabled = running && isSurvivalRules;
   updateSurvivalTopStatus();
   updatePauseButtons();
   updateStartButtonLabel();
@@ -3104,7 +3096,6 @@ function animate(ts){
     const from=-n.el.offsetHeight*scale-20;
 
     // 現在位置から速度ぶんだけ進める。
-    // BPMが変わってduration()が変化しても、位置そのものは再計算しないためワープしない。
     const lastTs=n.lastMoveTs ?? ts;
     const dt=Math.max(0,Math.min(80,ts-lastTs));
     n.lastMoveTs=ts;
@@ -3977,12 +3968,7 @@ function bootGame(mode="normal"){
   countdownToken++;
   updatePauseButtons();
   updateStartButtonLabel();
-
-  if(isSurvivalRulesMode()){
-    setBpm(SURVIVAL_START_BPM);
-  }
-
-  scoreEl.textContent=0;
+scoreEl.textContent=0;
   comboEl.textContent=0;
   progressEl.textContent = isSurvivalRulesMode() ? "0 問" : `0 / ${gameQuestions.length}`;
   doneTitle.textContent="終了！";
@@ -4147,13 +4133,6 @@ function finish(cleared=true, reason=""){
 
   updateModeUi();
 }
-const bpmLabel=document.getElementById("bpmLabel");
-function setBpm(v){
-  bpm=Math.max(20,Math.min(400,v));
-  bpmLabel.textContent=`${bpm} BPM`;
-}
-document.getElementById("bpmMinus").onclick=()=>setBpm(bpm-5);
-document.getElementById("bpmPlus").onclick=()=>setBpm(bpm+5);
 const fallSpeedSlider=document.getElementById("fallSpeedSlider");
 const fallSpeedValue=document.getElementById("fallSpeedValue");
 fallSpeedSlider.addEventListener("input",()=>{
