@@ -1848,6 +1848,38 @@ body[data-bg-theme="space"]{
   transition:filter .28s ease;
 }
 
+
+body{
+  --outer-bg-1:#050b12;
+  --outer-bg-2:#0a1520;
+}
+body[data-outer-theme="purple"]{
+  --outer-bg-1:#0d0714;
+  --outer-bg-2:#21102f;
+}
+body[data-outer-theme="sunset"]{
+  --outer-bg-1:#140807;
+  --outer-bg-2:#2d130d;
+}
+body[data-outer-theme="teal"]{
+  --outer-bg-1:#041010;
+  --outer-bg-2:#0a2425;
+}
+body[data-outer-theme="mono"]{
+  --outer-bg-1:#080808;
+  --outer-bg-2:#171717;
+}
+body[data-outer-theme="space"]{
+  --outer-bg-1:#02040b;
+  --outer-bg-2:#071126;
+}
+body{
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.025), transparent 34%),
+    linear-gradient(180deg,var(--outer-bg-2),var(--outer-bg-1)) !important;
+  transition:background .28s ease;
+}
+
 </style>
 </head>
 <body>
@@ -1867,7 +1899,7 @@ body[data-bg-theme="space"]{
 
   <div class="help">
     流れてくる麻雀の形を見て、正解牌をクリックするトレーニング。手牌・補助牌のどちらからでも回答できます。<br>
-    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをSAFEまたはLv.1〜6で調整できます。SAFEはSPEED 0.5×でも重ならない間隔を自動確保し、高頻度では警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準は出題頻度Lv.4・SPEED 1.4×固定です。開始前に両方を下げられ、変更時はCUSTOM扱いになります。
+    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをSAFEまたはLv.1〜6で調整できます。SAFEはSPEED 0.5×でも重ならない間隔を自動確保し、高頻度では警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準はFREQUENCY Lv.4・SPEED 1.4×です。開始前にSPEEDは0.5×〜3.0×、FREQUENCYはLv.1〜4で調整でき、標準設定から変更するとCUSTOM扱いになります。
   </div>
 
   <div class="problem-types">
@@ -1913,6 +1945,17 @@ body[data-bg-theme="space"]{
         </select>
         <b id="backgroundThemeLabel">夜青</b>
       </label>
+      <label><span>OUTER BG</span>
+        <select id="outerThemeSelect">
+          <option value="night">夜青</option>
+          <option value="purple">紫ネオン</option>
+          <option value="sunset">赤橙</option>
+          <option value="teal">青緑</option>
+          <option value="mono">モノクロ</option>
+          <option value="space">宇宙紺</option>
+        </select>
+        <b id="outerThemeLabel">夜青</b>
+      </label>
       <label class="mute-setting"><input id="muteAudio" type="checkbox"><span>MUTE</span></label>
     </div>
     <div class="settings-note">BGMはゲーム中ループ再生します。3曲から選択できます。SEとのバランス用にBGM出力は内部で抑えています。</div>
@@ -1944,7 +1987,7 @@ body[data-bg-theme="space"]{
       <input id="endlessFrequencySetting" type="range" min="1" max="4" step="1" value="4">
       <b id="endlessFrequencySettingValue">Lv.4</b>
     </label>
-    <div class="settings-note">標準：SPEED 1.4× / FREQUENCY Lv.4。下げるとX投稿時にCUSTOM表示になります。</div>
+    <div class="settings-note">標準：SPEED 1.4× / FREQUENCY Lv.4。標準設定から変更するとX投稿時にCUSTOM表示になります。</div>
   </div>
 
   <audio id="bgmPlayer" loop preload="auto" src="timebend.mp3" aria-hidden="true"></audio>
@@ -2019,11 +2062,11 @@ body[data-bg-theme="space"]{
       <div><b>START</b><span>ゲーム開始後はRESTART表示になり、押すと同じモードを最初からやり直します。</span></div>
       <div><b>カウントダウン</b><span>START / RESTART / リトライ後は3・2・1・STARTのカウントダウンを挟んでから出題が始まります。</span></div>
       <div><b>記録</b><span>終了時にPERFECT・GOOD・MISS CLICK・正答率・問題種別成績を表示します。SURVIVALとサバイバル(カスタム)の自己ベストは別々にブラウザへ保存されます。</span></div>
-      <div><b>設定保存</b><span>LIGHT MODE、問題種ON/OFF、通常時の速度、音量・ミュート設定をこのブラウザに保存します。</span></div>
+      <div><b>設定保存</b><span>LIGHT MODE、問題種ON/OFF、通常時の速度、音量・ミュート、BGM曲、ゲーム背景、外側背景の設定をこのブラウザに保存します。</span></div>
     </div>
 
     <div class="rules-grid extra-lite-rule"><div><b>LIGHT MODE</b><span>ONにすると花火・発光・影・一部フラッシュなどを軽量化し、ブラウザ負荷を抑えます。ゲーム内容、判定、得点、速度は変わりません。</span></div>
-      <div><b>音量</b><span>SE音量・BGM音量・MUTEを設定できます。現在のゲームにはBGM音源はありませんが、BGM音量の設定値は保存されます。</span></div>
+      <div><b>音量</b><span>SE音量・BGM音量・MUTEを設定できます。BGMは3曲から選択でき、選択中の曲と音量設定は保存されます。</span></div>
     </div>
 
     <h3 class="rules-subtitle">問題ごとの配点</h3>
@@ -2127,6 +2170,8 @@ const bgmPlayer2=document.getElementById("bgmPlayer2");
 const bgmPlayer3=document.getElementById("bgmPlayer3");
 const backgroundThemeSelect=document.getElementById("backgroundThemeSelect");
 const backgroundThemeLabel=document.getElementById("backgroundThemeLabel");
+const outerThemeSelect=document.getElementById("outerThemeSelect");
+const outerThemeLabel=document.getElementById("outerThemeLabel");
 const muteAudioInput=document.getElementById("muteAudio");
 let idx=0,score=0,combo=0,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
 let spawnDueAt=0;
@@ -2188,6 +2233,7 @@ const SE_OUTPUT_GAIN=4.0;
 let bgmVolume=.7;
 let selectedBgmTrack="1";
 let backgroundTheme="night";
+let outerTheme="night";
 let audioMuted=false;
 let sessionStats=null;
 const SETTINGS_KEY="mahjongRhythmSettingsV1";
@@ -2270,6 +2316,23 @@ const BACKGROUND_THEME_LABELS={
   space:"宇宙紺"
 };
 
+const OUTER_THEME_LABELS={
+  night:"夜青",
+  purple:"紫ネオン",
+  sunset:"赤橙",
+  teal:"青緑",
+  mono:"モノクロ",
+  space:"宇宙紺"
+};
+
+function applyOuterTheme(theme){
+  const safe=OUTER_THEME_LABELS[theme] ? theme : "night";
+  outerTheme=safe;
+  document.body.setAttribute("data-outer-theme",safe);
+  if(outerThemeSelect) outerThemeSelect.value=safe;
+  if(outerThemeLabel) outerThemeLabel.textContent=OUTER_THEME_LABELS[safe];
+}
+
 function applyBackgroundTheme(theme){
   const safe=BACKGROUND_THEME_LABELS[theme] ? theme : "night";
   backgroundTheme=safe;
@@ -2287,6 +2350,7 @@ function currentSettings(){
     bgmVolume,
     bgmTrack:selectedBgmTrack,
     backgroundTheme,
+    outerTheme,
     muted:audioMuted
   };
 }
@@ -2327,6 +2391,7 @@ function applySavedSettings(){
     bgmVolume:.7,
     bgmTrack:"1",
     backgroundTheme:"night",
+    outerTheme:"night",
     muted:false
   };
   const s=loadJsonStorage(SETTINGS_KEY,defaults);
@@ -2345,6 +2410,7 @@ function applySavedSettings(){
   selectedBgmTrack=String(s.bgmTrack||"1");
   if(!["1","2","3"].includes(selectedBgmTrack)) selectedBgmTrack="1";
   backgroundTheme=BACKGROUND_THEME_LABELS[s.backgroundTheme] ? s.backgroundTheme : "night";
+  outerTheme=OUTER_THEME_LABELS[s.outerTheme] ? s.outerTheme : "night";
   audioMuted=!!s.muted;
 
   if(seVolumeInput) seVolumeInput.value=seVolume;
@@ -2357,6 +2423,7 @@ function applySavedSettings(){
   }
   if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
   applyBackgroundTheme(backgroundTheme);
+  applyOuterTheme(outerTheme);
   if(muteAudioInput) muteAudioInput.checked=audioMuted;
   if(seVolumeValue) seVolumeValue.textContent=`${Math.round(seVolume*100)}%`;
   if(bgmVolumeValue) bgmVolumeValue.textContent=`${Math.round(bgmVolume*100)}%`;
@@ -4250,6 +4317,12 @@ if(bgmTrackSelect){
     if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
     pauseBgm();
     if(running && !paused) restartBgm();
+    saveSettings();
+  });
+}
+if(outerThemeSelect){
+  outerThemeSelect.addEventListener("change",()=>{
+    applyOuterTheme(outerThemeSelect.value);
     saveSettings();
   });
 }
