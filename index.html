@@ -1880,6 +1880,88 @@ body{
   transition:background .28s ease;
 }
 
+
+body[data-bg-theme="ice"]{
+  --bg-base-1:#eef5f8;
+  --bg-base-2:#dce9ef;
+  --bg-glow-1:rgba(120,190,220,.18);
+  --bg-glow-2:rgba(170,205,220,.16);
+  --bg-wave-filter:saturate(.55) brightness(1.18);
+  --bg-city-filter:saturate(.45) brightness(.72);
+}
+body[data-outer-theme="ice"]{
+  --outer-bg-1:#f5f7f8;
+  --outer-bg-2:#e4ecef;
+}
+
+/* ゲーム内を白系にした時の視認性補正 */
+body[data-bg-theme="ice"] .stage{
+  color:#13202a;
+}
+body[data-bg-theme="ice"] .score-hud,
+body[data-bg-theme="ice"] .survival-top-status,
+body[data-bg-theme="ice"] .progress-status,
+body[data-bg-theme="ice"] .speed-slider-hud,
+body[data-bg-theme="ice"] .lite-mode-toggle,
+body[data-bg-theme="ice"] .mode-hud-switch,
+body[data-bg-theme="ice"] .mode-hud-start,
+body[data-bg-theme="ice"] .mode-hud-pause,
+body[data-bg-theme="ice"] .hold2x-btn{
+  color:#10202b !important;
+}
+body[data-bg-theme="ice"] .mode-hud-btn,
+body[data-bg-theme="ice"] .mode-hud-start,
+body[data-bg-theme="ice"] .mode-hud-pause,
+body[data-bg-theme="ice"] .hold2x-btn{
+  background:rgba(248,252,254,.82) !important;
+  border-color:rgba(40,75,95,.26) !important;
+}
+body[data-bg-theme="ice"] .mode-hud-btn.active{
+  background:rgba(205,232,244,.92) !important;
+}
+body[data-bg-theme="ice"] .judge{
+  box-shadow:0 0 8px rgba(180,145,20,.5);
+}
+body[data-bg-theme="ice"] .note{
+  text-shadow:none;
+}
+body[data-bg-theme="ice"] .action-marker{
+  background:rgba(245,250,252,.92);
+  color:#17303d;
+  border-color:rgba(40,80,100,.24);
+}
+body[data-bg-theme="ice"] .action-marker.draw{
+  color:#006d88;
+}
+body[data-bg-theme="ice"] .action-marker.discard{
+  color:#a13b2e;
+}
+
+/* 外側が白系の時はページ全体の文字も暗くする */
+body[data-outer-theme="ice"]{
+  color:#17232b;
+}
+body[data-outer-theme="ice"] .wrap{
+  color:#17232b;
+}
+body[data-outer-theme="ice"] .help,
+body[data-outer-theme="ice"] .rules-panel,
+body[data-outer-theme="ice"] .game-settings,
+body[data-outer-theme="ice"] .endless-settings,
+body[data-outer-theme="ice"] .problem-types{
+  background:rgba(255,255,255,.72);
+  border-color:rgba(35,60,75,.15);
+}
+body[data-outer-theme="ice"] .asset-credit{
+  color:rgba(28,45,55,.72);
+}
+body[data-outer-theme="ice"] .btn,
+body[data-outer-theme="ice"] select{
+  background:rgba(255,255,255,.9);
+  color:#17232b;
+  border-color:rgba(35,60,75,.2);
+}
+
 </style>
 </head>
 <body>
@@ -1942,6 +2024,7 @@ body{
           <option value="teal">青緑</option>
           <option value="mono">モノクロ</option>
           <option value="space">宇宙紺</option>
+          <option value="ice">アイスホワイト</option>
         </select>
         
       </label>
@@ -1953,6 +2036,7 @@ body{
           <option value="teal">青緑</option>
           <option value="mono">モノクロ</option>
           <option value="space">宇宙紺</option>
+          <option value="ice">アイスホワイト</option>
         </select>
         
       </label>
@@ -2311,7 +2395,8 @@ const BACKGROUND_THEME_LABELS={
   sunset:"赤橙",
   teal:"青緑",
   mono:"モノクロ",
-  space:"宇宙紺"
+  space:"宇宙紺",
+  ice:"アイスホワイト"
 };
 
 const OUTER_THEME_LABELS={
@@ -2320,7 +2405,8 @@ const OUTER_THEME_LABELS={
   sunset:"赤橙",
   teal:"青緑",
   mono:"モノクロ",
-  space:"宇宙紺"
+  space:"宇宙紺",
+  ice:"アイスホワイト"
 };
 
 function applyOuterTheme(theme){
