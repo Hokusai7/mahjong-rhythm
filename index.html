@@ -1874,7 +1874,7 @@ body[data-bg-theme="space"]{
 
   <div class="help">
     流れてくる麻雀の形を見て、正解牌をクリックするトレーニング。手牌・補助牌のどちらからでも回答できます。<br>
-    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをLv.1〜6で調整できます。高頻度では問題同士が重なる可能性があるため警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準は出題頻度Lv.4・SPEED 1.4×固定です。開始前に両方を下げられ、変更時はCUSTOM扱いになります。
+    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをSAFEまたはLv.1〜6で調整できます。SAFEはSPEED 0.5×でも重ならない間隔を自動確保し、高頻度では警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準は出題頻度Lv.4・SPEED 1.4×固定です。開始前に両方を下げられ、変更時はCUSTOM扱いになります。
   </div>
 
   <div class="problem-types">
@@ -1930,13 +1930,13 @@ body[data-bg-theme="space"]{
     <div class="endless-settings-title">NORMAL設定</div>
     <label>
       <span>FREQUENCY</span>
-      <input id="normalFrequencySetting" type="range" min="1" max="6" step="1" value="3">
+      <input id="normalFrequencySetting" type="range" min="0" max="6" step="1" value="3">
       <b id="normalFrequencySettingValue">Lv.3</b>
     </label>
     <div id="normalFrequencyWarning" class="normal-frequency-warning" style="display:none">
       ⚠ この設定は重ならない最低間隔を超える可能性があります
     </div>
-    <div class="settings-note">Lv.4までは通常範囲の目安。Lv.5〜6はさらに高頻度です。</div>
+    <div class="settings-note">SAFEはSPEED 0.5×でも重ならない間隔を自動確保。Lv.1〜6は固定頻度です。</div>
   </div>
 
   <div id="endlessSettings" class="endless-settings" style="display:none">
@@ -3024,13 +3024,20 @@ function retimePendingSpawnForSlowState(){
 
 
 function normalFrequencyRequestedDelay(){
-  // Lv.1〜6。Lv.3は従来NORMALの約900ms相当。
+  // 0=SAFE。Lv.1〜6は固定頻度。Lv.3は従来NORMALの約900ms相当。
   const table={1:1160,2:1030,3:900,4:770,5:640,6:510};
+  if(normalFrequencyLevel===0) return 0;
   return table[normalFrequencyLevel] || 900;
 }
 
 function updateNormalFrequencyWarning(nonOverlapDelay=null){
   if(!normalFrequencyWarning) return;
+
+  if(normalFrequencyLevel===0){
+    normalFrequencyUnsafe=false;
+    normalFrequencyWarning.style.display="none";
+    return;
+  }
 
   const requested=normalFrequencyRequestedDelay();
   const runtimeUnsafe=Number.isFinite(nonOverlapDelay) && nonOverlapDelay>0 && requested<nonOverlapDelay;
@@ -3063,10 +3070,11 @@ function scheduleNextSpawn(){
   const nonOverlapDelay=minimumNonOverlapDelay();
 
   // SURVIVAL / ENDLESSは従来どおり重なり防止を優先。
-  // NORMALはユーザーが高頻度を選んだ場合、その設定を優先して安全間隔より詰めることを許可する。
+  // NORMALのSAFE(0)では必ず重ならない最低間隔を採用。
+  // Lv.1〜6ではユーザー指定の固定頻度を優先。
   const baseDelay=isSurvivalRulesMode()
     ? Math.max(requestedDelay, nonOverlapDelay)
-    : requestedDelay;
+    : (normalFrequencyLevel===0 ? Math.max(900,nonOverlapDelay) : requestedDelay);
 
   if(gameMode==="normal"){
     updateNormalFrequencyWarning(nonOverlapDelay);
@@ -4191,9 +4199,10 @@ document.addEventListener("keyup",e=>{
 
 if(normalFrequencySetting){
   normalFrequencySetting.addEventListener("input",()=>{
-    normalFrequencyLevel=Math.max(1,Math.min(6,parseInt(normalFrequencySetting.value,10)||3));
+    const raw=parseInt(normalFrequencySetting.value,10);
+    normalFrequencyLevel=Math.max(0,Math.min(6,Number.isFinite(raw)?raw:3));
     normalFrequencySetting.value=String(normalFrequencyLevel);
-    normalFrequencySettingValue.textContent=`Lv.${normalFrequencyLevel}`;
+    normalFrequencySettingValue.textContent=normalFrequencyLevel===0 ? "SAFE" : `Lv.${normalFrequencyLevel}`;
     updateNormalFrequencyWarning();
 
     // NORMALプレイ中に変更した場合は、次回出題から即反映。
