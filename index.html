@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>麻雀牌リズム 119問版</title>
+<title>何切るリズムトレーニング</title>
 <style>
 :root{--bg:#10131a;--panel:#171c25;--line:#f2c94c;--text:#eef2f7;--muted:#9aa6b2}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -1465,7 +1465,7 @@ body.lite-mode .mini-answer.tamechan-selected::after{
 }
 
 
-/* タメンチャンのフォーカス演出 */
+/* 多メンチャンのフォーカス演出 */
 .stage.tamechan-cinematic .note:not(.tamechan-focus){
   opacity:.22 !important;
   filter:blur(3px) brightness(.48) saturate(.55) !important;
@@ -1576,7 +1576,7 @@ body.lite-mode .tamechan-judge-guide{
 }
 
 
-/* タメンチャン：スロー中の注目演出を強化 */
+/* 多メンチャン：スロー中の注目演出を強化 */
 .stage.tamechan-cinematic .note.tamechan-focus{
   z-index:10 !important;
   opacity:1 !important;
@@ -2081,7 +2081,7 @@ body[data-outer-theme="ice"] .asset-credit{
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>麻雀牌リズム</h1>
+    <h1>何切るリズムトレーニング</h1>
     <button id="startNormal" class="btn mode-switch-top">ノーマル</button>
     <button id="startSurvival" class="btn mode-switch-top">サバイバル</button>
     <button id="startEndless" class="btn mode-switch-top">エンドレス</button>
@@ -2284,7 +2284,7 @@ body[data-outer-theme="ice"] .asset-credit{
       <div><b>リャンメン化</b><span>5枚形から1枚切り、リャンメン形を残すために切る牌を選びます。</span></div>
       <div><b>リャンメンカンチャン</b><span>8枚形から1枚切り、リャンメン＋カンチャンの形を残す牌を選びます。</span></div>
       <div><b>サンメンチャン化</b><span>8枚形から1枚切り、3種類の待ちを持つサンメンチャン形を残す牌を選びます。</span></div>
-      <div><b>タメンチャン</b><span>複数ある待ち牌をすべて選びます。最初にこの問題を押すと、5面待ちを5.0秒基準として待ちの数に応じたスローモーションになり、その間はこの問題だけ操作できます。正解済みの場所は光ったまま残り、すべて選ぶと問題が消えます。タメンチャンだけは補助牌を除いた手牌の高さ全体がPERFECT範囲です。</span></div>
+      <div><b>多メンチャン</b><span>複数ある待ち牌をすべて選びます。最初にこの問題を押すと、5面待ちを5.0秒基準として待ちの数に応じたスローモーションになり、その間はこの問題だけ操作できます。正解済みの場所は光ったまま残り、すべて選ぶと問題が消えます。多メンチャンだけは補助牌を除いた手牌の高さ全体がPERFECT範囲です。</span></div>
       <div><b>一盃口＋1枚</b><span>一盃口になる6枚形に1枚加わった形から、一盃口の形を残すために切る牌を選びます。</span></div>
       <div><b>一通＋1枚</b><span>同色の123456789に余分な1枚が加わった形です。一通の9枚を残すため、その余分な同色牌を切ります。</span></div>
       <div><b>タンヤオ＋1枚</b><span>1234または6789を含む形から、タンヤオを確定させるために端牌を切ります。1234なら1、6789なら9が正解です。</span></div>
@@ -2305,7 +2305,7 @@ const PROBLEM_KIND_LABELS = {
   discard5: "リャンメン化",
   rk8: "リャンメンカンチャン",
   sanmenchan8: "サンメンチャン化",
-  tamechan: "タメンチャン",
+  tamechan: "多メンチャン",
   iipeiko_plus1: "一盃口＋1枚",
   ittsu_plus1: "一通＋1枚",
   tanyao_plus1: "タンヤオ＋1枚",
@@ -3115,7 +3115,7 @@ function createNote(q, qIndex){
     const n=activeNotes.find(x=>x.el===el);
     if(!n)return;
 
-    // タメンチャンの3秒スロー中は、その問題以外を押せない。
+    // 多メンチャンの3秒スロー中は、その問題以外を押せない。
     if(tamechanSlowActive && tamechanFocusNote && tamechanFocusNote!==n) return;
 
     if(Number.isFinite(clientX) && Number.isFinite(clientY)){
@@ -3847,7 +3847,7 @@ function activateTamechanSlow(n){
 }
 
 function highlightTamechanChoice(n, tile, sourceEl=null){
-  // タメンチャンは、正解した牌コードと同じ牌を
+  // 多メンチャンは、正解した牌コードと同じ牌を
   // 手牌・補助牌の両方で同時に光らせる。
   const candidates=[
     ...n.el.querySelectorAll(`.tile-cell[data-code="${tile}"]`),
@@ -3871,7 +3871,7 @@ function judgeAnswer(tile,n,sourceEl=null){
     const half=Math.max(1,n.renderedHandHalf ?? n.handHalf ?? 32);
     const centerDiff=Math.abs(center-judgeY);
 
-    // タメンチャンだけは補助牌を除いた「◀ 手牌 ▶」の高さ全体をPERFECT範囲にする。
+    // 多メンチャンだけは補助牌を除いた「◀ 手牌 ▶」の高さ全体をPERFECT範囲にする。
     const perfectRatio=n.q.kind==="tamechan" ? 1 : 0.38;
     const isPerfect=centerDiff<=half*perfectRatio;
     const gained=scoreForQuestion(n.q,isPerfect);
@@ -3901,7 +3901,7 @@ function judgeAnswer(tile,n,sourceEl=null){
     return {isPerfect,gained};
   };
 
-  // タメンチャン:
+  // 多メンチャン:
   // 5種類の正解牌を1回ずつ押す。押した場所はその場で光るだけ。
   // 全5種類を押し切るまで問題自体は移動・消失させない。
   if(n.q.kind==="tamechan"){
@@ -4481,7 +4481,7 @@ postXResultBtn.addEventListener("click",()=>{
     `PERFECT：${sessionStats?.perfect||0}回 / GOOD：${sessionStats?.good||0}回`,
     `最高SPEED：${sessionMaxSpeed.toFixed(1)}×`,
     "",
-    "#麻雀 #麻雀牌トレーニング"
+    "#何切るリズムトレーニング"
   ].join("\n");
 
   const pageUrl="https://hokusai7.github.io/mahjong-rhythm/";
