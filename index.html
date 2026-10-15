@@ -117,7 +117,12 @@ button,select,input{font:inherit}.btn{background:#2a3240;color:#fff;border:1px s
 
 
 
-.done{display:none;text-align:center;padding:35px}.done h2{font-size:30px}#finalSub{margin:6px 0 8px;color:#dbe8f7;font-size:14px}
+.done{display:none;text-align:center;padding:35px
+  max-height:88%;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}.done h2{font-size:30px}#finalSub{margin:6px 0 8px;color:#dbe8f7;font-size:14px}
 @media(max-width:700px){.tile{width:36px;height:52px;font-size:17px}.stage{height:420px}.note{top:0}.row{gap:4px}.row.honor{max-width:100%}}
 
 .tile-img{width:46px;height:64px;object-fit:contain;display:block;filter:drop-shadow(0 3px 0 #8f98a5)}
@@ -1266,6 +1271,517 @@ body.lite-mode .flash{
   line-height:1.5;
 }
 
+
+.game-settings{
+  margin:10px auto 12px;
+  padding:10px 12px;
+  max-width:720px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;
+  background:rgba(12,18,28,.62);
+}
+.game-settings-title{
+  font-size:13px;
+  font-weight:900;
+  color:#eef7ff;
+  margin-bottom:8px;
+}
+.game-settings-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  align-items:center;
+}
+.game-settings-grid label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  color:#cddbea;
+}
+.game-settings-grid input[type="range"]{width:100px}
+.game-settings-grid b{min-width:38px;text-align:right;font-size:10px;color:#fff}
+.mute-setting{padding-left:4px}
+.settings-note{
+  margin-top:6px;
+  font-size:10px;
+  color:#8596aa;
+}
+.best-record-summary{
+  margin-top:8px;
+  font-size:11px;
+  line-height:1.55;
+  color:#bcd0e4;
+}
+.best-record-summary b{color:#fff}
+
+.countdown-overlay{
+  display:none;
+  position:absolute;
+  inset:0;
+  z-index:75;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  background:rgba(4,8,14,.28);
+}
+.countdown-overlay.show{display:flex}
+.countdown-text{
+  font-size:clamp(64px,15vw,120px);
+  font-weight:1000;
+  letter-spacing:.04em;
+  color:#fff;
+  text-shadow:0 0 10px rgba(255,255,255,.9),0 0 28px rgba(90,220,255,.8),0 0 52px rgba(150,100,255,.5);
+  animation:countdownPop .55s ease-out;
+}
+@keyframes countdownPop{
+  0%{opacity:0;transform:scale(.65)}
+  24%{opacity:1;transform:scale(1.12)}
+  100%{opacity:.92;transform:scale(1)}
+}
+
+.final-stats{
+  margin:14px auto 0;
+  max-width:360px;
+  text-align:left;
+  font-size:12px;
+  line-height:1.55;
+}
+.final-stat-summary{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px 10px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:rgba(255,255,255,.045);
+}
+.final-stat-summary b{color:#fff}
+.final-kind-title{
+  margin:10px 0 5px;
+  font-weight:900;
+  color:#fff;
+}
+.final-kind-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  padding:3px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  color:#c7d6e7;
+}
+.final-kind-row span:last-child{white-space:nowrap;color:#fff}
+.final-best{
+  margin-top:10px;
+  font-size:12px;
+  color:#ffeeb0;
+  line-height:1.5;
+}
+.new-best{
+  font-weight:1000;
+  color:#fff5a7;
+  text-shadow:0 0 10px rgba(255,215,70,.55);
+}
+@media(max-width:560px){
+  .game-settings-grid{display:grid;grid-template-columns:1fr}
+  .game-settings-grid input[type="range"]{width:130px}
+  .final-stat-summary{grid-template-columns:1fr 1fr}
+}
+
+
+.action-marker{
+  height:22px;
+  min-width:26px;
+  padding:0 7px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:1000;
+  line-height:1;
+  margin-bottom:1px;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(7,12,20,.78);
+  pointer-events:none;
+}
+.action-marker .action-count{
+  font-size:11px;
+  letter-spacing:.02em;
+  opacity:.92;
+}
+.action-marker.draw{
+  color:#8fe5ff;
+  border-color:rgba(105,215,255,.55);
+  box-shadow:0 0 9px rgba(70,200,255,.22);
+}
+.action-marker.discard{
+  color:#ffb3a8;
+  border-color:rgba(255,135,120,.55);
+  box-shadow:0 0 9px rgba(255,105,90,.20);
+}
+body.lite-mode .action-marker{
+  box-shadow:none !important;
+}
+
+
+.note.tamechan-focus{
+  filter:
+    drop-shadow(0 0 9px rgba(120,235,255,.52))
+    drop-shadow(0 0 22px rgba(120,170,255,.30)) !important;
+}
+.tamechan-selected{
+  position:relative;
+}
+.tile-cell.tamechan-selected .tile-img,
+.mini-answer.tamechan-selected img{
+  filter:
+    brightness(1.08)
+    saturate(.92)
+    drop-shadow(0 2px 0 #8f98a5) !important;
+}
+.tile-cell.tamechan-selected::after,
+.mini-answer.tamechan-selected::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:7px;
+  border:3px solid rgba(120,225,255,.98);
+  box-shadow:
+    0 0 4px rgba(80,210,255,.45);
+  pointer-events:none;
+}
+body.lite-mode .note.tamechan-focus,
+body.lite-mode .tile-cell.tamechan-selected .tile-img,
+body.lite-mode .mini-answer.tamechan-selected img{
+  filter:brightness(1.06) !important;
+}
+body.lite-mode .tile-cell.tamechan-selected::after,
+body.lite-mode .mini-answer.tamechan-selected::after{
+  box-shadow:none !important;
+  border-color:rgba(120,225,255,.95) !important;
+}
+
+
+/* タメンチャンのフォーカス演出 */
+.stage.tamechan-cinematic .note:not(.tamechan-focus){
+  opacity:.22 !important;
+  filter:blur(3px) brightness(.48) saturate(.55) !important;
+  transition:opacity .18s ease, filter .18s ease !important;
+}
+.stage.tamechan-cinematic .city-lights-bg,
+.stage.tamechan-cinematic .wave-bg{
+  filter:blur(4px) brightness(.42) !important;
+  opacity:.34 !important;
+  transition:filter .18s ease, opacity .18s ease !important;
+}
+.stage.tamechan-cinematic::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:rgba(0,0,0,.32);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.stage.tamechan-cinematic .note.tamechan-focus{
+  z-index:8 !important;
+  opacity:1 !important;
+  filter:
+    drop-shadow(0 0 12px rgba(145,235,255,.68))
+    drop-shadow(0 0 28px rgba(110,150,255,.42)) !important;
+}
+.stage.tamechan-cinematic .judge{
+  opacity:.35;
+}
+body.lite-mode .stage.tamechan-cinematic::after{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  background:rgba(0,0,0,.40);
+}
+body.lite-mode .stage.tamechan-cinematic .note:not(.tamechan-focus){
+  filter:brightness(.48) !important;
+}
+
+
+.tamechan-timer{
+  display:none;
+  height:20px;
+  min-width:54px;
+  padding:0 7px;
+  box-sizing:border-box;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:2px;
+  border-radius:999px;
+  background:rgba(5,10,18,.84);
+  border:1px solid rgba(150,230,255,.62);
+  color:#eefdff;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.04em;
+  text-shadow:0 0 7px rgba(100,220,255,.75);
+  box-shadow:0 0 10px rgba(90,205,255,.20);
+  pointer-events:none;
+}
+.tamechan-timer.show{
+  display:flex;
+}
+body.lite-mode .tamechan-timer{
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+
+.tamechan-judge-guide{
+  display:none;
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:4px;
+  transform:translateY(-2px);
+  z-index:9;
+  pointer-events:none;
+  background:#ffe36b;
+  box-shadow:
+    0 0 6px rgba(255,255,255,.95),
+    0 0 16px rgba(255,226,85,.95),
+    0 0 28px rgba(255,185,45,.55);
+}
+.stage.tamechan-cinematic .tamechan-judge-guide{
+  display:block;
+}
+body.lite-mode .tamechan-judge-guide{
+  box-shadow:0 0 8px rgba(255,226,85,.65) !important;
+}
+
+
+.note.tamechan-note .arrow{
+  font-size:22px !important;
+  color:#9de9ff;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.9),
+    0 0 11px rgba(90,220,255,.75);
+}
+.note.tamechan-note .arrow.perfect-range{
+  color:#fff176 !important;
+  text-shadow:
+    0 0 5px rgba(255,255,255,1),
+    0 0 12px rgba(255,235,95,1),
+    0 0 24px rgba(255,180,45,.75) !important;
+}
+
+
+/* タメンチャン：スロー中の注目演出を強化 */
+.stage.tamechan-cinematic .note.tamechan-focus{
+  z-index:10 !important;
+  opacity:1 !important;
+  filter:
+    drop-shadow(0 0 14px rgba(190,245,255,.88))
+    drop-shadow(0 0 34px rgba(95,165,255,.56)) !important;
+}
+
+/* 対象の補助牌と手牌を個別に拡大 */
+.stage.tamechan-cinematic .note.tamechan-focus .mini-answer-row{
+  transform:scale(1.16);
+  transform-origin:center bottom;
+  filter:
+    brightness(1.12)
+    drop-shadow(0 0 8px rgba(255,255,255,.7))
+    drop-shadow(0 0 18px rgba(100,220,255,.5));
+  transition:transform .18s ease, filter .18s ease;
+}
+.stage.tamechan-cinematic .note.tamechan-focus .note-row{
+  transform:scale(1.14);
+  transform-origin:center center;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 0 7px rgba(255,255,255,.58))
+    drop-shadow(0 0 18px rgba(100,210,255,.45));
+  transition:transform .18s ease, filter .18s ease;
+}
+
+/* 周囲をさらに落として、中心だけ目立たせる */
+.stage.tamechan-cinematic .note:not(.tamechan-focus){
+  opacity:.14 !important;
+  filter:blur(5px) brightness(.34) saturate(.42) !important;
+}
+.stage.tamechan-cinematic::after{
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(0,0,0,.08) 0%,
+      rgba(0,0,0,.20) 28%,
+      rgba(0,0,0,.48) 68%,
+      rgba(0,0,0,.64) 100%) !important;
+  backdrop-filter:blur(3px) !important;
+  -webkit-backdrop-filter:blur(3px) !important;
+}
+
+/* 対象問題の周囲に薄いハロー */
+.stage.tamechan-cinematic .note.tamechan-focus::before{
+  content:"";
+  position:absolute;
+  inset:-24px -34px;
+  border-radius:28px;
+  pointer-events:none;
+  background:radial-gradient(circle at center,
+    rgba(120,220,255,.12) 0%,
+    rgba(110,180,255,.08) 45%,
+    rgba(0,0,0,0) 74%);
+  box-shadow:0 0 36px rgba(90,190,255,.16);
+  z-index:-1;
+}
+
+body.lite-mode .stage.tamechan-cinematic .note.tamechan-focus .mini-answer-row,
+body.lite-mode .stage.tamechan-cinematic .note.tamechan-focus .note-row{
+  filter:brightness(1.08) !important;
+}
+body.lite-mode .stage.tamechan-cinematic .note:not(.tamechan-focus){
+  filter:brightness(.38) !important;
+}
+body.lite-mode .stage.tamechan-cinematic::after{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+body.lite-mode .stage.tamechan-cinematic .note.tamechan-focus::before{
+  box-shadow:none !important;
+}
+
+
+.endless-settings{
+  margin:10px 0 14px;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;
+  background:rgba(10,16,26,.72);
+}
+.endless-settings-title{
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.endless-settings label{
+  display:grid;
+  grid-template-columns:92px minmax(120px,1fr) 54px;
+  align-items:center;
+  gap:8px;
+  margin:7px 0;
+  font-size:12px;
+}
+.endless-settings input[type="range"]{
+  width:100%;
+}
+.endless-settings b{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+
+.space-particle-layer{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+.space-particle{
+  position:absolute;
+  left:-12%;
+  top:20%;
+  width:4px;
+  height:4px;
+  border-radius:999px;
+  opacity:0;
+  background:rgba(235,248,255,.92);
+  box-shadow:
+    0 0 5px rgba(225,245,255,.95),
+    0 0 12px rgba(120,190,255,.65);
+  transform:translate3d(0,0,0);
+}
+.space-particle.streak{
+  width:32px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(225,245,255,.35) 28%,
+    rgba(245,252,255,.98) 100%);
+  box-shadow:
+    0 0 6px rgba(230,248,255,.9),
+    0 0 14px rgba(110,175,255,.55);
+}
+.space-particle.drift{
+  width:3px;
+  height:3px;
+  opacity:.75;
+  box-shadow:
+    0 0 5px rgba(220,245,255,.75),
+    0 0 10px rgba(120,170,255,.42);
+}
+body.lite-mode .space-particle{
+  box-shadow:none !important;
+  opacity:.5 !important;
+}
+
+
+@media (max-height:700px){
+  .done{
+    max-height:84%;
+  }
+}
+
+
+.normal-frequency-warning{
+  margin-top:7px;
+  padding:7px 9px;
+  border-radius:8px;
+  border:1px solid rgba(255,205,90,.55);
+  background:rgba(115,75,10,.25);
+  color:#ffe39a;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.35;
+}
+
+
+.asset-credit{
+  margin:6px 0 10px;
+  font-size:11px;
+  line-height:1.4;
+  color:rgba(230,238,248,.62);
+  text-align:right;
+}
+
+
+.game-settings select{
+  width:100%;
+  min-width:150px;
+  background:rgba(10,16,26,.88);
+  color:inherit;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:7px;
+  padding:5px 7px;
+}
+
+
+.asset-credit .music-credit-title{
+  margin-top:5px;
+  font-weight:800;
+  color:rgba(235,242,250,.78);
+}
+.asset-credit a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.asset-credit a:hover{
+  color:rgba(255,255,255,.9);
+}
+
 </style>
 </head>
 <body>
@@ -1280,18 +1796,19 @@ body.lite-mode .flash{
     </div>
     <button id="startNormal" class="btn mode-switch-top">ノーマル</button>
     <button id="startSurvival" class="btn mode-switch-top">サバイバル</button>
+    <button id="startEndless" class="btn mode-switch-top">エンドレス</button>
     <button id="pause" class="btn">停止</button>
     <div class="ctrl"><span>流れる速度</span><input id="speed" type="range" min=".5" max="8" step=".25" value="1"><b id="speedLabel">1.00倍</b></div>
     <div class="stat"><span id="score">0</span> 点</div>
     <div class="stat"><span id="combo">0</span> COMBO</div>
-    <div class="stat"><span id="progress">0 / 119</span></div>
+    <div class="stat"><span id="progress">0 / 166</span></div>
     <div class="stat"><span id="modeLabel">NORMAL</span></div>
     <div class="stat"><span id="missLabelTop">MISS </span><span id="miss">0</span><span id="missLimitTop"> / 3</span></div>
   </div>
 
   <div class="help">
     流れてくる麻雀の形を見て、正解牌をクリックするトレーニング。手牌・補助牌のどちらからでも回答できます。<br>
-    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周、SURVIVALはMISS 3回まで無限に続きます。
+    正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをLv.1〜6で調整できます。高頻度では問題同士が重なる可能性があるため警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準は出題頻度Lv.4・SPEED 1.4×固定です。開始前に両方を下げられ、変更時はCUSTOM扱いになります。
   </div>
 
   <div class="problem-types">
@@ -1304,6 +1821,65 @@ body.lite-mode .flash{
     </div>
     <div id="problemTypeGrid" class="problem-type-grid"></div>
   </div>
+
+  <div class="asset-credit">
+  <div>麻雀牌画像素材：麻雀王国（mj-king.net）</div>
+  <div class="music-credit-title">BGM</div>
+  <div>「タイムベンド」 / かずち — <a href="https://opentracks.com/bgm/detail/1488" target="_blank" rel="noopener noreferrer">OpenTracks</a></div>
+  <div>「Meteorite」 / FLASH☆BEAT — <a href="https://opentracks.com/bgm/detail/14179" target="_blank" rel="noopener noreferrer">OpenTracks</a></div>
+  <div>「Somehow (Prod. Khaim)」 / Khaim — <a href="https://opentracks.com/bgm/detail/12431" target="_blank" rel="noopener noreferrer">OpenTracks</a></div>
+</div>
+
+  <div class="game-settings">
+    <div class="game-settings-title">設定・記録</div>
+    <div class="game-settings-grid">
+      <label><span>SE</span><input id="seVolume" type="range" min="0" max="1" step="0.05" value="1"><b id="seVolumeValue">100%</b></label>
+      <label><span>BGM</span><input id="bgmVolume" type="range" min="0" max="1" step="0.05" value="0.7"><b id="bgmVolumeValue">70%</b></label>
+      <label><span>BGM曲</span>
+        <select id="bgmTrackSelect">
+          <option value="1">1：タイムベンド</option>
+          <option value="2">2：Meteorite</option>
+          <option value="3">3：Somehow (Prod. Khaim)</option>
+        </select>
+        <b id="bgmTrackLabel">1/3</b>
+      </label>
+      <label class="mute-setting"><input id="muteAudio" type="checkbox"><span>MUTE</span></label>
+    </div>
+    <div class="settings-note">BGMはゲーム中ループ再生します。3曲から選択できます。SEとのバランス用にBGM出力は内部で抑えています。</div>
+    <div id="bestRecordSummary" class="best-record-summary"></div>
+  </div>
+
+  <div id="normalFrequencySettings" class="endless-settings">
+    <div class="endless-settings-title">NORMAL設定</div>
+    <label>
+      <span>FREQUENCY</span>
+      <input id="normalFrequencySetting" type="range" min="1" max="6" step="1" value="3">
+      <b id="normalFrequencySettingValue">Lv.3</b>
+    </label>
+    <div id="normalFrequencyWarning" class="normal-frequency-warning" style="display:none">
+      ⚠ この設定は重ならない最低間隔を超える可能性があります
+    </div>
+    <div class="settings-note">Lv.4までは通常範囲の目安。Lv.5〜6はさらに高頻度です。</div>
+  </div>
+
+  <div id="endlessSettings" class="endless-settings" style="display:none">
+    <div class="endless-settings-title">ENDLESS設定</div>
+    <label>
+      <span>SPEED</span>
+      <input id="endlessSpeedSetting" type="range" min="0.5" max="3.0" step="0.1" value="1.4">
+      <b id="endlessSpeedSettingValue">1.4×</b>
+    </label>
+    <label>
+      <span>FREQUENCY</span>
+      <input id="endlessFrequencySetting" type="range" min="1" max="4" step="1" value="4">
+      <b id="endlessFrequencySettingValue">Lv.4</b>
+    </label>
+    <div class="settings-note">標準：SPEED 1.4× / FREQUENCY Lv.4。下げるとX投稿時にCUSTOM表示になります。</div>
+  </div>
+
+  <audio id="bgmPlayer" loop preload="auto" src="timebend.mp3" aria-hidden="true"></audio>
+  <audio id="bgmPlayer2" loop preload="auto" src="meteorite.mp3" aria-hidden="true"></audio>
+  <audio id="bgmPlayer3" loop preload="auto" src="somehow_khaim.mp3" aria-hidden="true"></audio>
 
   <div id="stage" class="stage">
 <div class="speed-slider-hud">
@@ -1318,6 +1894,9 @@ body.lite-mode .flash{
   <input id="liteModeToggle" type="checkbox">
   <span>LIGHT MODE</span>
 </label>
+<div id="countdownOverlay" class="countdown-overlay" aria-hidden="true">
+  <div id="countdownText" class="countdown-text">3</div>
+</div>
 <div id="progressStatus" class="progress-status" aria-live="polite"></div>
 <div id="scoreHud" class="score-hud">
   <span>SCORE <span id="hudScore">0</span></span>
@@ -1326,10 +1905,13 @@ body.lite-mode .flash{
 <div id="modeHudSwitch" class="mode-hud-switch">
   <button id="modeHudNormal" type="button" class="mode-hud-btn">NORMAL</button>
   <button id="modeHudSurvival" type="button" class="mode-hud-btn">SURVIVAL</button>
+  <button id="modeHudEndless" type="button" class="mode-hud-btn">ENDLESS</button>
 </div>
 <button id="modeHudStart" type="button" class="mode-hud-start">START</button>
 <button id="modeHudPause" type="button" class="mode-hud-pause">一時停止</button><div id="missScreenFlash" class="miss-screen-flash" aria-hidden="true"></div><canvas id="cityLightsBg" class="city-lights-bg" aria-hidden="true"></canvas><canvas id="waveBg" class="wave-bg" aria-hidden="true"></canvas>
+    <div id="spaceParticleLayer" class="space-particle-layer" aria-hidden="true"></div>
     <div id="judge" class="judge"></div>
+    <div id="tamechanJudgeGuide" class="tamechan-judge-guide" aria-hidden="true"></div>
     <div id="flash" class="flash"></div>
     <div id="note" class="note" style="display:none"></div>
     <button id="hold2x" class="hold2x-btn" type="button" aria-label="押している間だけ2倍速">⌨ Shift ×2</button>
@@ -1340,34 +1922,49 @@ body.lite-mode .flash{
     <button id="focusResumeBtn" class="focus-resume-btn" type="button">再開</button>
   </div>
 </div>
-<div id="done" class="done"><h2 id="doneTitle">終了！</h2><div id="finalSub"></div><div id="finalScore"></div><button id="retrySurvival" class="btn retry-survival-btn" type="button" style="margin-top:14px;display:none">リトライ</button><button id="postXResult" class="btn" type="button" style="margin-top:10px;display:none">Xでポスト</button></div>
+<div id="done" class="done">
+  <h2 id="doneTitle">終了！</h2>
+  <div id="finalSub"></div>
+  <div id="finalScore"></div>
+  <div id="finalStats" class="final-stats"></div>
+  <div id="finalBest" class="final-best"></div>
+  <button id="retrySurvival" class="btn retry-survival-btn" type="button" style="margin-top:14px;display:none">リトライ</button>
+  <button id="postXResult" class="btn" type="button" style="margin-top:10px;display:none">Xでポスト</button>
+</div>
   </div>
 
   <section class="rules-panel" aria-label="ゲームルール">
     <h2>ルール</h2>
     <div class="rules-grid">
       <div><b>回答</b><span>流れてくる問題の正解牌をクリックします。手牌そのものと、上に表示される補助牌のどちらからでも回答できます。</span></div>
-      <div><b>GOOD</b><span>正解するとGOOD。問題の手牌枚数に応じて得点が入ります。</span></div>
+      <div><b>GOOD</b><span>正解するとGOOD。問題の手牌枚数に応じて得点が入り、14枚問題が最高配点です。</span></div>
       <div><b>PERFECT</b><span>◀ 手牌 ▶ の中央が画面中央の判定ライン付近にあるとPERFECT。GOODより高得点です。</span></div>
       <div><b>MISS CLICK</b><span>誤った牌を押しても問題は続行します。MISS回数には入りませんが、SCORE -100です。</span></div>
       <div><b>MISS</b><span>問題が画面下まで流れ切るとMISSになります。</span></div>
       <div><b>NORMAL</b><span>選択した問題種の問題を1周します。問題種はゲーム開始前にON/OFFできます。</span></div>
+      <div><b>ENDLESS</b><span>サバイバルと同じ3MISS終了・無限出題ルールです。標準設定はSPEED 1.4×・FREQUENCY Lv.4で、開始前にSPEEDは0.5×〜3.0×、FREQUENCYはLv.1〜4で調整できます。標準設定から変更した場合は「エンドレス（カスタム）」表記になります。</span></div>
       <div><b>SURVIVAL</b><span>MISS 3回でゲームオーバー。問題は無限に出題され、各問題種はその種類の問題を1周出し切ってから次の周回に入ります。問題種を1つでも外して開始すると「サバイバル(カスタム)」になります。</span></div>
       <div><b>難易度上昇</b><span>SURVIVALは4問ごとに出題頻度が上昇し、FREQUENCY Lv.4でMAX。その後は4問ごとに最低速度が0.1×ずつ上がり、最大4.0×です。</span></div>
       <div><b>速度</b><span>左上のスライダーで調整できます。Shift / ×2ボタンを押している間だけ2倍速になります。重なり防止の出題間隔は通常速度を基準に計算します。</span></div>
       <div><b>一時停止</b><span>右上の一時停止ボタンから停止・再開できます。ゲーム中にブラウザ外や別タブへ移ると自動で一時停止し、ゲーム画面も隠れます。</span></div>
       <div><b>START</b><span>ゲーム開始後はRESTART表示になり、押すと同じモードを最初からやり直します。</span></div>
+      <div><b>カウントダウン</b><span>START / RESTART / リトライ後は3・2・1・STARTのカウントダウンを挟んでから出題が始まります。</span></div>
+      <div><b>記録</b><span>終了時にPERFECT・GOOD・MISS CLICK・正答率・問題種別成績を表示します。SURVIVALとサバイバル(カスタム)の自己ベストは別々にブラウザへ保存されます。</span></div>
+      <div><b>設定保存</b><span>LIGHT MODE、問題種ON/OFF、通常時の速度、音量・ミュート設定をこのブラウザに保存します。</span></div>
     </div>
 
     <div class="rules-grid extra-lite-rule"><div><b>LIGHT MODE</b><span>ONにすると花火・発光・影・一部フラッシュなどを軽量化し、ブラウザ負荷を抑えます。ゲーム内容、判定、得点、速度は変わりません。</span></div>
+      <div><b>音量</b><span>SE音量・BGM音量・MUTEを設定できます。現在のゲームにはBGM音源はありませんが、BGM音量の設定値は保存されます。</span></div>
     </div>
 
     <h3 class="rules-subtitle">問題ごとの配点</h3>
     <div class="score-rule-table">
       <div><b>2枚問題</b><span>GOOD +400 / PERFECT +700</span><em>40問</em></div>
       <div><b>5枚問題</b><span>GOOD +600 / PERFECT +1000</span><em>24問</em></div>
-      <div><b>8枚問題</b><span>GOOD +800 / PERFECT +1300</span><em>33問</em></div>
+      <div><b>7枚問題</b><span>GOOD +700 / PERFECT +1150</span><em>35問</em></div>
+      <div><b>8枚問題</b><span>GOOD +800 / PERFECT +1300</span><em>54問</em></div>
       <div><b>11枚問題</b><span>GOOD +1000 / PERFECT +1600</span><em>22問</em></div>
+      <div><b>14枚問題</b><span>GOOD +1200 / PERFECT +1900</span><em>15問</em></div>
     </div>
     <div class="rules-note">※ 弱ターツ落としは1枚目・2枚目をそれぞれ判定し、それぞれGOOD / PERFECTの得点が入ります。</div>
 
@@ -1377,7 +1974,11 @@ body.lite-mode .flash{
       <div><b>リャンメン化</b><span>5枚形から1枚切り、リャンメン形を残すために切る牌を選びます。</span></div>
       <div><b>リャンメンカンチャン</b><span>8枚形から1枚切り、リャンメン＋カンチャンの形を残す牌を選びます。</span></div>
       <div><b>サンメンチャン化</b><span>8枚形から1枚切り、3種類の待ちを持つサンメンチャン形を残す牌を選びます。</span></div>
+      <div><b>タメンチャン</b><span>複数ある待ち牌をすべて選びます。最初にこの問題を押すと、5面待ちを5.0秒基準として待ちの数に応じたスローモーションになり、その間はこの問題だけ操作できます。正解済みの場所は光ったまま残り、すべて選ぶと問題が消えます。タメンチャンだけは補助牌を除いた手牌の高さ全体がPERFECT範囲です。</span></div>
       <div><b>一盃口＋1枚</b><span>一盃口になる6枚形に1枚加わった形から、一盃口の形を残すために切る牌を選びます。</span></div>
+      <div><b>一通＋1枚</b><span>同色の123456789に余分な1枚が加わった形です。一通の9枚を残すため、その余分な同色牌を切ります。</span></div>
+      <div><b>タンヤオ＋1枚</b><span>1234または6789を含む形から、タンヤオを確定させるために端牌を切ります。1234なら1、6789なら9が正解です。</span></div>
+      <div><b>三色＋1枚</b><span>3色に同じ数字並びの順子を残せる形から、三色同順を確定させる余分な1枚を切ります。</span></div>
       <div><b>弱ターツ落とし</b><span>複数のターツから弱いペンチャン・カンチャンを2枚とも選んで落とします。1枚目と2枚目をそれぞれGOOD / PERFECT判定し、1枚目の後は◀ 手牌 ▶ が白枠へ移動します。</span></div>
       <div><b>順子＋リャンメン残し</b><span>順子を含む形から1枚切り、完成順子とリャンメンを両方残す牌を選びます。</span></div>
     </div>
@@ -1387,18 +1988,22 @@ body.lite-mode .flash{
 
 <script>
 const HAND_IMAGES = {"1m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePj4/HhwOPi4vHhv/Dgv/Hgv9vb29vb2tva2tra2tbNyMzKztLAttLBttHAtr+8w7+7w860ps6zps2zptyyX7KtuMmnl8mnlsWcicWciMWbiKafrqWfrsGPesGPe8GQe8CPepqSpM2TBpmRpMyTBsySBsySBY+Pj72EbbyDbY2FmoyFmrh4Ybh4YLh3YLd3YIF5koF5kbRsVbRsVHZtiHVtiLBhSXVsiLBgSK9gSLBgSWtigKxVPqxUPatUPV9XeKhJM19Xd6hJMqdIMqQ+KqQ+KVRNcKQ9KaM9KaExH6AxH0lDaaAwH0lDaPYA/0hDaEhCaJ0hFJwhFJwhE5wgEzIvWiYlVJkIBJkIA5kHA5gHAxYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFIALAAAAAAhADsAAAf/gFIrg4SFhoeIhIIpjI2Oj5CRjYOSlZaOlJeakZmbnoyDGAejpKQJp6ipqqoYgwCvsLGys7SwrrW4ubYrur21t77Br8DCvsTFusfIuMrLtM3Osq4B1NXW1gPZ2tvcAIMGDeHhDOTk4ufo6Q0Eg+Xu7/AM4vHkg+r3+Or2+Q308eft/NHjF26QgoMH4RG8ZxChw4cQIz4MWG6BxYsYLS5ssE+dQHcMV2DEl8EFjh9TUk6h8YDeoIwYJ7hQogUMGC1Pnti0qeWBvhXpSnwZ+iXLkBcUGIBQMmSH0xowLbZL90FJkRPnXLjYSPGj13cvF3jdKK6hw6/vfsojew9mR7YE/98SnDHDQ9QFAFekPadBw7kkXYDEBYrPQxcPEDZsqNJlCRQbEvDJFedgAwsvmLto3twFi+QVB9NB6YLZy4YFUK5ACLfhwt0FYdNVhuDDSwQZVXjIGLE6X0N1HEiQcGLFCxEZQrxU+RhW7LsZxnkw8cJERgfM/CaLg+GlBRHNTYD04JIkO2F1I7pA2cDDiwwNXLi0YH5eNpYuV0Zb0XzFgXmBJBBRARFbyEAEESO09hps9VHW2wYxXFHagQQ20UFICqSzgRU8WBEfFzxYcM4NyoV0kTsxeHEFDx0I0QUPQOQnQwNAqBgSPZpBoMNmWGB2RANOeBEEQuho1wASXtggAlARLcRgxAgSMACBZiGEdI8IXCxBjgQbKHADCRskZ9teHIF2zw1IoOMAERP6Yw9a5YyABRaujVQWaETC9ZmeC5nlEJ9F6gVnOXEJksihiCoSCAA7", "2m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePj4+Pi4vHhwPHgv/Dgv/Hhv9vb29ra2tva2tvb2tXNx9bNyM3Lz8zKztLBttLAttHAtdHAtr+7w860ps2zps2zpd2yYNyyX7OtubKsuMqnl8mnlsmnl8WciMWbiKafrqWfrqWersGQe8GPe8GPesCPes2TBpqSpJmRpJmRo5mSpMySBsyTBsySBY+Pj72EbbyDbb2DbY2Fm42Fmrh4Ybh4YLh3YIF5koF5kbRsVbRsVLNrVLBhSXZtiXZtiLBgSK9gSHVsiGtigGphf6xVPqtUPV9XeKhJM6hJMqdIMqQ+KqQ+KVRNcKQ9KUlDaaExIKExH6AxH/YA/0lDaEhCaKAwHz45Yj45YZ0hFJwhFJwhE5wgEzIvWzIvWiYlVCYlU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFYALAAAAAAhADsAAAf/gFYyg4SFhoeIhIIvjI2Oj5CRjYOSlZaOgzCal5yPlJ2gkzIbCKWmp6UHqqusqwmvCRqDALS1tre4ubWzur2+uzK/wrq8w8a0xcfDycq/zM29z9C50tO3swHZ2tvc3d4BAIMFDOTl5g3o6eoL7O3tBIPu8vP09QuD6uv27eYM8oMKAiroR7CgP3rx9im0N8igw4Xs8OVrMC8CCyNSpJCguE/iRHQQhGxRQ1LNlQ4HGcpwSG6FEC1qlFgQSLNmQI8f0d0YU8KmT4EA9xWBAiElPYIN60UwQqJgPXMJ6UUY4SKIEilg0GjVKgYKh4JR3bEoqaarEB4kSGBREybjEYQr/wta2LGDg7oWSmxEyJku7EK7fNXh5AvxX1yWRvdBlVGYnYkcNAy68ytvggl3NMiQWTh4ohciDj58WEImS5YhIFQ6/IBiipkzsGPHxmAQoEB3PzRr9sEAxxkU5C584Eu5nWgTZGpcMLMkR44M7sAyrvcAR4goU85E8eED9omOhwl+MONkCZIzX4BkMGNGRMB6xdl9OMOdvZcmOmBPYNk5XQXNIdRAxhITRHFGEwpRRtMSZnBRBXsQhpBTOX7VdMESJ+RHRBJL6OCBB+DVU0FAGNTwRGxRLLGEF17k8FNDBVUxBBWxZQGCOSCwdwFc9GDwhRlP1JDfEkRkcUYSD5yg2WwHPvXXABNkpJBCbF/AlsUEP7AHX3jm6GBGFhQs0YMJS8xwATlZmJFETrbZJAF7FaBzQgMzzPCBDpqlsOVPCpiQxQU15QebFw/UJgOfNhm3xBnfbVkPYRDF19iWgX1UWFiIZQqVIIl06qkigQAAOw==", "3m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePi4uLi4vHhwPDgv/Hgv/Hhv9vb29ra2tvb2tva2tbNyM3Lz8zKztLAttLBttHAtr+8w767w7+7w860ps2zps2zpd2yYNyyX7OtubKtuLKsuMqol8mnl8mnlsWciMWbiKafrqWfrsGQe8GPe8GPes2TBpqSpJmRpMyTBsySBpmSpI+Pj72EbbyDbb2DbY2Fm42FmoyEmrh4Ybh4YLh3YLd3YIF5krRsVbRsVLNrVLBhSXZtiXVtiLBgSK9gSHVsiKxVPmpigGphf6hJM6hJMl9XeKdIMqQ+KVRNcKQ9KaM9KVRMcElDaaExH/YA/0lDaEhDaEhCaKAwHz45Yj05YZ0hFJwhFJwhE5wgEzIvWjEvWiYlVCYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFIALAAAAAAhADsAAAf/gFIvg4SFhoeIhIItjI2Oj5CRjYOSlZaOlJeakZmbnoyDGwejpKWmp6gHGoMAra6vsLGyrqyztre0L7i7s7W8v62+wLzCw7jFxrbIybLLzLCsA9LTAdXW1tPU19YAgwQN4OHi4gvl5ufoBYPo7O3u6IPj8vLv8C8M+Pn6+/z9+YMKAgocSNDDjx8r6pVb1y7cAxVFupiZOMSfvnj0zFFgUqXLFyAQFC58IXIBjSEhSy4AqEChhQ46qJxhUkEhw3cWknQ5w/PMlQcM6mEER1CgCyNlykChMU/euqbhLFzpMkPlyhdQwbnwAqSBhxIlaJAgwaGBu0H5wpnjwGQmlp5w/898+THv5rkVcMEwGVLCAoQnPKEIpsAuXrsfXZjUEPdAR9msDVgWFWjVXrvJ40Q+VVvPBA4ckwkOnRcBhrgRZMhMgGy3nZUjC0KEIBJGixUhId61PodBxBIxwMWkHk5GxFmS7XYQD7IAR5gT4C6AcNB09LgLH06IwXFBi5IbN0KwfkGZHY8RSraMcbLjRmoZWSUXxUBmyREfZLYEiTBmDIzQAclHUAhiBIGDemMoYUJ/F1jEgHXj9GcCDGRE4cARY0ShTztoWRTEGFZYQRwZKLAzzm7nOECEDCGQcQQRR/AgmwO63dNPBOWUtkQYPDZxxBFRjNFDaAIKdIQQVgSXRYcINJZzQWohTFakAhdkIUYTMshAhhNBREEGERmE0J94TmE1DxFk4IBaaghyEQIO/TVpj1nsxBBGFg4oEcQJRNiAQUBO1HecOw5oIUaUCozQHA4hxJAaDoO6Y4IWF6CDAnES+BPPhiJhgKEJUE0pEGTxIVdZOQ4+SN6pJQlIKjm6CZLIrLQqEggAOw==", "4m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vT09fX09ePi4uLi4vHhwPHgv/Dgv/Hhv9vb29ra2tva2tvb2tXNx9bNyNbNx83Lz8zKztLAttHAtb+7w767w860ps2zpc2zptyyX7OtubKsuLKtuMmnlsmnl8WciMacicWcicWbiKafrqWfrqWersGQe8GPe8GPesCPes2TBsyTBsySBsySBZmSpI+Pj72EbbyDbY2Fm4yFmrh3YLh4Ybh4YLd3YIF5koF5kbRsVbRsVLNrVLBhSXZtiXVtiLBgSK9gSHVsiGtigKxVPqxVPWpigGphf6tUPahJM6hJMl9XeF9Xd19Wd6dIMqQ+KVRNcKQ9KaM9KUlDaaExH6AxH/YA/0lDaEhDaKAwHz46Yj45Yj05YT45YZ0hFJwhFJwhE5wgEzIvWzIvWiYlVJkIA5kIBJkHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFgALAAAAAAhADsAAAf/gFgxg4SFhoeIhIIsLo2Oj5CRko2Dk5aXj5WYm5KanJ+UMRsIpKWmp6ipCBuDAK6vsLGys6+ttLe4tTG5vLS2vcCuv8G9w8S5xse3ycqzzM2xrQTT1NQB19jZ1tnXAIMFC+Hi4gzl5ufo6AaD6ecO7/Dx8vPs7fb3Dfn69ff9DPr5zrHT588fwAb8Cio0N+jguYMQIwJMeK/DjiJVqrAxo8VJB4kUy8FAwoBDEzJtUnoxYUICkJQl2jVsgG5Hm4xV2nw50aaMOBhs2NCQGYMmOhNttDTwwKZMg5wpy2RpY2ZCxEHjxE1IeYJImyIOPKQkkyTlE5BFIzZpaqLMBRpm/7zoMAHVwrx3IctN4NJGCpIyKQOnDFLuaox7Erp8rSKlSpkiReLehZf3nIkJDizUkGi4XdbPnCceXkiaAdaFFHLkCGGOc+VyIz7Ei6JGScHXDESc+UDhwwc0aK5c4UHhHVF7ED7YUMO8ufMwrkejoyDGeQYIVqJAKPchA4PJlZNXWJKGwnIeNlZQ8PcaBQkZW9SIMYJDSRowkymnbddDzRIh8U2BwwxppBEaQtKlI0QaIizB3BZDGFEbezF8Jo4MaTDxgYMzgABcCv9AxFCC0xW4xRjyFSjGA/nhRWKI+aiwBAVMqOHDEkusAAIG/eQFwXoMkNDDGMChgaODV2Rg4ZUCWH32QRhChFFgGj1oAJAPamxhT148oAElCQ7+AEWWNjBAnpbHpVNBGmFEICFzYDAHRQPVCYHOPi+WE58MKCyRwg1HqABBAxowR0Jrok2GQxpLhEMBBhAIEQIIVDA3aGf2LGEEOhAsccanSuQ3U0T32CDGFkASRU5pFLboajzpjHrgrOgM4sCdsxp1TwyCJOLrr4oEAgA7", "5m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fX09fT09fHhwOPi4vHhv/Dgv/Hgv9vb29va2tra2tvb2tbOyNbNyNbNx83Lz8zKztLBttLAttHAtdHAtr67w7+7w860ps2zpc2zpt2yX7OtubKtuLKsuMmnl8mnlsacicWciMWbiKafrqWfrsGQe8CPes2TBpqSpMyTBsySBsySBZmSpJmRpI+Pj72Ebb2DbbyDbbyDbI2Fm42Fmrh4YLh3YLd3YIJ6koF5kYF5krRsVbRsVLNrVLBhSXZtiXVtiLBgSbBgSK9gSHVsiGtigKxVPmpigGphf6tUPahJM6hJMl9XeKdIMl9Wd6Q+KqQ+KaQ9KaM9KVRNcFRMcElDaaExH0lDaPYA/0hCaKAwHz45Yj45YT05YZwhFJwhEzIvWzIvWjEuWiYlVCYlUyYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFoALAAAAAAhADsAAAf/gFowg4SFhoeIhIIsjI2Oj5CRjYMrlZaVkpmQgy2anpmDn6KbMBwIp6cJqqusra6rHIMAs7S1tre4tLK5vL26ML7BubvCxbPExsLIyb7LzLzOz7jR0rayBAQC2tvc3d7eAIMGDOTl5ufo6QwGgwru6gvxC+rqg/T3+AyD8vzyHhgNAgocGDDdIIHpoLg5MlBCkiQS+vWzh07eFjdOApZIUqZNGx3uQiowRzHdBTduSjDoUOWKGDZnIkjk186dRCdurpyr0iaJyJ/uaqKLUMZNh3MdAQqcWfKcETdK+F1QghJlFnpNy2EwM0YIgwsXnLAZG+QFSpnySMIgGNBKGRtu/1TINWECpYQsbapghYHOSRcPO9h4kQfXiwo3ZSLsnWfuQ7wqbqyU29Imy5mcRozwOHquJlAFF68kuVIU5ZcrV8iMZWOjM191V+IKyeKkBgZ5LoTQNaFYLT0obFTmQ5fVXAQhbGcyhfF5ZDoNN25swLdPebwTE0JCUKNGRlqDr+n1CEMhQwgUa9ZQoRLjgfKDbANOAAGEu/37apa8Xxs/RPr0YTxQwRpEkOMACBScI09x5VCA4BRcMNAEF9GN8EBB4Fm3AA4k4BDGGlwQgYMUa+gnUTkMlvNEGEz0wN0TIwyhBhOMgYfOQEyAQQIX6VEhAxho+NCPa+XMtIQaP4Qghc0aIeCQ3gafocicdSCkh0V6YKTHREhDkpNiOT0wwQCIRDCxxAgI7tVAOhQ8wMADIgDxH4tMUDGjm8SFdw4OVCDx3xozJFjOFCUupw4VIPoQAhdq3MBEGlKQoEAYaCBhYzokpMHFAjyuAQaQaOBAQXoxfJaiBemF4AMSNBRRxAjxzMBdBYaq08QaOZATggUW9AACCDxOMZBaNkn0gBQ0nKNBp2vgsGaeA52YzgM9qNecAvbEN9w9JS2l4bcL6rntcF+ac+1PJAmSyLrsKhIIADs=", "6m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09ePi4vHhwPDgv/Hhv/Hgv9vb29va2tvb2tra2tXNx9bNyMzKztLAttHAtr+7w767w860ps2zpc2zpt2yX9yyX7OtubKsuMmnl8mnlsWciMWbiKWfrqafrqWersGQe8GPesCPes2TBsyTBsySBsySBZmSpI+Pj72Ebb2DbbyDbbyDbI2Fm42Fmrh3YLh4YIF5kYF5krRsVbRsVLNrVLBhSXZtiXZtiHVtiLBgSbBgSK9gSHVsiKxVPqxUPWpigGphf6tUPahJM6hJMl9XeF9Xd6dIMqQ+KaQ9KaM9KVRNcFRMcElDaaExH6AxH/YA/0lDaEhDaEhCaKAwHz45Yj45YT05YZ0hFJwhFJwhE5wgEzIvWzIvWiYlVCYlU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFIALAAAAAAhADsAAAf/gFIqg4SFhoeIhIInjI2Oj5CRjYOSlZaOlJeakZmbnoyDFwijpKWmp6gIGIMAra6vsLGyrqyztre0Kri7s7W8v62+wLzCw7jFxrbIybLLzLCsAdLT1NXWAtjZ2ACDBAzf4OHi4+QMBIPhC+rr7O3u4+jl8vPggwr08wn64Ar9gwv0QOjQAQNfPRX4HuQ4c8aJQQaD9CVwx+5Hkxwv+mncyDEePRgwdjx5AgaNySYZyHkc9+HHE5NfmkyZIuSHyycF4SEUlyKMSTRZaEzgqFHeSnAfduzQ8OBBv4ffjop7cCWERAkjkXy4F26jPaIasaA5slECEoZDwPrbSW4Hwwzt/x6IRaOh3Feu4V7uYLBxxsAnXkBIbHeXKIwmUMUVVssYr06AiQ1+7coxnAgZLfD9o6gOgohwNsZooahYBWd1DcrccMCBg5EyVqzg4GBUxdNxHEZYEcO7t28KdtmK61GmeJkYDHiU6fCNAofTUsFxsCCizAgOZIDIYEHhtkrbaiHE8MAkSpklNWqQIWNBAXTw5DicJ0IEdo8IxTkQlZggIn/+8tngw3pbFBFDcQ40thlFEKznwQpkGAEBFGQQ0ZgCi3GURBlcREGGFuuRsQE90YFDgREkHNhDEEbI0JqCwoVjwTcVtLCEcUskkQQXXMTA2V3ilOGDFThuwF8HxbVHlH5/CYSDXXYjyFBGET1YsUUPDqxQXHc6qVUEGSOMYBwXxVkRAXFbBPefRDeQwYQFRdjgghIrWKDObjyo0yVYECD4jQgKsMDCBgeWAShY9oijkQhWQCBOm+t1kaB3UcVYDkccLEEGCQmoVWJkOoEqmaWihjpOZaCqIEgirLaqSCAAOw==", "7m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09ePi4vHhwPHgv/Dgv/Hhv9vb29vb2tra2tva2tbNx9XNx9bNyM3Lz8zKztLAtr+8w7+7w860ps2zpc2zptyyX7KsuMqol8mnlsmnl8WciMWcicWbiKafrqWfrqWersGQe8GPesCPes2TBsyTBsySBsySBZmSpI+Pj72Ebb2DbbyDbY2Fm42FmoyFmrh4YLh3YIF5koF5kbRsVLRsVbRrVLNrVLBhSXZtiXZtiHVtiLBgSK9gSHVsiGtigKxVPqxVPaxUPWpigKtUPahJM19XeF9Xd6dIMl9Wd6Q+KaQ9KaM9KVRNcElDaaExH6AxH0lDaPYA/0hDaEhCaKAwHz45Yj05YZ0hFJwhFJwhE5wgEzIvWzIvWjEuWiclVCYlUyYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFQALAAAAAAhADsAAAf/gFQrg4SFhoeIhIIojI2Oj5CRjYOSlZaOlJeakZmbnoyDGAejpKWmpQapqqsYgwCvsLGys7SwrrW4ubYrur21t77Br8DCvsTFusfIuMrLtM3Osq4B1NXW19jUAtvcAIMEC+Hi4gzl5ufo6ASD4+3u7/ALg+nn8fbh7PfwCvz9/grz6AkcyKAduwQIEypMgMQLEgjmxgnMZy8CGjQ0/tkLSJABFjU92oX454+ivSpqlsDoYQWMmpdBSAJccU9EjzAv1WCBkqRHkSlTKLgbJDNDjSdi0qT5kiZGxHtESYpYMgZLDQpA1Lzo15HBoIVgEapAkwWCPnw0z2JJ4yVIjydB/0AMjCpTwbgISMbkfJkhbAKOA8VF2DGFB48QIcCKM3mPAoV0dfM9JVfurMEVXc9tmDHjgbjImOu1a+FA3IczZy5ATRuPCRMGGzbgQN3ESIl4gNFd8HDEjG/fqIO7mLiC67kSwc8cUTDCjIxwEjh4fsd4XAUOFbb8eKCliQwZG1abk+mjgpErZK7omMHFDAsG/YaGFnhGyhEbZ7QMsXDlzAx351BEjxlHsOfbESSQQUYHG7G2AElSnOHCBgo+QMQZW6xWFz8ymMFFf1sE91+D9jhgxA0bKKfDET7E1sBcDi5gTgXQkSBEcFIoocQVZdzwAD10/XOEEE0kJ11CD/jGAoF1MUJ3hRlMsHDaFTY4cYYRF1zgWwv+LNZkODOU4cMF7ZnxpIcdIJcak3594JsERvjQwhE3cICQD2RE4Vd14vT3QTgdPLBBDhu4aYYPoGkkzgVSfIBOCV0EtwE6Xt5DjwRHiAmjaO1MZllumXkqn6iWAVjOV36BFdhQgiTi6quKBAIAOw==", "8m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fT09fX09fHhwOPi4vHhv/Dgv/Hgv9vb29vb2tva2tra2tbNyNXNx83Lz9LAtr67w7+7w860ps2zpc2zptyyX7OtubKtuLKsuMmnlsmnl8WcicWciMWbiKafrqWfrsGPe8GQe8CPes2TBpmSpJmRpMyTBsySBsySBY+Pj72Ebb2DbY2Fm42Fmrh4Ybh4YLh3YIJ6koF5krRsVbRsVLNrVLBhSXZtiHVtiLBgSK9gSGpigGphf6xVPqxVPatUPV9XeKhJM6hJMl9Wd6dIMqQ+KqQ+KVRNcKQ9KUlDaaExH/YA/6AwHz45Yj05YT45YZ0hFJwhFJwhEzIvWyYlVCYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAE0ALAAAAAAhADsAAAf/gE0rg4SFhoeIhIIpjI2Oj5CRjYMolZYokpmRg5qdmpyeoY+DFwimCaipqqusqxeDALGys7S1trKwt7q7uCu8v7e5wMOxwsTAxse8ycq6zM22z9C0sALW19jYBNvc3d4AgwYN4+Tl5ufoDQaD6e3u5ezv8ujsDPb38+/x+fyDCv8AAwocCJDeinv4+JlDuO+dCStQXCCcyHDFgosYMy4oUkWHAglLvETJMPHcIIrminjxMuHfjJUuxlG0N0ijRhBcuLzI+GJlD3sG22mw0qXIuZ5ekkAIWu4eBitehKQTshJKQXINyYG44iUHg3MhhDyB6uWFyYNAx9FY4mOCzYsT/8i9WHKC3L2s5QQqbIB3b7qTCmfO7NtugwwZFPShbdciwj0HW7awIBiQMDkbVB5Y2MAishMkLBwIthxhw4/IqFNvCfL1bGtzH1IzcUBBy45xDjZEoExa9xQnDYxQOfzBAUGsFt9ejLEB8xYnO2Qg0RLE3UmE5o5QGVIj8hDTW4ZYXyFzJhMmHpxo0aJkxBTJyi9abhAkS40NUrZQkLE+wnjB9pCQRRZIYIGFFOuJN947NwSxgBbQEQHEB7q1Q1gEDjTgAAk4oCYFEURMN4RxA/lDkAxKnIYaCf6RM90OC5yVDhLP3cABFVvUcMQWSHzAwHo7DEYeOiSE18AU61Gxnl8WMNSmhQhpISdYBAZW0OAIN/DwwTgsrJehjOkMoYUM/2zggAf3dZCfEn8lh1E5ETjRgjkUvBcZCSWNM186DuywhREWDukXOhURGqVfe5ZjU0BgypOQPCsIksiklCoSCAA7", "9m": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fT09fX09ePj4+Pi4vHhwPHhv/Dgv/Hgv9vb29va2tra2tvb2tbOyNbNyM3Lz8zKztLBttLAtr+7w767w860ps2zps2zpc6zptyyX7OtubKsuMqnl8mnl8mnlsWcicWciMWbiKafrqWfrsGQe8GPe8GPesCPes2TBpmSpMyTBsySBpmRpI+Pj72Ebb2DbbyDbY2Fm42FmoyFmrh3YLh4YLd3YIJ6koF5koF5kbRsVbRsVLRrVLNrVLBhSXZtiHVtiLBgSbBgSK9gSKxVPqxUPWpigGphf6tUPahJM6hJMqdIMqQ+KaQ9KaM9KVRNcFRMcElDaaExH6AxH/YA/0hDaEhCaKAwHz45Yj45YZ0hFJwhFJwhE5wgEzIvWzIvWiYlVCYlUyYkU5kIBJkIA5kHA5gHAxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFYALAAAAAAhADsAAAf/gFYvg4SFhoeIhIItjI2Oj5CRjYOSlZaOlJeakYMsm5+TLxsJCqWmp6ipCgmsrRuDALGys7S1trKwt7q7uC+8v7e5wMOxwsTAxse8ycq6zM22z9C0sAPWAtjZ2tvc2wCDBQzi4+TkDefo6eoGg+ru7/Dq7fH09fP0MzMVDg716PfxOLBhQ8PfvxcGw6yJYvDcoH70IqhR42LBgnIYxQ0yh46cizVrrojc4Q7jxoziaEQZiGVFFDViUJIDmM6CljUD2ZRwEGWNFJnjTopLF6HDAhpswlicsmZGRnkI6V1ho+McSAn+hGZcwUZMBH4Th9KjSS4CGYLoxqjBau8Fv7dv/ytsYVMjXRI1YJBImTIlCgkGUOHCDRKEhMXDC3ZMyTlwiskXQFFKyJGkhEya9MZJkPAWJWZ6MHDEGBfvMzoKKBD/OOMFseuDgOE9QOMDwocPS9BkyTIEBMeD8UCkyIKmuPHjF+AJVZfbuI0FQ7hgOHfBt2fIKEFgMHHGBIgzQGzI0PBWXdCo7yj8GAGlS5kmN34Uz/DUIXp3INA8UZK7ShENZ5zhAUTvmNbAdzYMUUYZXhjRQ4AQjAUZPBecwQUIMJyxBAXEHRGZVhg9gQYXXKDxRYBngMBPadiVgw4GS6CAAxpELLHEDSCAkM5jKGVg0QUwVGHcE0ww4YUXJ1wHD4UaQBBX3BIfkCNCcRdk9NkIxSlxQg/vEZGFF0VAIAOVVt6XjhPdmWBcF8VRMQERrClnJjpwLgHjDycsIcME53hRBhGCvQXiOB8s+JYJDcTgXQ/FiXAdaerA4AVGPKDoBQS/NQCiQSAQF0JH5RjYkJwGoSSha6imapCoo7rzgiCJxCqrIoEAADs=", "1p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePi4vHhwPHhv/Dgv/Hgv9vb29ra2tvb2tva2s3Lz8zLz8zKzr+8w7+7w767w9yyX7OtubOtuLKtuLKsuKafrqWfrqWers2TBsySBsySBcyTBpmSpJmRpI+Pj4yFmo2Fm42FmoyEmoF5koF5kXZtiXZtiHVtiHVsiGtigGpigGphf19XeF9Xd19Wd15Wd1VNcVRNcFRMcElDaUhDaEhCaPYA/0lDaD46Yj45Yj45YT05YTIvWzIvWiclVCYlVCYlUxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADkALAAAAAAhADsAAAf/gDkhg4SFhoeIhIIcjI2Oj5CRjYOSlZaOgx6al5yPlJ2gkyETBqWmp6ippgisrBODALGys7S1trKwt7q7uCG8v7e5wMOxwsTAxse8ycq6zM22z9C0sAPW1gHZ2tvc2dffAIMECuQM5ufoDAvr7Avk7+8Egwn09fb08O/p+wyD+f8AA+bzJ7CgwXn3EhhcqIAgw4fkHELMd25giHYY3U2ENygjRn4g0yFMSDJByH8SA1IwocIGCxUYFqbMRwLIkZs8bh75saJgR48PbBQB0qOHjiM8cBQ90uNCwJ8YHfQowsMmjQg+MpwwIuSHECEXzrWbqSDn0Z0RHvhocAGGESM9/74+QBkioQoiPIrotWHChA0ML1a8hXuEBgOL6RoEibsiQ4ofGmjYQEFCh44RLI4AMVJBZAiaTFUwgLECw9kjNl5ksKHgBA8jLSzmgyHEhw8aIFYMQSrEphAcF0585cHD8z0bNoxcABHD5pDBP4wQVXEC+RGMKXXUOPIABfKhOoXaUKFCQQ8cRjyns94jgoUWSHX2OPJCA4UTqI/Ihmfj9dsgIuwUXW9HpGCDEDfNhxg68OnAFQQ07HDTgUfggIMEvgFhg2cYUSCdES6McAINMAwBBBCSiZBCCvmdgN1n+eAgRA8vMJBCDS6U8AIIL7jgggIs9CbEXBzBCE8GmgkBQ4wRD7BwwREW0PCAEUFuZgI+75C1gmZAyJABCD4g9QEEM5x4BAz8kKWAC0cIceBggxFV2ANpGvkPCAj+QBxyNviGQkX7BdSACTnptNMKEtDj0QJq/pPBow8s+uJGDzVKqQLnWAroRIOcdGlEdn4KT6ahihooQyHtY6moIyVkaqf8CJTqYREJksituCoSCAA7", "2p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vX09fT09fHhwOPi4vHgv/Hhv/Dgv9vb29va2tvb2tra2szLz83Lz8zKzr+8w7+7w767w9yyX7OtubKtuLKsuKafrqWfrqWers2TBsyTBsySBsySBZmSpJmRpJmRo4+Pj42Fm42FmoyEmoF5koF5kXZtiXZtiHVtiHVsiGtigGpigGphf19XeF9Xd19Wd15Wd1VNcVRNcFRMcElDaUlDaEhCaPYA/z45Yj45YT05YTEvWjIvWzIvWiclVCYlVCYlUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADkALAAAAAAhADsAAAf/gDkig4SFhoeIhIIeHY2Oj5CRko2Dk5aXj5WYm5KanJ+UIhQHpKWmp6ipBxSDAK6vsLGys6+ttLe4tSK5vLS2vcCuv8G9w8S5xse3ycqzzM2xrQHT1NUD19jZ2tkAgwYN4OHgC+Tl5ufoBoPi7O3uDejkg/EL7/bt6/f3Cvz9CuH59AnEJ2JgAwgZLjBYyLAhg3IB30FQ0aOIxSAvIuiL2G6CDos8guzwMSQIiHscxUHgQYRIkAs2LtRoSeSCOXbz6K1wuWMHDRs0WBQJMsQHvQU54xHN8OLFRx06XGTYUQQEvZTgMgThYUMGzZY2auwIsoKcQwaDFqLTUOTGBxhE/37Q1LGCBJEV7yKawxCESAwVRC0WYbEiCNm8IuhJuJjih+AgLna0POHPX1qG7Kja+GDDhoqfJ1ZYlIC4sr8MLWuEWOEDBQmoRVr8c4c1XIshQ2r4KPKjRV8dEI4mpUdCSMkggl04MG1ZxFnM4CCQeIGDxgrS7yCKYM7PIOJ25wbGG17PXQUTKVJkeL5QXO1wF3BYxAGkiI+TKLdzVzCCJo2gyBXxQn72SCCERTuMYAMIt+FmAjvmvEdDETy08EMNOtDwgg0vDAXBd+5A4BIJ//VFRGcY3FAECaXNJo5WMaxQg2AWzTBDC0KUNd528aD2wwox8CZYDOkVoSM6tWll34ELjgnGAlWH0aZfOw8UIcQPTh0oBA/VWTTCVQW98wIRO0iAAw4n/HeCC0QA8QBiR0nQFw8XrCCECxXYcOAH4yC5nT0XmEiTk2dF6Bx7C0kwIY0/WHUUUok9So4EGaRQggUN2fOed1Jy6t0g+3XnKTibihNPfpKW46kIgiTi6quKBAIAOw==", "3p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vT09fX09fHhwOPi4vHhv/Dgv/Hgv9vb29va2tra2tvb2tXNx9bNyMzKztLBttLAtr+7w9yyX7OtubKsuLKtuMmnl8mnlsWciKWfrsGQe8CPes2TBpmRpMyTBsySBo+Pj72EbY2Fmrh4YLh3YLd3YIJ6koF5kYF5krRsVLNrVHZtiHVtiHZtibBgSbBgSHVsiGtigKxVPmpigGphf6tUPahJM6hJMl9XeF9Xd6dIMl9Wd6Q+KqQ+KaQ9KaM9KVVNcVRNcFRMcKExH6AxH0lDaUlDaEhDaEhCaPYA/6AwHz46Yj45Yj45YT05YZ0hFJwhFJwhE5wgEzIvWjIvWzEuWiYlVCYlU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAEsALAAAAAAhADsAAAf/gEsig4SFhoeIhIIeIY2Oj5CRko2Dk5aXj4OMmJyRlZ2gjoMUCKWmp6ipqggUgwCvsLGys7SwrrW4ubYiur21t77Br8DCvsTFusfIuMrLtM3Osq4B1NXW1wTZ2tvWAIMGDOHi4+Tl5gwGg+fr4wvu7wvig/D07PYM6uT09e377/n3Ao4DuM6fO3YExU2wAcXLkxoQBMoTUa4CFjBOqkD5guUCvAYgQ4acKLIBBCxevMxo0eMLRwgKFAScBy8FGBtDsuhEUuNLCok03x2pQqQKmKNVdlQRApTiuCNYiFg5CubJDixH7oVMOASMRqpOLuoAaZBeQhJgdAypMuQKkq4b/5rGnKtASdUaWGw8AUOk3Mhyg+jGhDAkpeEdEZues+CisYUMMXDgWBGh7D+n7GB06cKECRcuHOwlLGfi8+QYQLZs0WB59LgHU3zEoNEZyA0mQBBiNoehS5Agn03/4PJgnWtxGbqsWBFcignNGYzvFvcuw+cfqrdMKbK5tQjLC6Zo6dAZBxMTXXjoZlCy5IguRkr8wDGCSpfo40oeH1dCi3//UXTQgHfguSPBCTnQMIIDJAxxxBEqJDbQdwXCAwEUYGBRhVFYWEBOYIKFKBgSLg3hhAwuYSEhPiK052JIH4AxAxJIYOTEC2DUAM9+5ryQxVoucVSUEhOys08LX7TQ1WVRTqCwYZEStXDUEVRVkQUYSOxIoUEVfZGEVEo00UQPXrQApUREgAGFDljUkFMVKyZUIGFUHQVFBYLxuM4GMyixAwn9LBBUhYQKumWhXE7ooj0v6jedRKK12Oik7X0oSCKYZqpIIAA7", "4p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePj4/HhwPHhv/Hgv/Dgv9vb29vb2tra2tva2s3Lz8zLz8zKzr+8w7+8xL+7w767w9yyX7OtubKsuLKtuKafrqWfrqWers2TBsyTBsySBcySBpmSpJmRpI+Pj42Fmo2Fm4yEmoF5knZtiXZtiHVtiHVsiGtigGpigF9XeF9Xd1RNcFRMcElDaUhCaElDaPYA/0hDaD46Yj45Yj45YT05YTIvWzIvWjEvWjEuWiYlVCYlUyYkUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADMALAAAAAAhADsAAAf/gDMhg4SFhoeIhIIejI2Oj5CRjYOSlZaOgxual5yPlJ2gkyEUB6Wmp6ipqgcUgwCvsLGys7SwrrW4ubYhur21t77Br8DCvsTFusfIuMrLtM3Osq4BA9UB19jZ2tvZAIMEC+Hi4+Tl5gsEg+cM7O3u7/Ds6uflCvb3+PkKg/r97/TjBiUYSLAgwIOD4n04MUJCvHYfUoh4AG+eOAc2hOjoIWTEPXcXcgjpQXLEO4vhYAixYeNFkCAZyuEYyULHSAkBQ+C7IOSFkJ8yfLR4lyFIUCE5aPRIkUCcQIIYhLgAQpWljKbiUORg8XOlixQ5x/H88eOnyBYFExTV8TLIjyBM/wmiXADjhl0ZN4RgaCcuhw0YOnDEACJBgVOd+CzsaBtERLwLZbuSOBliwbsHIlKkiMDO3IMRJko4pHxwnLvS/EqrJsevn+vVC+bCRhji4Wxzss093M2gtb7b5QQCR1159Wnaw4kf5M07t+Xdqn3nS364nO3ZzqmHS/hOAgoYLD4MjBdhBXgMwWu7q0ASxkwW7gh+GMkj44qB96Qr2Iijhw2bIuTzgA8EuuCDSDEdhk8GUrWlww0ukANCDz6NlMMNKeCDEoMZ/WRDDzKQU0IPMbTFEgruoCSBEDfYxCIQKrxjQRAzcZRXCSkWJ46BOtQQw0YTlKOUDD3UsFEDYY3TgDELXelQgTkNwOCgBazpOI4EGKAHEAQYWJDWQNmV1px60A0XJnX6uWYYdoIk4uabigQCADs=", "5p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09eLi4uPi4vHgv/Hhv/Dgv9vb29vb2tva2tra2tbNyM3Lz8zKztHAtr+8w767w7+7w9yyX7OtubKsuLKtuMmnlsWciKafrqWfrqWersCPes2TBsyTBpmSpJmRpMySBsySBY+Pj72EbbyDbY2Fm42FmoyEmrh3YIF5kbNrVHZtiXZtiHVtiLBgSHVsiGtigKxVPqxVPWpigGphf6tUPahJM19XeF9Wd6Q+KaQ9KaM9KVRNcFRMcKExH6AxH0lDaUhCaPYA/6AwH0lDaEhDaD46Yj45Yj45YT05YZwhFJwhEzIvWzIvWjEvWiclVCYlVCYlUyYkU5kIBJkHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAEQALAAAAAAhADsAAAf/gEQkg4SFhoeIhIIeIo2Oj5CRko2Dk5aXj4OMmJyRlZ2gjoMUBqWmp6ipqgYUgwCvsLGys7SwrrW4ubYkur21t77Br8DCvsTFusfIuMrLtM3Osq4B1NXW19jZAQCDBQkM4AwK4+Tl5ufkBIPh7O3u7+7r8PP04fL1DAv6+/z9+vf43vnbN2jghhcrItADESPFg3gk2jlQomXKFC0nBl5AokWKxxQJQoYEyEBIlidPdGjRssHdkpNCTGaZsMBexHATtAiRsvKIFB81w13QMoTnEyVSXPADqAGLj5VaksQ0p0GKypVJhgxZSqKchI48tTzJ8qMfh45YsEC1wdXckCRJ/5woocjB39G5SoxkqcC134MlULXUeFch7MqM7AaJ/AYOhQsXExQMXPDghIsVEyCi28yZXOKu70QGfEdyNL6C/d41MEGDRoeAqCfra8Djyg0eVno0AMe5tDsYV5js2FGkiYp6ihnDu4LDypXnPIAgv0nvyo4mz4vsuLJYuU18QMI/f75juvd3KprgKMIDx5UM04PSY1GlfpUS3fMnGNS5HAQMGOx2Ggmy8RNOgf3wd45p85CEYGoNkpBfBC0IkQMK80wgg4Ua5EdSBVRgkYQRWuTwTggeHaWFDt0pSM4TUgC2hBNapOBOik8kcZEG8iUXkgVa+BDWUT6Ys4EUP2SRhXwUTywhQzk+JqBBFklAlcQTQrSzgRZHKEmlE0JASeA+DnypZJU6tANkEh6JpUUMn/UjA0o5QqGFBO4YMQVKSjwxRWbfsfOADV5KAcI7DsiUhRMVjGPTYjhpoAE8Ik0gqX6+jVagi/11ag5/9DyoD0QMzuMPCYIkouqqigQCADs=", "6p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fT09fX09fHhwOPi4uPj4vDgv/Hhv/Hgv9vb29va2tra2tvb2tbOyNbNx9bNyNXNx8zKztLAttHAtb+7w860ps2zps2zpdyyX7OtubKsuMmnlsqnl8WcicWbiMGQe8GPesCPes2TBsyTBsySBpmSpJmRpI+Pj72EbY2FmoyEmrh3YLd3YIF5koF5kbRsVLNrVLBhSXZtiHVtiLBgSbBgSHVsiKxVPmphf6tUPahJM6hJMl9XeF9Xd6dIMl9Wd6Q+KqQ+KVRNcKQ9KaM9KVRMcElDaaExIKExH6AxH/YA/0lDaEhCaKAwHz45Yj05YZ0hFJwhFJwhE5wgEzIvWjIvWyclVCYlVCYlU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAEwALAAAAAAhADsAAAf/gEwpg4SFhoeIhIImjI2Oj5CRjYOSlZaOlJeakZmbnoyDGgijpKWmowqpqqupGoMAsLGys7S1sa+2ubq3Kbu+tri/wrDBw7/FxrvIybnLzLXOz7OvAtXW19jZAgTcBNYAgwYN4+QNDOfo6errDAeD7OkL8vP0C+X37/AM9/z95IP+AgosN2jewIP4Ugg8UWPFhHIccLywQG4dwH4brIDRwnFDgwlEwmTJAkaHv0EO1k2wEgaKyy9ZJugIEyZIE5or+uVThyIMEo1giGh5kcVJli9arkBBojMFOxxWkNAMYwUKDTA+stC0ciSMg69gHVy8t4LqVJYwYE6lCSXdP4X8/yZkaRKlrlELPq4gyYKk6wt0BOHy46BlqhYWH6Gs/XFScFwYNWBQJHeCBg0OAcciHJhOMz99oM/l20z6HenSKeqdFuiZX9jXsF+3rnhu9bid6zzw6PLkRoRxFG5IkZLjArzZDUR4oVIkh5chESpM6cIjB5cqGMqhQy7FyBMvT55QabGjSBIq6J/waNqvQ5ceXuKj5/F8ehfeXdjz6wDePo8qu1Hx3XNDeEHPdk4BRs4UPPjnhQw5SNHDfU8YYYR+66ggxRNVGFFFFRFgIIUS6W3RQVMKlgPCE1tssQMF51ywWxdFdHCcY/dIoAIPM4hQzgg55KBCBLGJ5Vg6GUxXBJx9NywQQRHP0TfEA+wgtwQVRoBXYAgyTAFeeFTYoN89GHixAxXxDQfEFD0MCF4XVeI4Dn9DoEngbuHdt8RuTcUGAXhS3DdEFzMYMcUSFIbn1m0JrhNDeAx+l8EHXQzxIQ9UqPBVPchFsEN8y4EwjgpU3NeFC40JVEEHNu4zjgSsRqBPQQaNExpob/UDlm258joQcr7+I0gixBarSCAAOw==", "7p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fX09fT09ePj4+Pi4vHhwPDgv/Hhv/Hgv9vb29ra2tvb2tva2tbNyNXNx8zKztLAttHAttHAtb+7w767w860ps2zps2zpd2yX9yyX7KsuLKtuMmnl8mnlsWciMWbiKafrqWfrqWersGPe8GQe8CPes2TBpqSpMyTBsySBsySBZmSpJmRpI+Pj72Ebb2DbbyDbY2Fmrh3YLh4YLh4YYF5koF5kbRsVbRsVLNrVLBgSbBgSK9gSKxVPqxVPWpigGpif2phf6tUPahJM6hJMl9XeF9Wd6Q+KaQ9KaM9KVRNcFRMcKExH6AxH0lDaUhCaPYA/6AwH0lDaEhDaD46Yj45Yj45YT05YZ0hFJwhFJwhEzIvWzIvWjEuWiYlVCYlUyYkU5kIBJkIA5kHA5gHAxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFIALAAAAAAhADsAAAf/gFIvg4SFhoeIhIIrjI2Oj5CRjYOSlZaOlJeakZmbnoyDGwijpKMKp6ipqqsagwCvsLGys7SwrrW4ubYvur21t77Br8DCvsTFusfIuMrLtM3Osq4D1NXW19jZAwCDBQzf4OHgDuTl5uIMBoPl6O3o5vCDC/P07vbu8uf3++GD7hYd6C3gJ24dvBRe0KABM2MgwX4vxIlIk4YJEzVqXMDbyA7coAbhmmDxoiZMlixdGqhcyVIlOoPl1FDBiJEkPY445QkUIwYKRihf1EQ48gUMEw4tkzbwF+5ImDBeomKZqgYKFDBqROAsxxRchCxgwKTxEgbKlbBWrFDpsg9muQhB/6weqWAWzJm7Pivc++jSXZQuXSiCSVihwogR7dziPHKGSVjAYZqowQrGRcGI+ypgvXqFphcoSBbq9Yh5HwefarrcUOOY4tUh5nQKnD1P3Ag1QiimAWMFCkTate2JmEwTYxOQ39Y9DOcFS1gvVdS0QM6ga7utHMB0xpLmyGWl4FtGwEHlCImNismBe2CjyJQfF8qdMPKkSIiOyUuje6CkjBIlW5jxAQM9mPHEEk+UsQN+1olTAxfumTFFEU58YIZ7XLxXhgTx6CcOhmaESIQZRDyhRYgXcgHDZVu5V0SIU0xhBhBaEFHGjUmUQcNlDqHjgxk/cJGhkCWUQcQYTmRoxuUFl9lDARdlLMFFkCvmmIQTRWjxw0svbOUABkXcOEUM30DwY4g6PMBAh8AJ5EENNcig5jcT0GCnBIl1CU84PZAxRRISUsDACWNkuMUWIKDnYTgm+KeEGUpoUYQEZkj5ZxJcPKBefvZQ6MSNUSqoxRRb3KjEGCV8w5WeHBWRhBGg5lCGezbe2MMWNXS45qbgEEHGixKSQUYNF4b4aRkhNOmOhUsQMQUPU+TwwKhEGGGEElNweR05JgQoopoYyBjiEhfQlh48D3jgQQbifOAuPi+Ep9RyfMlLHb2s8rocPoIk4u+/igQCADs=", "8p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vT09fX09ePj4/HhwOPi4vHgv/Hhv/Dgv9vb29va2tvb2tra2szLz83Lz8zKzr67w7+7w9yyX9yxX7OtubKtuLKsuKafrqWfrs2TBpqSpMyTBsySBpmSpJmRpI+Pj4yFmo2Fm42FmoyEmoJ6koF5kYF5knZtiXZtiHVsiGtigGpigGphf19XeF9Xd1VNcVRNcFRMcElDaUlDaPYA/0hDaEhCaD45Yj45YT05YTIvWzIvWjEvWjEuWiYlVCYlUyclVCYkUxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADYALAAAAAAhADsAAAf/gDYhg4SFhoeIhIIbHo2Oj5CRko2Dk5aXj5WYm5KanJ+UIRQKpKWmCKipqqimpRWDALGys7S1trKwt7q7uCG8v7e5wMOxwsTAxse8ycq6zM22z9C0sAHW19jZ2tYE3d4AgwcO4+Tl5ufoDgWD6e3u5ezv8uiDDfb3+Pn574ML/v/+3DEY6K4fQH8YYODAUQIfuQgoFr6YcG7QwIsMOBw5koPGERgMykHIcURHjyNAMJiLVw5IjhxAeuQIQgLjCpc8ipjsEZIcy3Eajnjc2KOHDIw0aADZeASHkQn4fjoICqSI1SI+aABUaqSrER5HNGC0iFHCERlGlu44YgLgCyMy/4DE7AFkZYhzLs4CiQskQjkLcmX8oBFkxcF6+vJurHEB40ALPboCUdHAruOBEGnAwKDPnoYXNEhEuCzVAYYgR2QeSVG53IvUJ3NEyMcuH4/bPGCGLUfiK8kdQWjYNZfBSA/UR24IgVEOR1GmJCMAlBq0xdLUNWosuEgjhwymM4pkgBei5zgLJa+fdFHu+1AgXR2XpmF0R/en5YLqmKEDRg8Ww5kDwVAogWDeOCNcd8QMfpGXzgpGcWaPORg4pwI9d5kzAUlyHUGCPi0cEQRqNEAQYDke5eaUERaUA8JG/kX2wonjYHDWRkPMBCA5Muh2BA81HDHaRWRdVNx3G+mgA/MNGOEwA3JAvKbBdOVhhF4QRGQJ1ozkeKTgUg2OU9oOPHTX3W7kfCAUfTH0wKVPGf7VQxFM1eQYC0yVNCSRVV7WAg0yUIROBkmdcBkDRV70QA1pyfXBZSKM2NWbcOpDQ1o7yFAEEBNglMFGZIK1I5zmWGAEDtcp1UJ7QHDVw6WWlfPpTUQlVU4NMqDVFVpi8WlOUDwgJ8RHSBWxQ1eRGTHbPYi15oBMPZgU5HjkkMBRDmX2oB2VlwGmg3FFvHAROS/EBMRtnY4VZzkQzeCCBuVgxAELL5xgonzrzqNvP/r26wC//s5jEEABpxOCIIkkrLAigQAAOw==", "9p": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09ePi4vHhwPDgv/Hhv/Hgv9vb29vb2tva2tra2tbNyMzLz83Lz8zKztLAttHAtr+8w7+7w767w860ps2zptyyX7OtubKtuLKsuMmnl8mnlqafrqWfrqWersGPe8GQe8GPesCPes2TBpmSpMySBpmRpMySBcyTBo+Pj72DbbyDbY2Fmo2Fm7h4YLh3YIF5koF5kbRsVbRsVLNrVHZtiHVtiHZtibBgSHVsiGtigKxVPmphf2pigKtUPahJM6hJMl9XeF9Xd6dIMl9Wd6Q+KqQ+KaQ9KaM9KVVNcVRNcFRMcKExH6AxH0lDafYA/6AwH0lDaEhDaEhCaD46Yj45Yj45YT05YZ0hFJwhFJwhE5wgEzIvWzIvWjEvWjEuWiclVCYlVCYlUyYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFEALAAAAAAhADsAAAf/gFErg4SFhoeIhIInjI2Oj5CRjYOSlZaOlJeakZmbnoyDGAijpKWmp6gIGIMAra6vsLGyrqyztre0K7i7s7W8v62+wLzCw7jFxrbIybLLzLCsAdIBAtXW1tPX1dPcAIMEDOHi4+Tl5gwEg+fr7OPq7ewL8vPzg/T3+Avw4vby+/8MBikYONBEkylMTMwDMQQKFBfiKBBxOAOCuxXjfrDxAiXMGh8MXKxZk+WLGiILNozZeIUNFgf8VsyroOZKS5trMowpOeYLljUvfH5hM3TMDoLvGOAgM4WN0ytjoHzJ4pQNGDBV2DAp4/SLw3oy5eUYs7LqmKxiqm50SrYqU6Qr/wii0LoyKpsZWomygcJGBlkvatQwYTMkZoLDCbJEzcJkDBYFRugSIUMGwg3HHMlSAEtQAQQmI9c0eRCOR1UoGcLtGBP4y4aL88Q98ECaHAgKiBF/2HwvKcBzvcPO60yceOxz/ej9XuebQYQaQWhEmBcBRpAaHMQ1YNFDR4jg9ESY6RJki5kRCS5w4SJFSRodDCxoQZMkCRodnZNKSCMFSXslaESghRZSFGhfB0VsgYQZQrgnAljitEBeGhS614MWPaChoRRbFJFGD1tQ2F8QiCUVAxdJUJhGEE8IkUYRGqLhH4VBcEFhfUHENA8JDMYohRk2oCHFembYCEMaW4S4Yv8aQBiGmBNO+IcEEk40EER/SAAhRRfPcVGelml04ORhFqR4owUMWKmiExfIU0OMXKBXIkbkWNABmuNc0IGY40SwZwPkNLccc3QO2o6ghpYjEHEfNJpbAhs4mkBEjUIA3jwaYEHUGldskAAEUITmmjyRsfVCbslBMBQVrK7xBagjWZEVGRSY1hNfbHgAYTgvEBbYGE2woVEVXji1BBk7qNFEGWqU8QUZTcAlzg5fmOYUFl6NgcMYI33REmFlOQYFXPPIwEZZVQX7Bbeu5nVuV2tAMWYFoo3hhRegTTDVVVO05IFUV5CBxU8QhbPoQC7o9QVQCeh0Exs4MKDBF0OtOwQ3qoWGQ8ENUORAQUQzMHGDrvJAIAMTPphAHKLiHPcby+IUJ7PMBw+UqKIZh+OyoSsIksjPQCsSCAA7", "1s": "data:image/gif;base64,R0lGODlhIQA7APcAAP////X19vX19fX09fT09fjryvfqyfbjuuPi4vHhwPDgv/Hhv/Hgv9vb29vb2tra2tva2tnZ0tvY0NvVxt3RsubOlu7PgeXNltbNx9bNyO7Mft/Nn8vMyM3LysrLx8rLyMzKydPIusfI0uvGaeHFguG9qunCXeO/ZL2/zui9Uce9teO8WLy+uOO8Wbu+t7u9t767uea5RM64jrO3yuW1Nru1suS0NeS1NruzsNyyX66xp7Guq6qux66wp6quxsmnlrSvj7Gtq+OpNLGrrNSqNKernKCmwqylop+mwp6kycWciKClmqClmaahp6CkmZ+kmbWffaWgnqSgnb2dYbydYJ+erZeevpaevs2SepKbxJiejpKbw5Gaw5edjaaYiJ6Wk4yWus2TBpiUkcySBsyTBsySBYaSvpuRgIaRvY+Pj4KOtomQf4mQfoyLnImPfoaOf5CJhYWNf5SHfI2HhXqIt5OGfMB3XYCGhnmEqrh3YH6Dn8B2XYqBgnqDc3qDcHmDcnmCcm5/rW1+sIN7eLRsVbppULBrUHZ5YW15Z2F2q214Z2x4Zmx3Y3VwblpxpV5umJpjR1RupppiR15skVRtpWFvW2BuW4hkSWFuW39lSk9qomBsV19sV1JpnGtmZWtmZEdmoJ5VOkZln3BgR65PN0VknlVmUlVlUVdjU1RlUVJiTGFdW2FcWmlbQKhJM19ZVzhemjhdmjddmjddmVhbQUtdSEpdR0pcR6lCLGNWPFhTUoJJLkZZQkJUdXpLLz9VPkRRQj9UPmpIK05KSTdNcmdFKTlQOD5JX6ExH/YA/6AwHzRNNTNMNTtJO0lFQzZHZD1IO0lEQ0VCQUVBQC1HLz88OzM+UDM+T1o2FzE4QzE3QjQzMjUzMzMzMjMyMikxLywsLCsrLCssLCsrK5kIBJgHAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAMkALAAAAAAhADsAAAj/AJOlGUiwoMGDCAkKHMOwocOHECM2HCixokWHFC9qjJhxo0eGA3MwGEmS5IKTJVOqHJljIICXMGPKnEkTpsuaOHPaTKOzZ82bPoO+BCrUJ9GiOo8ixal0Kc2mTmW6FEC1qtWrWLMKADAQwYOvYMOKHUv2AYKBDtKWXcv2wcC2cMFCmDv3bdy7YO3ivYs2rV+5c8XSpVtW7164dhsobrCWxNfBkAcbHmsF7AQbG+gaQSGY7sDIdFHAUjOXxI0VX5HE4rF2ctgZsmRxPkGDRgMRpWZdGes5zWLFIIJ8RRErViAHLWpLAFPcB/AgkD+L9fYJRANY2FHUpkGhVHHOjbpJ/xHretu4YQ40Fcdzo70X7LAgeBInDkb0NGNXhQvHKhCsRJPQYEEKckQCiyONjDOONGO5FoWC4xxjBh0hjCCEBhegkUQvEIoRmWsP6KJgNnRkoUIMB5hwQRZZXLOfN78tBmIQ4zhTAyiU4EBDATTIQEcsQ7wSzhwxKgbiA6wcEQ4XsoSwIw0VyCKIM4MwSNaRO0QDRxWxtEGDATdAAYseX7wy3pVpgDZXI+HAIQofNxRwAxWwNAGOLq3ht9Y03DxSx5NTdFKNNx0whiZbND4jBxFAEEEFMeOIwdZnhH3VAyBxcNCINndwssYah1gzjAdv/NEDaJTSxQQTLzTAASKojPjjhxZFdOHGN8D04QEEOjihQ4yufcDEIotU8kczjGRCziWMQLOIJX8swgQHH+op1h+K6XBKMK2QUkIhayxjig5f/XHoWKb88ostlhRTDi52YBFBMLYEU0stiqD5G10c1JJKLb7sQgskABiiCjOWLGOLLR9A0KC1YnlgSyqY3GJMKABIsskpiljCsJp2qcmCE05QI8we2PCyqguDPRzXGbm4MMoZcR0p1g+EQEDID51VW2SRSiCDjCvKKKMEYr79HCMGeTSQRwZ+RS21A6m2lQEEGShd5ECGHtYW11orBheqEHud59QOqOkwX2WvVSnSZiMmUEJ0161QQAA7", "2s": "data:image/gif;base64,R0lGODlhIQA7ANUAAP////X19vX19fT09fX09ePj4/Hgv/Hhv/Dgv9vb29ra2tva2tvb2s3Lz8zLz8zKztyyX7OtuLOtubKsuLKtuKafrqWfrs2TBpmSpJmRpMyTBsySBsySBY+Pj42Fm42FmoF5koF5kXZtiXZtiHVtiHVsiGpigF9XeF9Xd1RNcElDafYA/0lDaEhDaEhCaD45YTIvWzIvWiYlVCYlUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUACsALAAAAAAhADsAAAb/wFVnSCwaj0ii8LJpOp/QqLQ5ZE6vWGony50Ou+DnEIIom8+GtHrNXkOGgLh8Tq/b5fC7fo/v8P93eYCDcYKEgIaHfImKeoyNdo+QdHACAgSYmZqYlp2enwIAQwUKpaanqKkKC6ytCwVDqrKzqkMLtLQMuru8sbi/tR28w8MPFQ8Jybi+uBEwzxLAzLQlNiM1I8Ta07MNLyU1D6zLHa60KiQ0ruvr3LMt1be/Q8OyDzEnNsjJysHAIjYCjpDWAViIgDY+EOTHsGGybzZakcPVyoUIGsAUuJPFYoSNjPS0pYLogCCwfPlSmPxlAmEKbcQ2qjpmocHKjDhl4pQ1JBk7oXM7S9n6ye6DCxBE2YWEuQtEjRM1QNykhWHGNQwMTCXtOcuVCnBJ23VwmECiKRYkamSdJ0wXLos1QLblpSpDDRU0MIRtpfOURxg2SpB1OHRdKgkzVNiYENZU31Pwasgjx5AW2o+pfj42hQ4z27Va2VGQcc3DwsEMXdiIQUMFaoa2flVwgcLFh72sNgcVWg73ZLm+g7sqbHj3qQ5CkihfriQIADs=", "3s": "data:image/gif;base64,R0lGODlhIQA7ANUAAP////X19fX19vX09fT09ePj4+Pj4vHhwPDgv/Hgv/Hhv9vb29va2tvb2tra2s3Lz8zKztyyX9yxX7OtubKtuLKsuKafrqWfrqWers2TBpmRpMyTBsySBpmSpI+Pj42Fm42FmoyFmoF5koF5kXZtiXZtiHVtiHVsiGphf19XeF9Xd19Wd1RNcFRMcElDafYA/0lDaEhDaEhCaD45Yj45YT05YTIvWzIvWiclVCYlVBYbThYaTRUaTQAAAAAAAAAAACH5BAUUAC8ALAAAAAAhADsAAAb/wJdnSCwaj0iicMNpOp/QqLQ5nFqvzyp2K9Vyv1RP5JAom8/otFoyBLjf8Lh8/m7T7/i6J8+n2/uAbn+BfYOEeYaHd4mKc4yNcW0CAZSVlpeYmQBDBQsOn6ChoqOkBkMMpKmqo0MLrquwpEOxtKwetRAYD7WzsRM3wBUMw8TEoaexJDstOyO0ra6vpBA8MDPFxqDEp9jDozwuLg0No+PmDb2x4C6q2OmrDzwzNhCq58iwJzv7zrHQ0QABjuBBMMS5g/duOcBGSgeMGrw8IJzYYIcMGRFDdSum42JGWh1pQOgmywNAVSl41ODB4plCbRtX6JjJIqCrbtw2YrPw4EI94Y0bc+ocms1WraOf3iGFJXSYCRggaIFwIQKnxHMqdrDg8YGiuYEpdogQpbRDtRwUyKnqkOMEjw7eknrotg4mw08uSvAwKmodUWJ5eVi1WQ3G32EuTOywqdTtjR0TdIIyK+Mt2ZeftuLg0U+VWxs7TLjD7GCCDmAQvI6jkAMGZFSglDqwKKOYqsQ8GM+F/alurBgndCBsyqAwLRdu+YLScPZCNJ0TcpTY8eHyQRc8coDTaU4FjxvfRy8kBkKGChcfbAasIAMF+tHSlq6SbfdwUNLjiy79pz4+Ug9CJCHggEoEAQA7", "4s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fT09fX09ePj4+Pi4vHhwPDgv/Hgv/Hhv9vb29vb2tva2tra2s3Lz8zLz8zKzr+8w7+7w767w9yyX7KsuLKtuKafrqWfrs2TBpqSpMyTBsySBsySBZmSpJmRpJmRo4+Pj42Fmo2Fm4yEmoF5kYF5knZtiXZtiHVtiHVsiGtigF9XeF9Xd19Wd1VNcVRNcFRMcElDaUlDaPYA/0hDaEhCaD46Yj45Yj45YT05YTIvWzIvWjEvWjEuWiclVCYlVCYlUxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADQALAAAAAAhADsAAAf/gDQhg4SFhoeIhIIcjI2Oj5CRjYOSlZaOlJeRGZwZkpmaoZghFAemp6YIqqusra4UgwCys7S1trezsbi7vLkhvcC4usHEssPFwcfIvcrLu83Ot9DRtbEB19jZ2tvcAQCDBQ3i4+Tl5ucNBIPo7O3kgwzu5Qz09fXl8Pb69PLngwsAA0bAAEGBwYMK9kG4AMHcOnIegPDAEQHhOQs9MlYwOO7hOBhEWAghEdAeORVFUhA5oc+jOAhFZuBASPOgAxwqcjR8F8IckRkz+tlQIaNmPntFZMjoNwPFjH1H6VUgggNHwAXoHPBo4cMBvp7kYBQZ68EdyrEpWoa4usDFkLcV/9yZeDuExFdzSZfKw4FCB1Sw5PKyHQxQxgm9PPfljedOBgobHDsCfhnzhrh9+m7kdMBY3CCaMYrgKNLCHQvSRWDcDUuXhemxRV6sHgeB4IWDJssxZPgV8z1y+9pF1dcPuD2XxfsNZ7BCBoh+JmqI+FtObOgR7kqgLjFbnIikQCa4i6gCSFmeeJVe/l3OcdHu4vL2q5ECseTBi33baypj8HAVRPAAhAT60aNBETYUcYFa+tRABBBFfOBOCkXwQIQKX7HlQYU8PFAgAxX8UMOAvemTnz41yVAfdeXI14BF5hhmn2chKAZUTZGNIwNRLI7znQxBYODOBUCkAMR0x03WQDeCEM5A2FUyFLFDUgBJVo4IMrAwg5DtYFADC9LBl5w7yxWYXJkfsufPWk8SlmY9IQiSyJx0KhIIADs=", "5s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fX09fT09ePj4+Pi4vDgv/Hgv/Hhv9vb29ra2tvb2tva2tXNx9bNyM3Lz8zKztLAtr+8w7+7w860ps2zptyyX7OtubKtuLKsuMacicWciKWfrqafrqWersGQe8CPes2TBsySBpmSpJmRpMyTBsySBY+Pj42Fm42Fmrh3YLh4YIF5koF5kbRsVLRsVXZtiXZtiHVtiLBgSHVsiGtigKxVPqxUPWphf6tUPahJM6hJMl9XeF9Xd6dIMl9Wd6Q+KqQ+KaM9KVVNcVRNcFRMcElDaUhDaEhCaPYA/6AwH0lDaD46Yj45Yj45YT05YTEvWjIvWzIvWiYlVCYlUyYkU5kIBJkIA5kHA5gHAxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAEoALAAAAAAhADsAAAf/gEoog4SFhoeIhIIjjI2Oj5CRjYOSlZaOlJeakYMinpugI4MXCaWlCKipqqsIB66vrheDALS1tre4ubWzur2+uyi/wrq8w8a0xcfDycq/zM29z9C50tO3swTZ2tvc3d4EAIMGC+Tl5ucLDeoN6OUFg+vx8u3y9Q2DCvn6+e39/fj7AgpUYC9euUHoKHhgwLChQ4cUOkBgZw5ePBVUpByJ4I9chykgM8hDaK5IlxpdPhRcJ2OLjy4uzllcF6GLjCcraXY5AgUdwH1cahx56NAclyNHfKKodzKJPXQ7j9QjWU5Dlx5POpKj0MXJlAgBf+Y7wqWsB609uqhtMRKFAnMv/9Vm0FqjLJcSD6mSg9AU3QN0W5BORQG1BhJzFoJk0fEAKFKiYvOdZGJuBxYYWkKYiypwproIW2I8cVhBy48lDmhySfIEgkwUD5NcPWkuy44dJbs02UIkLGyHR9Se3Kfltrm0aou8lhfBA4Sz5R5c2TFEXoeIg82tpKGl+4acB5euLHejuxYQWsl5XvlAy5Dq6Resb2DjiAd5tnfIa8FEhVJ15Rgx21zl5GdOC12YFFNFbu0zQxczWEGBQ1rwwMM+JHSRBBUd5CVePFzIMFQ5L5imxQqbCdYWUzVQVg4PWMSIg1FMuMggReV0EUMS5kjAAgcrNKZPVEqdY8NOVFCgVYiGUnBxXzzrMdHFFF14IJA8JlXBxQzLxVPCTlJEYBA6Vk1BxQQrytPUmO0Q+RpgQsUXVXbnBHXEQAJFBRlh5qigoxUYaNXBTlWQ8KY5UnQRBRc94KkPEl1QsVOa66hwRA5HBNpRCkcAcYQKbaVXVHzyfTgPqf+YCiA666CqF6rpoSBIIrTWqkggADs=", "6s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fX09fT09ePi4vHhwPHhv/Dgv/Hgv9vb29va2tra2tvb2szLz83Lz8zKzr+8w7+7w767w9yyX7OtubKsuLKtuKafrqWfrqWers2TBsySBsySBcyTBpmRpI+Pj42Fm42FmoyEmoF5koF5kXZtiXZtiHVtiHVsiGtigGpigGphf19XeF9Xd1VNcVRNcFRMcElDaUlDaEhDaEhCaPYA/z45Yj45YT05YTIvWzIvWjEuWiYlVCYlUyYkUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADYALAAAAAAhADsAAAf/gDYgg4SFhoeIhIIcjI2Oj5CRjYMbkpaXkyCYm5KDnJ+OgxQJpKWmp6ipCRSDAK6vsLGys6+ttLe4tSC5vLS2vcCuv8G9w8S5xse3ycqzzM2xrQLT1NMD19UC19vcA9QAgwUM4+QL5ucL5Orr6gWD7PDx8gyDDfP38oPo+/z95vCDFAgcKCFDOnUFIeyboAHCwIH17I0T0WMHDQjkQvTQQUNCg48ZevS4IWFfxI8NZARBISTDQBhBYGYgB7OFkBLrAj6cAMREC3UPgMi4oQ5CEBk42L1bJwQFCpQfhciQsU+qDKUgoH5ciYLpjBlarfJbSs5CkBYx0F0QcuMG1LU4/3ZA0KpzYI0geGeOkyGkbwaUMPoKCZETxLoYeIN4/OhCsAVyLAT/VUd2nNEULNQ5CPLV6wysA8lxDdtZnZDSlA0zTZGC9Gd1nF+n3gdByIkW6GoPLSo1x1jV5HYIsYlzHA22QHCbC3xjeOF9wvuSOFdD8Ipzgfu6ODiuMgMHGB5gKJpBfFEMEf7SBdEPHz7v7t3Dj38PPosaFfapkIFh330RWO0DAxAuAFHBS8MJYcE5Nr0gxAjPcZeCECnsEAFKJUjVQ0nmjHCUD4+l9pBAQLDG1FRhTfUbA1Wxts9RMowoRA01/KZVAxSmIONXEo1z2gz/kHPSRyuc9gOHC7DEw54PF350ghA7HFnYOjNAKYQG5PDVQ0vnVLllcUKCMKIIR93w0AdC6KCDQuastYNcJgFHTo4nXmXaVyMqAF+OL6I2Tmx57mmiaTSuExtWWpFZYQXkiCDVD/mZQ2YNPWgQ50dzpkkhOToI0YNQWQbRA2fr7UOCDC3QcEGjMqiAH6styKBXmOX4wx1989GXj5y61idmngr0qpQgiRRrrCKBAAA7", "7s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09ePi4vHhv/Hgv/Dgv9vb29va2tra2tvb2tbNyM3Lz8zKzr+8w7+7w767w860pt2yX9yyX7OtubKtuLKsuMmnl8mnlsWcicWbiKWfrqWersGPesGPe8CPes2TBsySBpmSpJmRo8yTBsySBY+Pj42Fm7h4Ybh3YLd3YIJ6koF5koF5kXZtiXZtiHVtiHVsiGtigGpigGphf6hJM19XeF9Xd6dIMl9Wd6Q+KlRNcFRMcElDaUlDaEhDaEhCaKAwH/YA/z45Yj45YT05YZ0hFJwhFJwhE5wgEzIvWzIvWjEuWiclVCYlVJkIBJkIA5kHA5gHAxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAEMALAAAAAAhADsAAAf/gEMng4SFhoeIhIIhjI0hIpCRkpOUkYOVmJmVl5qdmYOPnqKSgxQFp6ipqqcGra6vrRODALS1tre4ubWzur2+uye/wrq8w8a0xcfDycq/zM29z9C50tO3swLZ2tvc3d4CAIMECQrl5ufo6eoEg+ru7+qDCeTn8/b39/AK7fr98ScLAgocSDADA3wI7Q0a+E6CkB1JPiCYSLEiRX76JByxMQWEv4UEGZqzwTGhvXMY9ZGM4m/fCYsI1G2YkmSKioTpUr7bIAVJlBUm8el8lyPHlJZD3ZGEEhRd0nQMhHDUALMqyJALzqWIooRmVQRCT/hj4AGDBwkfAQ6EgONKDwvm/xrcuPLjgjkHNaz84BCWIIsrL664MDfiytwa5ipYuWGFB8FBMIPAuELQh48r6CxbgTn0x4sq6IAAuYLPMmanJ/BZeHLZbrkLT5hcGWEOQmwrKCaauxrQRZXfMQT+vXIFB0UUxK/woFduaBEdp80RIXKlwb0iRao4QA3Th4zo5Uxb/PEDfHO1A4lMbnCOiA8qDgaStxJBwT3eC+YGscLEnosrsjkhUAtXLHHFE2HhUwEPMvBAgj0W8FBDDywIdAEPM/QQA2roNPBCEDM8cJcLP9QAwYggQhAWOn/FcEUMFLnQmHL2cKAcjfelhs8PMViBThBBXGGRZaBxmJmLzClA5JSOP/hYzkUvVXRBE4xdYM8DTBRxBVzlOJBlFRygho+LxMFgDoHE4WCOb7/1IOY5DSzR1nZdYqfddVpCYNFQQXxX2mUWAUnaiqG5mNll+ABZJEo6mtNjkEbYQyB1RUh6hZYI5ohPBz70EMRg5XAQBA8lmnOBDzj4QMOeUX7lj0n4BfQqPka2ZOtTLeWDkiCJ9OqrIoEAADs=", "8s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vX09fT09ePj4+Pi4vHhwPHgv/Hhv/Dgv9vb29va2tra2tvb2szLz83Lz8zKzr+7w767w9yyX7OtubOtuLKtuLKsuKafrqWfrqWers2TBpqSpMySBZmRpMyTBpmSpMySBo+Pj42Fmo2Fm4J6koF6koF5koF5kXZtiHVtiHZtiXVsiGtigGpigGphf19XeF9Xd19Wd1VNcVRNcFRMcElDafYA/0lDaEhDaEhCaD45Yj45YT05YTIvWzIvWjEvWjEuWiYlVCYlUyclVCYkUxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADgALAAAAAAhADsAAAf/gDgjg4SFhoeIhIIijI2Oj5CRjYOSlZaOlJeakZmbnoyDFAmjpKWmp6gJFIMAra6vsLGyrqyztre0I7i7s7W8v62+wLzCw7jFxrbIybLLzLCsA9LT1NIB19jZAdPYAIMGDeHi4+Tl5g0Fgwzr5+3h6/Dxg+70Dvb3+PP05/H96/r+Ago8p09cCCVDkvgQR4KEgwgpLqyTUKQIwgcLMi5QFw+FEh5IhqyroESJixsIw2VQ0qMkhnGDMo7rsUMJhokISw7hcS8GShIaM8aUGe7GDST3WuwsmUOJhnAsUGoIunFEOaNK7GFQgrIDjCE9fjxosEIquYLidOhI0sBCjx5F/1qEeztEhoQWZmFabXBPQpIfSGyUBNJD3AUlQJIMGZI4xtm9DHOWLLki3o0kmBUjufG4HwTCJVEq6RAvRhIgQ1gqMfHYXjy1SIjs4HEBn70PSnIkQZmhtYNxN4QkiaFEYkAVQ3z8UNJbr78dR44MWeGuZckM/QbZ3jr5gjsVk39khxxOAuAhNSIIXKeBR0kWttGGi7BiKtX7CyCkCHFfPj14+/i3z4AcrWcgO+YMFZQGN7gw4AU7uADBeP2QVBIRFeCnEQqZAdFZPBKkdp1ttrUwmQsINuCfaEBwdk4Ei5X0lF5XoVRTCinCQwMQQLiHnXP9YJVbXQ/Eg0ENSqzF28lv4iiY0QSM6VRSCsAlUQRmQSQBw2PklIBQZpi9MI4PkylBBFdUqTNOBDwmccJyPgwhQTgpKEHmDTwkhqM8I/iTQ1Ph1PDDDzc4MAERR33AQFlOfRjPDtDNN0QOQ8TgA481hIMXc/GRVxRKBimBpBI7EAGBPSrk1aSn5l3WglZlmhkOBD7oJgOX44BnREnrQClnCknwkNFKCSWxAZ9USXDDDBHSE0EN0DqmF4m2kRMQQX2myM96CY6g4bfgBiXggPSMIEgi6KarSCAAOw==", "9s": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX09fT09fHhwOPi4vHhv/Dgv/Hgv9vb29ra2tvb2tva2tbNyM3Lz8zLz8zKztLAttHAtr67w7+7w860ps2zpt2yX9yyX7OtubKtuLKsuMmnlsmnl8acicWcicWciMWbiKafrqWfrsGPesGQe8CPes2TBpqSpMyTBpmSpMySBpmRpMySBY+Pj72Ebb2DbY2Fm42FmoyEmrh3YLh4YLd3YIJ6koF5koF5kbRsVLNrVHZtiXZtiHVtiLBgSbBgSK9gSHVsiGtigKxVPmpigKhJM6hJMl9XeF9Xd6dIMqQ+KaM9KVRNcFRMcElDaUhDaEhCaPYA/6AwH0lDaD45Yj45YT05YZ0hFJwhEzIvWzIvWjEvWiclVCYlVCYlU5kIBJkIA5kHA5gHAxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAFIALAAAAAAhADsAAAf/gFIug4SFhoeIhIIpK42Oj5CRko2Dk5aXj5WYm5KDjJyglC4YB6Wmp6ippQisrReDALGys7S1trKwt7q7uC68v7e5wMOxwsTAxse8ycq6zM22z9C0sALW19jZ1wHc3d4BAIMFCuTl5ufo6QoFgwzu7wzq8unt8Av3C/P6CoP75u/7BuHDB0EEPHcNODRANwICOoH5yLHQQnHEOxBTMoIoJ2LLli8zzvUzh+LMEy8j8IXAQgNMCI5enpiRIdLFwHtnoEA5Z6RGmHM6zzy0GZHcmShRzh2xMebcE5kJokqFWE7ImS9nVLwrMWZKmBDvWJzxYibHzZHlepghq9UdCDFT/8Z4KKfCzJcyOeKVQ1vOzNODRmiIcfrkjNSpLg4yMPmEZ42m5pAKrXlwwxkqWzSUizClBhgOUiloiXJGRE2na/2++9FVzBGpPtaOPchXwYQYImJQkNqABAcSEQjGGCGDwmlzGpqcSWKcnAQgY4hEKAcByZkmGs4mhofjjHUc5WCAefwCXw7vZ4bQdoHODFLANgabe2rGnbl258j8haeExpiDkilWW0lbeLHBOxVkYcQYFpSzQRdbmDECZfAkccaFN+AjmBhivPBODmaE2ENR/LBnzgNnVFHFOUwAIV85V1xxhkP3ETXQUUmZExhk5Tx1hoA24uPXFQ69s8RjC8FIxf8ZDtR0k3JbnOEEPi4aEYYR+HSnxVU1JWAOC0/w8AQK5XRARA1GfPDOBk4M4UQM651DwRBR5ECjAg3oYIQOSSrwQA5UDNHcXiZWdd0ZOEj1whjkvdOdE2cUcZw5fj1xkBJMHeQjkO3t984RjxFmxlA3ZXDGFVtMUE4FWLjYIDkbcFGFGRqsZx85Q1yIqIZj9EoDPlZdyIN25zhw6hVNktPAFEGI0ScEKs6o3U0LlPGUUoJpKtNQ6DDGU7bwbBqnOU6YUcV15ewghhFiECHVebNeMSk5MkSRBBU0kWOCEUQoUd49IjzRxBNFHJZAbf78o5g7gxyWsD8NGyzxwzUubPELxQu7IEgiHHesSCAAOw==", "東": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fX09fT09eno6OPj4/HhwPHhv/Hgv/Dgv9vb29va2tvb2tra2s3Lz8zKzr+8w9+7ZL+7w767w9yyX7OtubKsuLKtuKWfrqafrqWers2TBsySBsySBcyTBpmRpJmSpI+Pj42Fmo2Fm4yEmoJ6koF5kYF5knZtiXZtiHVtiHVsiGtigGpigGpif2phf19XeF9Xd19Wd1RNcFRMcElDaUhDaEhCaPYA/0lDaD45Yj45YT05YTIvWzIvWjEvWiclVCYlVCYlUxYbTRYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADkALAAAAAAhADsAAAf/gDkig4SFhoeIhIISHY2Oj5CRkh0Sg5OXmI+WmZySm52gjYMVCqWmp6ipqgoVgwCvsLGys7SwrrW4ubYiur21t77Br8DCvsTFusfIuMrLtM3Osq4CA9XW19YC2tvb2AMAgwYO4+Tl5ufoDgaD6e3nDPDx8Ozu9e2DC/n6C/b2gw0N+gkcN0jeQH8i0slbyLAhg4IOI0qMh28BQIAH74lwaE5GkBYPBP4DKDHDkSMsIppjZzBdkSI9VpyAMHHkxZsAM5zAcbJnjJoJ26XwYaSokR0tSkCoBzEihBkzTrKYSmKpxnYUHMRwsaOoDhovjgjJEO9c03M/YvQ8mSEkkCM2/66Sk2cShYMNKHoKoXCSRsSmDMqZ9HHBx1oWM4qOkHtuQtEWAE+G2HDSxz595Cpezhej6Akaek+CCJyOHjoIO9YeIWoEB+nSQdvJWMsgxIqQ7vC1myCESM8aI2gCnQuPHAQeRoakUF2DbNmVGxte+GGkhwWTRyZEPWljAuzNEFb0XUr5CDwKN3qqQGd6nIYiQmiMcF4+X4btJ2EwtIkToIkeJ8xmHgMXjBPBCClgsBlgxZVjgRA9DcRgQxb0cFJ/GAJUkD0PwKDCAhNRFFtGTEXXIInsjYgibCu+I8+EJ6LTkFkqjrPZjTjq054DKh3UXohAziNChhi209AgBRAZEAuJBYggSCJQRqlIIAA7", "南": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vX09fT09ePj4uPi4vDgv/Hgv/Hhv93d3dzc3Nvb29ra2tva2tvb2szKzr+8w7+7w9yyX7OtubKtuLKsuKafrqWfrqWers+YE82TBsyTBsySBpmSpJmRpI+Pj42Fm42FmoyEmoF5koF5kXZtiXZtiHVtiHVsiGtigGpigGphf19XeF9Xd19Wd1RNcFRMcElDaUlDaEhCaPYA/z45Yj05YTIvWzIvWiclVCYlVCYlUyYkUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADUALAAAAAAhADsAAAf/gDUgg4SFhoeIhIIaHY2Oj5CRkh0ag5OXmI+WmZySm52gjYMTCAgHp6ipqqurE4MAsLGys7S1sa+2ubq3ILu+tri/wrDBw7/FxrvIybnLzLXOz7OvAdXW19jZ2gEAgwYP4OHiDw3l5ufo5gWD5Onu7w0O8vMOg/T38Pnm9vLw8/ro+N0bSLDgPHbjHhhMZ3AQg4cQHwLUN2iixXMVLxJ8lzEfhAsSLjboCA8CDh8y8t1DmFDhPBRAgESM6I4kvBk+doSQ4eICRRAG5UkQseOHUaM7fhpMkcNHTCA5XIiwANAmOg8pYPyA0bLrA4H/0MEA4gGDibNnS0go6BCiOw9P/5/KaDEWyIqZD602uMCiLlQaNIDsiCDvhNEQ6ViKQ2EDBuAfOUj84GFhHgajKRKDcCdDhjyYL3YAgcEVHIaYKQaCNSfDB7gLO0THnBHu8g8SbsvpvfGjQjkVPYz2vAChwYiYF3KP3JxONOK9OI4ibbDC6NqVzNHNANJCguyYKjBgoGrDKEGw81QA0QFBxYsKPnxkmAchJo2WeiX0AEJiXswWIhRXglEn1JTdVTzA4B8QDsAkw1OVqXYgOhJc5wAQMrwmW0oGnhPUDxeEAwFdFLA1ITwfiKSXSBydyGKLQYWloosvarZQjboBFeOO9OxDI44+9gNkh0O2OFNQ/kiowAtARY4kSCJQRqlIIAA7", "西": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19vX19fT09fX09ePj4/HhwOPi4vDgv/Hgv/Hhv+Dg4ODf39vb29vb2tra2tva2szKzr+8w7+8xL67w7+7w9yyX7OtubKtuLKsuNSiKdOhKaafrqWfrs2TBsyTBsySBsySBZmSpJmRpI+Pj42Fm42FmoyEmoJ6koF5koF5kXZtiHVtiHVsiGtigGpigF9XeF9Wd1VNcVRNcFRMcElDaUlDaEhCaPYA/z45Yj45YTEvWjIvWzIvWiclVCYlVCYlUxYbThYaTRUaTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUADgALAAAAAAhADsAAAf/gDgkg4SFhoeIhIIbHiCOj5CRkpMag5OXmJOWmZyYm52gkIMWCgimp6ipqggJra4WgwCys7S1trezsbi7vLkkvcC4usHEssPFwcfIvcrLu83Ot9DRtbEB1wLZ2tvc3dwAgwcQ4+Tl5uMP6err6QWD7PDx8OcQgw73+A7y+/Hv/P/7/AGUR2+cwIEIHxxMCHAhQ36DGkhs8BAiiYkYMVZMZy+fx48gQw6CwDACBw7o5HUMie9Cihg9hsikYXFfBBMzfgQRwlPIDxoizLFbqW8dCh9BfsSsYaLCQIfwcKoY8qNCQXP24uWD8UDCDyEtnpL4d2EIhhY1hLDAd7UeCXzy81YMyZEih88geIPYKNFvLLwKEimk7SmkBosOHVTohCFx3btzOVjokDmkhogbQWYgjuBghswHWEmQWzekxQgWeE08SEGZKoQfn4eKPidkx72YFe6dgE0Vg0wdoMtBlcnhwYgX6TDkGMIjRQQXMlOcg9qjcDkVQGR0SBeB9wR4UFvIVFHBRMwZNWT+GDyD3shzEez+MNG6PvG+JOFd+Jqiw40Z/XFHQxAqqORXPBGokMFGUG0kW0EOqtNghBwdSCF4FqrTFkJEbcjQhBR2dGE6ws02GkFtTfdWPuxk9GGGFJa4UYpuLUBhRhIxQIIgifTooyKBAAA7", "北": "data:image/gif;base64,R0lGODlhIQA7ANUAAP////X19fT09fX09fHhwOPj4uPi4vHhv/Hgv/Dgv9zb29vb29vb2tra2tva2szLz83Lz8zKzr+8w7+7w9yyX7OtubKsuKafrqWfrqWers2UC82TBsyTBsySBsySBZmSpI+Pj42Fm42FmoyEmoF5kXZtiXZtiHVtiHVsiGtigGpigGphf19XeF9Xd1VNcVRNcFRMcElDafYA/z45Yj45YT05YTIvWzIvWiYlVCYlUyclVCYkUxYbTRYbThYaTRUaTSH5BAUUADIALAAAAAAhADsAAAb/QBloSCwaj0iiUNNpOp/QqLSjGU6v2Kc1y5Vuu+DmkIJAJM7odHnNbq8pQ4B8Tq/b7/M4fs/Pg/qAeHqBhHKDhYGHiH2Ki3uNjneQkXVxA5eYmZqZAZ2enwBDBQ6kDaanqKakq6ytBkOtsamztKawsbK1ure4vQ66qEMLw8TFxsfIxEMMDMDOtcvM0tPMrc+2INPX20Pb3ti+udwg2xEX1eGk3dcRNT8pqb3rtBM6OvANKD8/IsnFsLpI7KvgAIMPHySo4eKFK8M+DA0uPHzGMNaFgxIYSPxxrWIrDD16mBrx48YIFz5wpGg2a14qES9s7CNlYp/NfapKgWv1AUfI1pA0SL3YF+PEhQsQ5IH49dKEiRA+YDRgcdAEq13kdJ14N6OFCh8lOmatpa8kBH0mxC7QlWJfBgYofJg4RksYXVM33jEL8aOF2mQtftR4QGrCjxwWcKVieCrCjIMVisXwsYNFicskJlBj4LJBiBg49qFIVSH0zcMiqFWMcOMgDVoRVMQ4/WLx2FMWWqx4UGtCixomMAhveXsbignOOn8Dpnw5tOLLfUVjcNW5bWqzfKFaCP2aP2XdrdtOJy55ePGn7H5HRnEpU/TEFciXv/5uXSFJ8utXEgQAOw==", "白": "data:image/gif;base64,R0lGODlhIQA7AMQAAP////X19fT09fX09ePi4vDgv/Hhv/Hgv9vb29va2tra2tvb2t2yYNyyX82TBsySBsyTBsySBY+Pj/YA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUABMALAAAAAAhADsAAAX/4CSNZGmeKCk+bOu+cNyOcm279K3H+e6zo8ZhSCweCsik0khkjADQqHRKrUaf1qz2Ktl6rdivGBoef8vmLTqdXbOr7vf0ORgE7vi8Hl/vDwSAACMECoWGCYiJiouLC44EI4ySioaVloUjCJqbm5eenwojjqOjoKaVkZOqq4mprJOmkaezniOer6+2tKaSmZy/wMGcqBK7xpjFx4mnoqXHsRKkjs+furTLs66U1JbW3KC+wuKbquGauLjm37XJh5LU5sLc3uuX2uiqxAqM9cgI+d+aSRsIT8K7fvT6Gcqk0F40gpYSQWSHr2LChhcVZty3zZjAgSBDOvoVruFCg4hMFiKrVBGbQ5X6YPobR7NTNxEpcupUEQIAOw==", "發": "data:image/gif;base64,R0lGODlhIQA7AOYAAP////X19fX19vT09fX09fHhwOPi4vHhv/Hgv/Dgv9vb29va2tra2tvb2szNy8vMy72/vLy/vLy+u9yyX9yxX6+zr6+yr6+zsK6yr6KnoqKmoqGmoqGmoZSbl5SblpObls2TBsyTCMySBcyTBsySBo+Pj4iRi4eQi4eQinqGgHuGgHqGf3qFf258dm58dW57dWNzbWJzbWJybFdqZFdqY1ZqY1ZpY0xhW0thWj5ZUT9ZUj5YUTRRSjNRSjNRSfYA/yhLQyhKQydKQhlEPBlEOxlDOxhDOwA+NQA9NQA9NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUUAD8ALAAAAAAhADsAAAf/gD8lg4SFhoeIhIIhJI2Oj5CQIJORJIOVmJmVl5qdmZyeoY+DFAimp6ipqqsIE4MAsLGys7S1sa+2ubq3Jbu+tri/wrDBw7/FxrvIybnLzLXOz7OvAdXWAQTZ2tvc3QQAgwYM4+Tl5ufoDAaD5wvu7+nx4+zy9fGDDfb65vT7/oPvAgr0Vw6gwIMID57rR9AevgYQI0qcSLEiRIMD6yUMyNBcQA40dqCA6PFgx3MociRZiYOBDx0VFtwrgS7gCRlIkPioUGOljgszN77DsXJlERkmIAQJUqHcu44RX+igoSLnhg08kOxIMSRJkRPoBikYO5acAxw5kbR4F8Nohplk/+OOvZATxzsLKnTkFPIh3clxEoogKZLCQgQeRVMUWZnDwcISCC34KOrVQZIYLZIwcDA5SQ8HE09iMKJTSM4KH5K0uJHEBg4YKpO8ECiWrAQaK1s4ANJ6QQ0kJzqkrbHAhle5DC20SBHBQ4+VQhYQlYACCQ8O5FSo4EcTHWUNCyrIOFFEx4amQRGeCOL1BYMKuCnDmJmuAuUZRWFwyN3OHUaBDujgAQxIvCDDDUDFgAQQjvkFmVArJOGCYkHosNgGQv0VAXoyyMZABDakRYME6cEzjg02eAAEEimEt5gQROQEQ0IPVWTcSh70REQLCniQ1mwmPWgiOb/Z4IAFAknwQjx5CP3lzwMONhQPbd1JWY+TVhYkpFAZXVlCA1yG2WSV+wQkD5ZZzkNmmo+NI+ab/m05ZJolCJLInXgqEggAOw==", "中": "data:image/gif;base64,R0lGODlhIQA7ANUAAP////X19vX19fT09fX09ePj4/HhwPHgv/Hhv/Dgv9vb29vb2tva2tra2tbNyNXNx9bNx9LAttHAtc60ps2zps2zpd2yX9yyX8mnlsWbiMGQe8GPe8GPesCPes2TB82TBsySBcyTBsySB8ySBo+Pj7h4Ybh4YLh3YLRsVbRsVLNrVLBgSbBgSK9gSKxVPqtUPahJM6Q+KaQ9KaM9KaAxH/YA/6AwH5whE5wgE5kIBJkIA5kHA5gHAwAAAAAAAAAAACH5BAUUADUALAAAAAAhADsAAAb/wBppSCwaj0ii0DNqOp/QqLQ5nFqln+yzeu1aud7wlmRBIBLodOLAbrvf78sQQK/b7/h8fa7v+/ckf4J6fIOGdIWHg4mKf4yNfY+QeZKTd3MCmZoCBJ2en6ChBABDBQunqKmqDKytrq4FQ6qnDbW2t7i5rUMMub6/wEPAw7+uwsTIvrzEs82zss3Jw9Cq0tMkCtna29zcxMfW0uC4qhE7LxSv6rsk6+svPDcQ7r2248MmOzsY2/S86r5O6MOQjFqqgDx4iCOBitiJhAwiYMAwgZUybN0c4JKwQp9HfTY0XPQ1o5aEFDFyqMyBokKHjxfX8eDAISGPGTASOoCX0EaGtHX3as2QB4Fig4fxdOigwaFBK1xDsr1ikcOFrQgubCZM0TBX0AYY9KUI+3EHjBQTrv1yoW+CjI8P6Bkj8ctBCxwRwKrQp6Bgu6fATPCAscDvNnxmF8p1tZewO6h/FzNQkSNFt8sKvvoSrGHdSFzuUNzQeAvwLVnJYJSwZvAVLhaki8116spZYdZ0gXUzHSyy63BeGdpeIPnXP7nSXi0Djgw182+5n6uVfs22L8m7hCTZzl1JEAA7"};
-const QUESTIONS = [{"kind":"wait2","tiles":["1m","2m"],"answers":["3m"]},{"kind":"wait2","tiles":["8m","9m"],"answers":["7m"]},{"kind":"wait2","tiles":["1m","3m"],"answers":["2m"]},{"kind":"wait2","tiles":["2m","4m"],"answers":["3m"]},{"kind":"wait2","tiles":["3m","5m"],"answers":["4m"]},{"kind":"wait2","tiles":["4m","6m"],"answers":["5m"]},{"kind":"wait2","tiles":["5m","7m"],"answers":["6m"]},{"kind":"wait2","tiles":["6m","8m"],"answers":["7m"]},{"kind":"wait2","tiles":["7m","9m"],"answers":["8m"]},{"kind":"wait2","tiles":["1p","2p"],"answers":["3p"]},{"kind":"wait2","tiles":["8p","9p"],"answers":["7p"]},{"kind":"wait2","tiles":["1p","3p"],"answers":["2p"]},{"kind":"wait2","tiles":["2p","4p"],"answers":["3p"]},{"kind":"wait2","tiles":["3p","5p"],"answers":["4p"]},{"kind":"wait2","tiles":["4p","6p"],"answers":["5p"]},{"kind":"wait2","tiles":["5p","7p"],"answers":["6p"]},{"kind":"wait2","tiles":["6p","8p"],"answers":["7p"]},{"kind":"wait2","tiles":["7p","9p"],"answers":["8p"]},{"kind":"wait2","tiles":["1s","2s"],"answers":["3s"]},{"kind":"wait2","tiles":["8s","9s"],"answers":["7s"]},{"kind":"wait2","tiles":["1s","3s"],"answers":["2s"]},{"kind":"wait2","tiles":["2s","4s"],"answers":["3s"]},{"kind":"wait2","tiles":["3s","5s"],"answers":["4s"]},{"kind":"wait2","tiles":["4s","6s"],"answers":["5s"]},{"kind":"wait2","tiles":["5s","7s"],"answers":["6s"]},{"kind":"wait2","tiles":["6s","8s"],"answers":["7s"]},{"kind":"wait2","tiles":["7s","9s"],"answers":["8s"]},{"kind":"wait2","tiles":["1m","2m"],"answers":["3m"]},{"kind":"wait2","tiles":["8m","9m"],"answers":["7m"]},{"kind":"wait2","tiles":["1m","3m"],"answers":["2m"]},{"kind":"wait2","tiles":["2m","4m"],"answers":["3m"]},{"kind":"wait2","tiles":["3m","5m"],"answers":["4m"]},{"kind":"wait2","tiles":["4m","6m"],"answers":["5m"]},{"kind":"wait2","tiles":["5m","7m"],"answers":["6m"]},{"kind":"wait2","tiles":["6m","8m"],"answers":["7m"]},{"kind":"wait2","tiles":["7m","9m"],"answers":["8m"]},{"kind":"wait2","tiles":["1p","2p"],"answers":["3p"]},{"kind":"wait2","tiles":["8p","9p"],"answers":["7p"]},{"kind":"wait2","tiles":["1p","3p"],"answers":["2p"]},{"kind":"wait2","tiles":["2p","4p"],"answers":["3p"]},{"kind":"discard5","tiles":["2m","2m","3m","5p","5p"],"answers":["2m"]},{"kind":"discard5","tiles":["6m","6m","2p","2p","3p"],"answers":["2p"]},{"kind":"discard5","tiles":["6m","6m","3p","3p","4p"],"answers":["3p"]},{"kind":"discard5","tiles":["3s","3s","4s","中","中"],"answers":["3s"]},{"kind":"discard5","tiles":["4s","4s","5s","中","中"],"answers":["4s"]},{"kind":"discard5","tiles":["4m","4m","5m","5p","5p"],"answers":["4m"]},{"kind":"discard5","tiles":["5m","5m","6m","5p","5p"],"answers":["5m"]},{"kind":"discard5","tiles":["6m","6m","5p","5p","6p"],"answers":["5p"]},{"kind":"discard5","tiles":["6m","6m","6p","6p","7p"],"answers":["6p"]},{"kind":"discard5","tiles":["6s","6s","7s","中","中"],"answers":["6s"]},{"kind":"discard5","tiles":["7s","7s","8s","中","中"],"answers":["7s"]},{"kind":"discard5","tiles":["7m","7m","8m","5p","5p"],"answers":["7m"]},{"kind":"discard5","tiles":["2m","3m","3m","5p","5p"],"answers":["3m"]},{"kind":"discard5","tiles":["6m","6m","2p","3p","3p"],"answers":["3p"]},{"kind":"discard5","tiles":["6m","6m","3p","4p","4p"],"answers":["4p"]},{"kind":"discard5","tiles":["3s","4s","4s","中","中"],"answers":["4s"]},{"kind":"discard5","tiles":["4s","5s","5s","中","中"],"answers":["5s"]},{"kind":"discard5","tiles":["4m","5m","5m","5p","5p"],"answers":["5m"]},{"kind":"discard5","tiles":["5m","6m","6m","5p","5p"],"answers":["6m"]},{"kind":"discard5","tiles":["6m","6m","5p","6p","6p"],"answers":["6p"]},{"kind":"discard5","tiles":["6m","6m","6p","7p","7p"],"answers":["7p"]},{"kind":"discard5","tiles":["6s","7s","7s","中","中"],"answers":["7s"]},{"kind":"discard5","tiles":["7s","8s","8s","中","中"],"answers":["8s"]},{"kind":"discard5","tiles":["7m","8m","8m","5p","5p"],"answers":["8m"]},{"kind":"rk8","tiles":["2m","3m","3m","4m","5m","7m","5p","5p"],"answers":["7m"]},{"kind":"rk8","tiles":["2m","4m","5m","6m","6m","7m","7s","7s"],"answers":["2m"]},{"kind":"rk8","tiles":["3m","4m","4m","5m","6m","8m","白","白"],"answers":["8m"]},{"kind":"rk8","tiles":["3m","5m","6m","7m","7m","8m","5p","5p"],"answers":["3m"]},{"kind":"rk8","tiles":["6m","6m","2p","3p","3p","4p","5p","7p"],"answers":["7p"]},{"kind":"rk8","tiles":["2p","4p","5p","6p","6p","7p","發","發"],"answers":["2p"]},{"kind":"rk8","tiles":["3p","4p","4p","5p","6p","8p","4s","4s"],"answers":["8p"]},{"kind":"rk8","tiles":["6m","6m","3p","5p","6p","7p","7p","8p"],"answers":["3p"]},{"kind":"rk8","tiles":["2s","3s","3s","4s","5s","7s","中","中"],"answers":["7s"]},{"kind":"rk8","tiles":["5m","5m","2s","4s","5s","6s","6s","7s"],"answers":["2s"]},{"kind":"rk8","tiles":["7p","7p","3s","4s","4s","5s","6s","8s"],"answers":["8s"]},{"kind":"rk8","tiles":["3s","5s","6s","7s","7s","8s","中","中"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["2m","2m","3m","4m","5m","6m","5p","5p"],"answers":["2m"]},{"kind":"sanmenchan8","tiles":["3m","3m","4m","5m","6m","7m","7s","7s"],"answers":["3m"]},{"kind":"sanmenchan8","tiles":["4m","4m","5m","6m","7m","8m","白","白"],"answers":["4m"]},{"kind":"sanmenchan8","tiles":["6m","6m","2p","3p","4p","5p","6p","6p"],"answers":["6p"]},{"kind":"sanmenchan8","tiles":["3p","4p","5p","6p","7p","7p","中","中"],"answers":["7p"]},{"kind":"sanmenchan8","tiles":["4p","5p","6p","7p","8p","8p","4s","4s"],"answers":["8p"]},{"kind":"sanmenchan8","tiles":["5m","5m","2s","3s","3s","4s","5s","6s"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["7p","7p","3s","4s","4s","5s","6s","7s"],"answers":["4s"]},{"kind":"sanmenchan8","tiles":["4s","5s","5s","6s","7s","8s","發","發"],"answers":["5s"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","2m","2m","3m","3m","4m","7p","7p","6s","7s"],"answers":["4m"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","2m","3m","3m","4m","4m","8p","8p","6s","7s"],"answers":["1m"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","3m","3m","4m","4m","5m","7p","7p","1s","2s"],"answers":["5m"]},{"kind":"iipeiko_plus1","tiles":["2m","3m","3m","4m","4m","5m","5m","8p","8p","1s","2s"],"answers":["2m"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","3p","3p","4p","4p","5p","5p","6p","8s","8s"],"answers":["6p"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","3p","4p","4p","5p","5p","6p","6p","9s","9s"],"answers":["3p"]},{"kind":"iipeiko_plus1","tiles":["8m","9m","4p","4p","5p","5p","6p","6p","7p","1s","1s"],"answers":["7p"]},{"kind":"iipeiko_plus1","tiles":["8m","9m","4p","5p","5p","6p","6p","7p","7p","2s","2s"],"answers":["4p"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","2p","3p","5s","5s","6s","6s","7s","7s","8s"],"answers":["8s"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","2p","3p","5s","6s","6s","7s","7s","8s","8s"],"answers":["5s"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","3p","4p","6s","6s","7s","7s","8s","8s","9s"],"answers":["9s"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","3p","4p","6s","7s","7s","8s","8s","9s","9s"],"answers":["6s"]},{"kind":"dualpick","tiles":["4m","5m","7p","8p","1s","2s","東","東"],"answers":["1s","2s"]},{"kind":"dualpick","tiles":["2m","3m","6p","7p","2s","4s","南","南"],"answers":["2s","4s"]},{"kind":"dualpick","tiles":["5m","6m","2p","3p","3s","5s","白","白"],"answers":["3s","5s"]},{"kind":"dualpick","tiles":["7m","8m","4p","5p","4s","6s","發","發"],"answers":["4s","6s"]},{"kind":"dualpick","tiles":["2m","3m","7p","8p","5s","7s","中","中"],"answers":["5s","7s"]},{"kind":"dualpick","tiles":["3m","4m","8m","8m","2p","3p","6s","8s"],"answers":["6s","8s"]},{"kind":"dualpick","tiles":["1m","2m","3p","4p","6s","7s","東","東"],"answers":["1m","2m"]},{"kind":"dualpick","tiles":["2m","4m","5p","6p","2s","3s","南","南"],"answers":["2m","4m"]},{"kind":"dualpick","tiles":["3m","5m","7p","8p","4s","5s","白","白"],"answers":["3m","5m"]},{"kind":"dualpick","tiles":["4m","6m","2p","3p","6s","7s","發","發"],"answers":["4m","6m"]},{"kind":"dualpick","tiles":["5m","7m","4p","5p","7s","8s","中","中"],"answers":["5m","7m"]},{"kind":"dualpick","tiles":["6m","8m","2p","3p","5s","6s","北","北"],"answers":["6m","8m"]},{"kind":"shape10","tiles":["1m","1m","2m","3m","3m","4m","7p","7p","5s","6s","7s"],"answers":["1m"]},{"kind":"shape10","tiles":["2m","2m","3m","4m","4m","5m","8p","8p","5s","6s","7s"],"answers":["2m"]},{"kind":"shape10","tiles":["3m","3m","4m","5m","5m","6m","9p","9p","1s","2s","3s"],"answers":["3m"]},{"kind":"shape10","tiles":["4m","4m","5m","6m","6m","7m","1p","1p","7s","8s","9s"],"answers":["4m"]},{"kind":"shape10","tiles":["5m","5m","6m","7m","7m","8m","2p","2p","1s","2s","3s"],"answers":["5m"]},{"kind":"shape10","tiles":["1m","1m","6p","7p","7p","8p","9p","9p","3s","4s","5s"],"answers":["9p"]},{"kind":"shape10","tiles":["2m","2m","5p","6p","6p","7p","8p","8p","3s","4s","5s"],"answers":["8p"]},{"kind":"shape10","tiles":["9m","9m","4p","5p","5p","6p","7p","7p","1s","2s","3s"],"answers":["7p"]},{"kind":"shape10","tiles":["8m","8m","3p","4p","4p","5p","6p","6p","7s","8s","9s"],"answers":["6p"]},{"kind":"shape10","tiles":["7m","7m","2p","3p","3p","4p","5p","5p","7s","8s","9s"],"answers":["5p"]}];
+const QUESTIONS = [{"kind":"wait2","tiles":["1m","2m"],"answers":["3m"]},{"kind":"wait2","tiles":["8m","9m"],"answers":["7m"]},{"kind":"wait2","tiles":["1m","3m"],"answers":["2m"]},{"kind":"wait2","tiles":["2m","4m"],"answers":["3m"]},{"kind":"wait2","tiles":["3m","5m"],"answers":["4m"]},{"kind":"wait2","tiles":["4m","6m"],"answers":["5m"]},{"kind":"wait2","tiles":["5m","7m"],"answers":["6m"]},{"kind":"wait2","tiles":["6m","8m"],"answers":["7m"]},{"kind":"wait2","tiles":["7m","9m"],"answers":["8m"]},{"kind":"wait2","tiles":["1p","2p"],"answers":["3p"]},{"kind":"wait2","tiles":["8p","9p"],"answers":["7p"]},{"kind":"wait2","tiles":["1p","3p"],"answers":["2p"]},{"kind":"wait2","tiles":["2p","4p"],"answers":["3p"]},{"kind":"wait2","tiles":["3p","5p"],"answers":["4p"]},{"kind":"wait2","tiles":["4p","6p"],"answers":["5p"]},{"kind":"wait2","tiles":["5p","7p"],"answers":["6p"]},{"kind":"wait2","tiles":["6p","8p"],"answers":["7p"]},{"kind":"wait2","tiles":["7p","9p"],"answers":["8p"]},{"kind":"wait2","tiles":["1s","2s"],"answers":["3s"]},{"kind":"wait2","tiles":["8s","9s"],"answers":["7s"]},{"kind":"wait2","tiles":["1s","3s"],"answers":["2s"]},{"kind":"wait2","tiles":["2s","4s"],"answers":["3s"]},{"kind":"wait2","tiles":["3s","5s"],"answers":["4s"]},{"kind":"wait2","tiles":["4s","6s"],"answers":["5s"]},{"kind":"wait2","tiles":["5s","7s"],"answers":["6s"]},{"kind":"wait2","tiles":["6s","8s"],"answers":["7s"]},{"kind":"wait2","tiles":["7s","9s"],"answers":["8s"]},{"kind":"wait2","tiles":["1m","2m"],"answers":["3m"]},{"kind":"wait2","tiles":["8m","9m"],"answers":["7m"]},{"kind":"wait2","tiles":["1m","3m"],"answers":["2m"]},{"kind":"wait2","tiles":["2m","4m"],"answers":["3m"]},{"kind":"wait2","tiles":["3m","5m"],"answers":["4m"]},{"kind":"wait2","tiles":["4m","6m"],"answers":["5m"]},{"kind":"wait2","tiles":["5m","7m"],"answers":["6m"]},{"kind":"wait2","tiles":["6m","8m"],"answers":["7m"]},{"kind":"wait2","tiles":["7m","9m"],"answers":["8m"]},{"kind":"wait2","tiles":["1p","2p"],"answers":["3p"]},{"kind":"wait2","tiles":["8p","9p"],"answers":["7p"]},{"kind":"wait2","tiles":["1p","3p"],"answers":["2p"]},{"kind":"wait2","tiles":["2p","4p"],"answers":["3p"]},{"kind":"discard5","tiles":["2m","2m","3m","5p","5p"],"answers":["2m"]},{"kind":"discard5","tiles":["6m","6m","2p","2p","3p"],"answers":["2p"]},{"kind":"discard5","tiles":["6m","6m","3p","3p","4p"],"answers":["3p"]},{"kind":"discard5","tiles":["3s","3s","4s","中","中"],"answers":["3s"]},{"kind":"discard5","tiles":["4s","4s","5s","中","中"],"answers":["4s"]},{"kind":"discard5","tiles":["4m","4m","5m","5p","5p"],"answers":["4m"]},{"kind":"discard5","tiles":["5m","5m","6m","5p","5p"],"answers":["5m"]},{"kind":"discard5","tiles":["6m","6m","5p","5p","6p"],"answers":["5p"]},{"kind":"discard5","tiles":["6m","6m","6p","6p","7p"],"answers":["6p"]},{"kind":"discard5","tiles":["6s","6s","7s","中","中"],"answers":["6s"]},{"kind":"discard5","tiles":["7s","7s","8s","中","中"],"answers":["7s"]},{"kind":"discard5","tiles":["7m","7m","8m","5p","5p"],"answers":["7m"]},{"kind":"discard5","tiles":["2m","3m","3m","5p","5p"],"answers":["3m"]},{"kind":"discard5","tiles":["6m","6m","2p","3p","3p"],"answers":["3p"]},{"kind":"discard5","tiles":["6m","6m","3p","4p","4p"],"answers":["4p"]},{"kind":"discard5","tiles":["3s","4s","4s","中","中"],"answers":["4s"]},{"kind":"discard5","tiles":["4s","5s","5s","中","中"],"answers":["5s"]},{"kind":"discard5","tiles":["4m","5m","5m","5p","5p"],"answers":["5m"]},{"kind":"discard5","tiles":["5m","6m","6m","5p","5p"],"answers":["6m"]},{"kind":"discard5","tiles":["6m","6m","5p","6p","6p"],"answers":["6p"]},{"kind":"discard5","tiles":["6m","6m","6p","7p","7p"],"answers":["7p"]},{"kind":"discard5","tiles":["6s","7s","7s","中","中"],"answers":["7s"]},{"kind":"discard5","tiles":["7s","8s","8s","中","中"],"answers":["8s"]},{"kind":"discard5","tiles":["7m","8m","8m","5p","5p"],"answers":["8m"]},{"kind":"rk8","tiles":["2m","3m","3m","4m","5m","7m","5p","5p"],"answers":["7m"]},{"kind":"rk8","tiles":["2m","4m","5m","6m","6m","7m","7s","7s"],"answers":["2m"]},{"kind":"rk8","tiles":["3m","4m","4m","5m","6m","8m","白","白"],"answers":["8m"]},{"kind":"rk8","tiles":["3m","5m","6m","7m","7m","8m","5p","5p"],"answers":["3m"]},{"kind":"rk8","tiles":["6m","6m","2p","3p","3p","4p","5p","7p"],"answers":["7p"]},{"kind":"rk8","tiles":["2p","4p","5p","6p","6p","7p","發","發"],"answers":["2p"]},{"kind":"rk8","tiles":["3p","4p","4p","5p","6p","8p","4s","4s"],"answers":["8p"]},{"kind":"rk8","tiles":["6m","6m","3p","5p","6p","7p","7p","8p"],"answers":["3p"]},{"kind":"rk8","tiles":["2s","3s","3s","4s","5s","7s","中","中"],"answers":["7s"]},{"kind":"rk8","tiles":["5m","5m","2s","4s","5s","6s","6s","7s"],"answers":["2s"]},{"kind":"rk8","tiles":["7p","7p","3s","4s","4s","5s","6s","8s"],"answers":["8s"]},{"kind":"rk8","tiles":["3s","5s","6s","7s","7s","8s","中","中"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["2m","2m","3m","4m","5m","6m","5p","5p"],"answers":["2m"]},{"kind":"sanmenchan8","tiles":["3m","3m","4m","5m","6m","7m","7s","7s"],"answers":["3m"]},{"kind":"sanmenchan8","tiles":["4m","4m","5m","6m","7m","8m","白","白"],"answers":["4m"]},{"kind":"sanmenchan8","tiles":["6m","6m","2p","3p","4p","5p","6p","6p"],"answers":["6p"]},{"kind":"sanmenchan8","tiles":["3p","4p","5p","6p","7p","7p","中","中"],"answers":["7p"]},{"kind":"sanmenchan8","tiles":["4p","5p","6p","7p","8p","8p","4s","4s"],"answers":["8p"]},{"kind":"sanmenchan8","tiles":["5m","5m","2s","3s","3s","4s","5s","6s"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["7p","7p","3s","4s","4s","5s","6s","7s"],"answers":["4s"]},{"kind":"sanmenchan8","tiles":["4s","5s","5s","6s","7s","8s","發","發"],"answers":["5s"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","2m","2m","3m","3m","4m","7p","7p","6s","7s"],"answers":["4m"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","2m","3m","3m","4m","4m","8p","8p","6s","7s"],"answers":["1m"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","3m","3m","4m","4m","5m","7p","7p","1s","2s"],"answers":["5m"]},{"kind":"iipeiko_plus1","tiles":["2m","3m","3m","4m","4m","5m","5m","8p","8p","1s","2s"],"answers":["2m"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","3p","3p","4p","4p","5p","5p","6p","8s","8s"],"answers":["6p"]},{"kind":"iipeiko_plus1","tiles":["1m","2m","3p","4p","4p","5p","5p","6p","6p","9s","9s"],"answers":["3p"]},{"kind":"iipeiko_plus1","tiles":["8m","9m","4p","4p","5p","5p","6p","6p","7p","1s","1s"],"answers":["7p"]},{"kind":"iipeiko_plus1","tiles":["8m","9m","4p","5p","5p","6p","6p","7p","7p","2s","2s"],"answers":["4p"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","2p","3p","5s","5s","6s","6s","7s","7s","8s"],"answers":["8s"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","2p","3p","5s","6s","6s","7s","7s","8s","8s"],"answers":["5s"]},{"kind":"iipeiko_plus1","tiles":["1m","1m","3p","4p","6s","6s","7s","7s","8s","8s","9s"],"answers":["9s"]},{"kind":"iipeiko_plus1","tiles":["2m","2m","3p","4p","6s","7s","7s","8s","8s","9s","9s"],"answers":["6s"]},{"kind":"dualpick","tiles":["4m","5m","7p","8p","1s","2s","東","東"],"answers":["1s","2s"]},{"kind":"dualpick","tiles":["2m","3m","6p","7p","2s","4s","南","南"],"answers":["2s","4s"]},{"kind":"dualpick","tiles":["5m","6m","2p","3p","3s","5s","白","白"],"answers":["3s","5s"]},{"kind":"dualpick","tiles":["7m","8m","4p","5p","4s","6s","發","發"],"answers":["4s","6s"]},{"kind":"dualpick","tiles":["2m","3m","7p","8p","5s","7s","中","中"],"answers":["5s","7s"]},{"kind":"dualpick","tiles":["3m","4m","8m","8m","2p","3p","6s","8s"],"answers":["6s","8s"]},{"kind":"dualpick","tiles":["1m","2m","3p","4p","6s","7s","東","東"],"answers":["1m","2m"]},{"kind":"dualpick","tiles":["2m","4m","5p","6p","2s","3s","南","南"],"answers":["2m","4m"]},{"kind":"dualpick","tiles":["3m","5m","7p","8p","4s","5s","白","白"],"answers":["3m","5m"]},{"kind":"dualpick","tiles":["4m","6m","2p","3p","6s","7s","發","發"],"answers":["4m","6m"]},{"kind":"dualpick","tiles":["5m","7m","4p","5p","7s","8s","中","中"],"answers":["5m","7m"]},{"kind":"dualpick","tiles":["6m","8m","2p","3p","5s","6s","北","北"],"answers":["6m","8m"]},{"kind":"shape10","tiles":["1m","1m","2m","3m","3m","4m","7p","7p","5s","6s","7s"],"answers":["1m"]},{"kind":"shape10","tiles":["2m","2m","3m","4m","4m","5m","8p","8p","5s","6s","7s"],"answers":["2m"]},{"kind":"shape10","tiles":["3m","3m","4m","5m","5m","6m","9p","9p","1s","2s","3s"],"answers":["3m"]},{"kind":"shape10","tiles":["4m","4m","5m","6m","6m","7m","1p","1p","7s","8s","9s"],"answers":["4m"]},{"kind":"shape10","tiles":["5m","5m","6m","7m","7m","8m","2p","2p","1s","2s","3s"],"answers":["5m"]},{"kind":"shape10","tiles":["1m","1m","6p","7p","7p","8p","9p","9p","3s","4s","5s"],"answers":["9p"]},{"kind":"shape10","tiles":["2m","2m","5p","6p","6p","7p","8p","8p","3s","4s","5s"],"answers":["8p"]},{"kind":"shape10","tiles":["9m","9m","4p","5p","5p","6p","7p","7p","1s","2s","3s"],"answers":["7p"]},{"kind":"shape10","tiles":["8m","8m","3p","4p","4p","5p","6p","6p","7s","8s","9s"],"answers":["6p"]},{"kind":"shape10","tiles":["7m","7m","2p","3p","3p","4p","5p","5p","7s","8s","9s"],"answers":["5p"]},{"kind":"ittsu_plus1","tiles":["1m","1m","2m","3m","4m","5m","6m","7m","8m","9m","8p","8p","2s","3s"],"answers":["1m"]},{"kind":"ittsu_plus1","tiles":["1m","2m","2m","3m","4m","5m","6m","7m","8m","9m","6p","7p","1s","1s"],"answers":["2m"]},{"kind":"ittsu_plus1","tiles":["1m","2m","3m","3m","4m","5m","6m","7m","8m","9m","9p","9p","3s","4s"],"answers":["3m"]},{"kind":"ittsu_plus1","tiles":["2m","2m","7p","8p","1s","2s","3s","4s","4s","5s","6s","7s","8s","9s"],"answers":["4s"]},{"kind":"ittsu_plus1","tiles":["8m","8m","2p","3p","1s","2s","3s","4s","5s","5s","6s","7s","8s","9s"],"answers":["5s"]},{"kind":"ittsu_plus1","tiles":["5m","6m","1p","1p","1s","2s","3s","4s","5s","6s","6s","7s","8s","9s"],"answers":["6s"]},{"kind":"ittsu_plus1","tiles":["3m","4m","1p","2p","3p","4p","5p","6p","7p","7p","8p","9p","9s","9s"],"answers":["7p"]},{"kind":"ittsu_plus1","tiles":["2m","2m","1p","2p","3p","4p","5p","6p","7p","8p","8p","9p","6s","7s"],"answers":["8p"]},{"kind":"ittsu_plus1","tiles":["2m","3m","1p","2p","3p","4p","5p","6p","7p","8p","9p","9p","7s","7s"],"answers":["9p"]},{"kind":"tanyao_plus1","tiles":["1m","2m","3m","4m","7p","7p","3s","4s"],"answers":["1m"]},{"kind":"tanyao_plus1","tiles":["6m","7m","8m","9m","3p","3p","6s","7s"],"answers":["9m"]},{"kind":"tanyao_plus1","tiles":["6m","6m","1p","2p","3p","4p","3s","4s"],"answers":["1p"]},{"kind":"tanyao_plus1","tiles":["3m","4m","6p","7p","8p","9p","7s","7s"],"answers":["9p"]},{"kind":"tanyao_plus1","tiles":["3m","3m","6p","7p","1s","2s","3s","4s"],"answers":["1s"]},{"kind":"tanyao_plus1","tiles":["6m","7m","3p","3p","6s","7s","8s","9s"],"answers":["9s"]},{"kind":"sanmenchan8","tiles":["2m","3m","4m","5m","6m","7p","7p","7p"],"answers":["7p"]},{"kind":"sanmenchan8","tiles":["2p","3p","4p","5p","6p","4s","4s","4s"],"answers":["4s"]},{"kind":"sanmenchan8","tiles":["2m","2m","2m","2s","3s","4s","5s","6s"],"answers":["2m"]},{"kind":"sanmenchan8","tiles":["3m","4m","5m","6m","7m","9s","9s","9s"],"answers":["9s"]},{"kind":"sanmenchan8","tiles":["1m","1m","1m","3p","4p","5p","6p","7p"],"answers":["1m"]},{"kind":"sanmenchan8","tiles":["6p","6p","6p","3s","4s","5s","6s","7s"],"answers":["6p"]},{"kind":"sanmenchan8","tiles":["4m","5m","6m","7m","8m","3s","3s","3s"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["8m","8m","8m","4p","5p","6p","7p","8p"],"answers":["8m"]},{"kind":"sanmenchan8","tiles":["5p","5p","5p","4s","5s","6s","7s","8s"],"answers":["5p"]},{"kind":"sanmenchan8","tiles":["3m","4m","4m","4m","6m","2p","3p","4p"],"answers":["6m"]},{"kind":"sanmenchan8","tiles":["4m","5m","5m","5m","7m","6s","7s","8s"],"answers":["7m"]},{"kind":"sanmenchan8","tiles":["3m","4m","5m","5p","6p","6p","6p","8p"],"answers":["8p"]},{"kind":"sanmenchan8","tiles":["2p","4p","4p","4p","5p","5s","6s","7s"],"answers":["2p"]},{"kind":"sanmenchan8","tiles":["4m","5m","6m","3s","5s","5s","5s","6s"],"answers":["3s"]},{"kind":"sanmenchan8","tiles":["2p","3p","4p","4s","6s","6s","6s","7s"],"answers":["4s"]},{"kind":"sanshoku_plus1","tiles":["3m","4m","5m","8m","8m","2p","3p","4p","5p","3s","4s","5s","7s","8s"],"answers":["2p"]},{"kind":"sanshoku_plus1","tiles":["3m","4m","5m","7m","8m","3p","4p","5p","8p","8p","3s","4s","5s","6s"],"answers":["6s"]},{"kind":"sanshoku_plus1","tiles":["3m","4m","5m","6m","4p","5p","6p","9p","9p","2s","3s","4s","5s","6s"],"answers":["3m"]},{"kind":"sanshoku_plus1","tiles":["4m","5m","6m","7m","8m","4p","5p","6p","7p","2s","2s","4s","5s","6s"],"answers":["7p"]},{"kind":"sanshoku_plus1","tiles":["2m","2m","5m","6m","7m","2p","3p","5p","6p","7p","4s","5s","6s","7s"],"answers":["4s"]},{"kind":"sanshoku_plus1","tiles":["5m","6m","7m","8m","2p","2p","5p","6p","7p","2s","3s","5s","6s","7s"],"answers":["8m"]},{"kind":"tamechan","tiles":["2m","3m","4m","5m","6m","6m","6m"],"answers":["1m","2m","4m","5m","7m"]},{"kind":"tamechan","tiles":["2m","2m","2m","3m","4m","4m","4m"],"answers":["1m","2m","3m","4m","5m"]},{"kind":"tamechan","tiles":["2m","2m","2m","3m","4m","5m","6m"],"answers":["1m","3m","4m","6m","7m"]},{"kind":"tamechan","tiles":["3m","3m","3m","4m","5m","5m","5m"],"answers":["2m","3m","4m","5m","6m"]},{"kind":"tamechan","tiles":["3m","3m","3m","4m","5m","6m","7m"],"answers":["2m","4m","5m","7m","8m"]},{"kind":"tamechan","tiles":["3m","4m","5m","6m","7m","7m","7m"],"answers":["2m","3m","5m","6m","8m"]},{"kind":"tamechan","tiles":["4m","4m","4m","5m","6m","6m","6m"],"answers":["3m","4m","5m","6m","7m"]},{"kind":"tamechan","tiles":["4m","4m","4m","5m","6m","7m","8m"],"answers":["3m","5m","6m","8m","9m"]},{"kind":"tamechan","tiles":["4m","5m","6m","7m","8m","8m","8m"],"answers":["3m","4m","6m","7m","9m"]},{"kind":"tamechan","tiles":["5m","5m","5m","6m","7m","7m","7m"],"answers":["4m","5m","6m","7m","8m"]},{"kind":"tamechan","tiles":["6m","6m","6m","7m","8m","8m","8m"],"answers":["5m","6m","7m","8m","9m"]},{"kind":"tamechan","tiles":["2m","3m","3m","3m","4m","5m","6m"],"answers":["1m","2m","4m","7m"]},{"kind":"tamechan","tiles":["2m","3m","4m","4m","5m","5m","5m"],"answers":["1m","3m","4m","6m"]},{"kind":"tamechan","tiles":["2m","3m","4m","5m","5m","5m","6m"],"answers":["1m","4m","6m","7m"]},{"kind":"tamechan","tiles":["3m","3m","3m","4m","4m","5m","6m"],"answers":["2m","4m","5m","7m"]},{"kind":"tamechan","tiles":["3m","4m","4m","4m","5m","6m","7m"],"answers":["2m","3m","5m","8m"]},{"kind":"tamechan","tiles":["3m","4m","5m","5m","6m","6m","6m"],"answers":["2m","4m","5m","7m"]},{"kind":"tamechan","tiles":["4m","4m","4m","5m","5m","6m","7m"],"answers":["3m","5m","6m","8m"]},{"kind":"tamechan","tiles":["4m","5m","5m","5m","6m","7m","8m"],"answers":["3m","4m","6m","9m"]},{"kind":"tamechan","tiles":["5m","5m","5m","6m","7m","8m","9m"],"answers":["4m","6m","7m","9m"]},{"kind":"tamechan","tiles":["5m","6m","7m","7m","8m","8m","8m"],"answers":["4m","6m","7m","9m"]},{"kind":"tamechan","tiles":["5m","6m","6m","6m","7m","7m","7m"],"answers":["4m","5m","6m","7m"]},{"kind":"tamechan","tiles":["6m","7m","7m","7m","8m","8m","8m"],"answers":["5m","6m","7m","8m"]},{"kind":"tamechan","tiles":["1m","1m","1m","2m","2m","3m","4m"],"answers":["2m","3m","5m"]},{"kind":"tamechan","tiles":["1m","1m","2m","3m","4m","5m","6m"],"answers":["1m","4m","7m"]},{"kind":"tamechan","tiles":["1m","1m","3m","4m","5m","6m","7m"],"answers":["2m","5m","8m"]},{"kind":"tamechan","tiles":["1m","1m","4m","5m","6m","7m","8m"],"answers":["3m","6m","9m"]},{"kind":"tamechan","tiles":["1m","2m","3m","3m","4m","4m","4m"],"answers":["2m","3m","5m"]},{"kind":"tamechan","tiles":["1m","2m","3m","4m","6m","6m","6m"],"answers":["1m","4m","5m"]},{"kind":"tamechan","tiles":["2m","2m","2m","4m","4m","5m","6m"],"answers":["3m","4m","7m"]},{"kind":"tamechan","tiles":["2m","2m","2m","3m","4m","6m","6m"],"answers":["2m","5m","6m"]},{"kind":"tamechan","tiles":["2m","2m","3m","3m","3m","4m","4m"],"answers":["2m","3m","4m"]},{"kind":"tamechan","tiles":["3m","3m","3m","4m","5m","5m","6m"],"answers":["4m","5m","7m"]},{"kind":"tamechan","tiles":["3m","3m","3m","5m","5m","6m","7m"],"answers":["4m","5m","8m"]},{"kind":"tamechan","tiles":["3m","3m","3m","5m","7m","7m","7m"],"answers":["4m","5m","6m"]}];
 
 const PROBLEM_KIND_LABELS = {
   wait2: "ペンチャン・カンチャン",
   discard5: "リャンメン化",
   rk8: "リャンメンカンチャン",
   sanmenchan8: "サンメンチャン化",
+  tamechan: "タメンチャン",
   iipeiko_plus1: "一盃口＋1枚",
+  ittsu_plus1: "一通＋1枚",
+  tanyao_plus1: "タンヤオ＋1枚",
+  sanshoku_plus1: "三色＋1枚",
   dualpick: "弱ターツ落とし",
   shape10: "順子＋リャンメン残し"
 };
-const PROBLEM_KIND_ORDER = ["wait2","discard5","rk8","sanmenchan8","iipeiko_plus1","dualpick","shape10"];
+const PROBLEM_KIND_ORDER = ["wait2","discard5","rk8","sanmenchan8","tamechan","iipeiko_plus1","ittsu_plus1","tanyao_plus1","sanshoku_plus1","dualpick","shape10"];
 
 function renderProblemTypeSettings(){
   const grid=document.getElementById("problemTypeGrid");
@@ -1425,15 +2030,38 @@ const doneTitle=document.getElementById('doneTitle'), finalSub=document.getEleme
 const postXResultBtn=document.getElementById('postXResult');
 const survivalTopStatus=document.getElementById('survivalTopStatus');
 const focusPauseOverlay=document.getElementById('focusPauseOverlay');
+const spaceParticleLayer=document.getElementById("spaceParticleLayer");
+let spaceParticleTimer=0;
 const focusResumeBtn=document.getElementById('focusResumeBtn');
 const liteModeToggle=document.getElementById('liteModeToggle');
 const progressStatus=document.getElementById('progressStatus');
-const modeHudNormal=document.getElementById('modeHudNormal'), modeHudSurvival=document.getElementById('modeHudSurvival');
+const modeHudNormal=document.getElementById('modeHudNormal'), modeHudSurvival=document.getElementById('modeHudSurvival'), modeHudEndless=document.getElementById('modeHudEndless');
 const modeHudStart=document.getElementById('modeHudStart');
 const modeHudPause=document.getElementById('modeHudPause');
 const hudScore=document.getElementById('hudScore'), hudMiss=document.getElementById('hudMiss'), hudMissWrap=document.getElementById('hudMissWrap');
 const bpmMinusBtn=document.getElementById("bpmMinus"), bpmPlusBtn=document.getElementById("bpmPlus");
+const countdownOverlay=document.getElementById("countdownOverlay"), countdownText=document.getElementById("countdownText");
+const finalStats=document.getElementById("finalStats"), finalBest=document.getElementById("finalBest");
+const bestRecordSummary=document.getElementById("bestRecordSummary");
+const normalFrequencySettings=document.getElementById("normalFrequencySettings");
+const normalFrequencySetting=document.getElementById("normalFrequencySetting");
+const normalFrequencySettingValue=document.getElementById("normalFrequencySettingValue");
+const normalFrequencyWarning=document.getElementById("normalFrequencyWarning");
+const endlessSettings=document.getElementById("endlessSettings");
+const endlessSpeedSetting=document.getElementById("endlessSpeedSetting");
+const endlessSpeedSettingValue=document.getElementById("endlessSpeedSettingValue");
+const endlessFrequencySetting=document.getElementById("endlessFrequencySetting");
+const endlessFrequencySettingValue=document.getElementById("endlessFrequencySettingValue");
+const seVolumeInput=document.getElementById("seVolume"), seVolumeValue=document.getElementById("seVolumeValue");
+const bgmVolumeInput=document.getElementById("bgmVolume"), bgmVolumeValue=document.getElementById("bgmVolumeValue");
+const bgmTrackSelect=document.getElementById("bgmTrackSelect"), bgmTrackLabel=document.getElementById("bgmTrackLabel");
+const bgmPlayer=document.getElementById("bgmPlayer");
+const bgmPlayer2=document.getElementById("bgmPlayer2");
+const bgmPlayer3=document.getElementById("bgmPlayer3");
+const muteAudioInput=document.getElementById("muteAudio");
 let idx=0,score=0,combo=0,bpm=50,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
+let spawnDueAt=0;
+let spawnDelayFactor=1;
 let gameQuestions = [];
 let activeNotes = [];
 let survivalKindDecks = new Map();
@@ -1442,15 +2070,58 @@ let survivalSpawnCount = 0;
 let survivalWasCustom=false;
 let gameMode="normal";
 let selectedMode="normal";
+let normalFrequencyLevel=3;
+let normalFrequencyUnsafe=false;
+let endlessBaseSpeed=1.4;
+let endlessBaseFrequency=4;
+let endlessChosenSpeed=1.4;
+let endlessChosenFrequency=4;
+let endlessSettingsCustom=false;
+function isSurvivalRulesMode(mode=gameMode){
+  return mode==="survival" || mode==="endless";
+}
+function isEndlessMode(mode=gameMode){
+  return mode==="endless";
+}
+
 let missCount=0;
 let survivalResolvedCount=0;
 let survivalSolvedCount=0;
-let survivalFrequencyLevel=1;
-let survivalAtFrequencyCap=false;
+let survivalFrequencyLevel=gameMode==="endless" ? SURVIVAL_MAX_FREQUENCY_LEVEL : 1;
+let survivalAtFrequencyCap=gameMode==="endless";
 let survivalPostCapResolved=0;
 let survivalMinFallSpeed=0.5;
 let hold2xActive=false;
+let tamechanFocusNote=null;
+let tamechanSlowTimer=0;
+let tamechanTimerRaf=0;
+let tamechanSlowActive=false;
+const TAMECHAN_BASE_ANSWERS=5;
+const TAMECHAN_BASE_SLOW_MS=5000;
+const TAMECHAN_PER_ANSWER_MS=500;
+const TAMECHAN_MIN_SLOW_MS=1000;
+const TAMECHAN_SLOW_MULTIPLIER=0.18;
+
+function tamechanSlowDurationMs(q){
+  const count=Math.max(1,Number(q?.answers?.length)||1);
+  return Math.max(
+    TAMECHAN_MIN_SLOW_MS,
+    TAMECHAN_BASE_SLOW_MS + (count-TAMECHAN_BASE_ANSWERS)*TAMECHAN_PER_ANSWER_MS
+  );
+}
 let userFallSpeed=1;
+let countdownActive=false;
+let countdownToken=0;
+let sessionMaxSpeed=1;
+let normalSavedSpeed=1;
+let seVolume=1;
+const SE_OUTPUT_GAIN=4.0;
+let bgmVolume=.7;
+let selectedBgmTrack="1";
+let audioMuted=false;
+let sessionStats=null;
+const SETTINGS_KEY="mahjongRhythmSettingsV1";
+const BEST_KEY="mahjongRhythmBestV1";
 const SURVIVAL_START_BPM=20;
 const SURVIVAL_STEP_QUESTIONS=4;
 const SURVIVAL_MAX_FREQUENCY_LEVEL=4;
@@ -1459,24 +2130,279 @@ const SURVIVAL_MAX_MISS=3;
 const travelBase=5200; // 落下速度の基準。BPMとは完全に独立
 const honors=["東","南","西","北","白","發","中"];
 
+function emptyKindStats(){
+  const byKind={};
+  PROBLEM_KIND_ORDER.forEach(k=>byKind[k]={correct:0,miss:0,perfect:0,good:0});
+  return {perfect:0,good:0,missClicks:0,questionCorrect:0,questionMiss:0,byKind};
+}
+
+function loadJsonStorage(key,fallback){
+  try{
+    const raw=localStorage.getItem(key);
+    return raw ? {...fallback,...JSON.parse(raw)} : fallback;
+  }catch(_){
+    return fallback;
+  }
+}
+
+function allBgmPlayers(){
+  return [bgmPlayer,bgmPlayer2,bgmPlayer3].filter(Boolean);
+}
+
+function currentBgmPlayer(){
+  if(selectedBgmTrack==="2") return bgmPlayer2;
+  if(selectedBgmTrack==="3") return bgmPlayer3;
+  return bgmPlayer;
+}
+
+const BGM_OUTPUT_GAIN=0.12;
+
+function syncBgmAudioState(){
+  allBgmPlayers().forEach(player=>{
+    // BGM音源自体の音圧が高いため、表示上のBGM音量とは別に全体ゲインを下げる。
+    // SE側は変更せず、BGMだけ約12%の出力に抑える。
+    player.volume=audioMuted ? 0 : Math.min(1,bgmVolume*BGM_OUTPUT_GAIN);
+  });
+}
+
+function playBgm(){
+  const player=currentBgmPlayer();
+  if(!player) return;
+  syncBgmAudioState();
+
+  // 選択されていない曲は必ず止める。
+  allBgmPlayers().forEach(p=>{
+    if(p!==player && !p.paused) p.pause();
+  });
+
+  if(!audioMuted && bgmVolume>0){
+    player.play().catch(()=>{});
+  }
+}
+
+function pauseBgm(){
+  allBgmPlayers().forEach(player=>{
+    if(!player.paused) player.pause();
+  });
+}
+
+function restartBgm(){
+  pauseBgm();
+  const player=currentBgmPlayer();
+  if(!player) return;
+  player.currentTime=0;
+  playBgm();
+}
+
+function currentSettings(){
+  return {
+    liteMode:!!liteMode,
+    selectedKinds:[...selectedProblemKinds()],
+    normalSpeed:normalSavedSpeed,
+    seVolume,
+    bgmVolume,
+    bgmTrack:selectedBgmTrack,
+    muted:audioMuted
+  };
+}
+
+function saveSettings(){
+  try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(currentSettings()));}catch(_){}
+}
+
+function loadBestRecords(){
+  const fallback={
+    survival:{score:0,solved:0,speed:0},
+    custom:{score:0,solved:0,speed:0}
+  };
+  const loaded=loadJsonStorage(BEST_KEY,fallback);
+  loaded.survival={...fallback.survival,...(loaded.survival||{})};
+  loaded.custom={...fallback.custom,...(loaded.custom||{})};
+  return loaded;
+}
+
+function saveBestRecords(data){
+  try{localStorage.setItem(BEST_KEY,JSON.stringify(data));}catch(_){}
+}
+
+function updateBestRecordSummary(){
+  if(!bestRecordSummary) return;
+  const b=loadBestRecords();
+  bestRecordSummary.innerHTML=
+    `<b>SURVIVAL BEST</b>　${b.survival.score}点 / ${b.survival.solved}問 / SPEED ${Number(b.survival.speed||0).toFixed(1)}×<br>`+
+    `<b>CUSTOM BEST</b>　${b.custom.score}点 / ${b.custom.solved}問 / SPEED ${Number(b.custom.speed||0).toFixed(1)}×`;
+}
+
+function applySavedSettings(){
+  const defaults={
+    liteMode:false,
+    selectedKinds:[...PROBLEM_KIND_ORDER],
+    normalSpeed:1,
+    seVolume:1,
+    bgmVolume:.7,
+    bgmTrack:"1",
+    muted:false
+  };
+  const s=loadJsonStorage(SETTINGS_KEY,defaults);
+
+  if(Array.isArray(s.selectedKinds)){
+    const selected=new Set(s.selectedKinds);
+    document.querySelectorAll(".problem-kind-toggle").forEach(el=>el.checked=selected.has(el.value));
+  }
+
+  liteMode=!!s.liteMode;
+  if(liteModeToggle) liteModeToggle.checked=liteMode;
+  document.body.classList.toggle("lite-mode",liteMode);
+
+  seVolume=Math.max(0,Math.min(1,Number(s.seVolume ?? 1)));
+  bgmVolume=Math.max(0,Math.min(1,Number(s.bgmVolume ?? .7)));
+  selectedBgmTrack=String(s.bgmTrack||"1");
+  if(!["1","2","3"].includes(selectedBgmTrack)) selectedBgmTrack="1";
+  audioMuted=!!s.muted;
+
+  if(seVolumeInput) seVolumeInput.value=seVolume;
+  if(bgmVolumeInput) bgmVolumeInput.value=bgmVolume;
+  if(bgmTrackSelect){
+    if(bgmTrackSelect.querySelector(`option[value="${selectedBgmTrack}"]`)?.disabled){
+      selectedBgmTrack="1";
+    }
+    bgmTrackSelect.value=selectedBgmTrack;
+  }
+  if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
+  if(muteAudioInput) muteAudioInput.checked=audioMuted;
+  if(seVolumeValue) seVolumeValue.textContent=`${Math.round(seVolume*100)}%`;
+  if(bgmVolumeValue) bgmVolumeValue.textContent=`${Math.round(bgmVolume*100)}%`;
+  syncBgmAudioState();
+
+  if(fallSpeedSlider){
+    const v=Math.max(.5,Math.min(4,Number(s.normalSpeed||1)));
+    normalSavedSpeed=v;
+    fallSpeedSlider.value=v.toFixed(1);
+    userFallSpeed=v;
+    if(fallSpeedValue) fallSpeedValue.textContent=`${v.toFixed(1)}×`;
+  }
+}
+
+function updateBestAfterGame(){
+  if(gameMode!=="survival") return {isNew:false,record:null};
+  const best=loadBestRecords();
+  const key=survivalWasCustom ? "custom" : "survival";
+  const prev={...best[key]};
+  const next={
+    score:Math.max(prev.score||0,score),
+    solved:Math.max(prev.solved||0,survivalSolvedCount),
+    speed:Math.max(prev.speed||0,sessionMaxSpeed)
+  };
+  const isNew=next.score>prev.score || next.solved>prev.solved || next.speed>prev.speed;
+  best[key]=next;
+  saveBestRecords(best);
+  updateBestRecordSummary();
+  return {isNew,record:next};
+}
+
+function renderFinalStats(){
+  if(!finalStats || !sessionStats) return;
+  const totalJudgments=sessionStats.perfect+sessionStats.good;
+  const denom=totalJudgments+sessionStats.missClicks+sessionStats.questionMiss;
+  const accuracy=denom>0 ? Math.round((totalJudgments/denom)*100) : 0;
+
+  const rows=PROBLEM_KIND_ORDER.map(kind=>{
+    const s=sessionStats.byKind[kind];
+    if(!s || (s.correct+s.miss+s.perfect+s.good)===0) return "";
+    return `<div class="final-kind-row"><span>${PROBLEM_KIND_LABELS[kind]||kind}</span><span>○${s.correct} / MISS ${s.miss} / P${s.perfect} G${s.good}</span></div>`;
+  }).join("");
+
+  finalStats.innerHTML=
+    `<div class="final-stat-summary">`+
+      `<div><b>PERFECT</b> ${sessionStats.perfect}</div>`+
+      `<div><b>GOOD</b> ${sessionStats.good}</div>`+
+      `<div><b>MISS CLICK</b> ${sessionStats.missClicks}</div>`+
+      `<div><b>正答率</b> ${accuracy}%</div>`+
+    `</div>`+
+    `<div class="final-kind-title">問題種ごとの成績</div>${rows || '<div class="final-kind-row"><span>記録なし</span><span>—</span></div>'}`;
+}
+
+function playCountdownTick(step){
+  const ctx=getAudioCtx();
+  if(!ctx || audioMuted) return;
+  const t=ctx.currentTime+.005;
+  const f=step==="START" ? 880 : 440+(3-Number(step))*70;
+  playTone(ctx,f,t,step==="START"?.20:.10,"sine",step==="START"?.045:.025);
+}
+
+function startCountdown(){
+  countdownToken++;
+  const token=countdownToken;
+  countdownActive=true;
+  paused=true;
+  updatePauseButtons();
+
+  if(countdownOverlay){
+    countdownOverlay.classList.add("show");
+    countdownOverlay.setAttribute("aria-hidden","false");
+  }
+
+  const steps=["3","2","1","START"];
+  let i=0;
+
+  const next=()=>{
+    if(token!==countdownToken || !running) return;
+    const step=steps[i++];
+    if(countdownText){
+      countdownText.textContent=step;
+      countdownText.style.animation="none";
+      void countdownText.offsetWidth;
+      countdownText.style.animation="";
+    }
+    playCountdownTick(step);
+
+    if(i<steps.length){
+      setTimeout(next,620);
+    }else{
+      setTimeout(()=>{
+        if(token!==countdownToken || !running) return;
+        countdownActive=false;
+        paused=false;
+        if(countdownOverlay){
+          countdownOverlay.classList.remove("show");
+          countdownOverlay.setAttribute("aria-hidden","true");
+        }
+        updatePauseButtons();
+        restartBgm();
+        scheduleNextSpawn();
+        raf=requestAnimationFrame(animate);
+      },420);
+    }
+  };
+  next();
+}
+
 function survivalLabelJa(){
+  if(gameMode==="endless"){
+    return (survivalWasCustom || endlessSettingsCustom) ? "エンドレス(カスタム)" : "エンドレス";
+  }
   return survivalWasCustom ? "サバイバル(カスタム)" : "サバイバル";
 }
 
 function survivalLabelEn(){
+  if(gameMode==="endless"){
+    return (survivalWasCustom || endlessSettingsCustom) ? "ENDLESS (CUSTOM)" : "ENDLESS";
+  }
   return survivalWasCustom ? "SURVIVAL (CUSTOM)" : "SURVIVAL";
 }
 
 function updateSurvivalTopStatus(){
   if(!survivalTopStatus) return;
-  if(gameMode!=="survival"){
+  if(!isSurvivalRulesMode()){
     survivalTopStatus.textContent="";
     return;
   }
   const shownSpeed=userFallSpeed*(hold2xActive?2:1);
-  const frequencyText = survivalFrequencyLevel>=SURVIVAL_MAX_FREQUENCY_LEVEL
-    ? "FREQUENCY MAX"
-    : `FREQUENCY Lv.${survivalFrequencyLevel}`;
+  const frequencyText = gameMode==="endless"
+    ? `FREQUENCY Lv.${survivalFrequencyLevel} FIXED`
+    : (survivalFrequencyLevel>=SURVIVAL_MAX_FREQUENCY_LEVEL
+      ? "FREQUENCY MAX"
+      : `FREQUENCY Lv.${survivalFrequencyLevel}`);
   survivalTopStatus.textContent=`SPEED ${shownSpeed.toFixed(1)}× / ${frequencyText}`;
 }
 
@@ -1490,6 +2416,7 @@ function applyLiteMode(enabled){
 if(liteModeToggle){
   liteModeToggle.addEventListener("change",()=>{
     applyLiteMode(liteModeToggle.checked);
+    saveSettings();
   });
 }
 
@@ -1498,7 +2425,7 @@ function updateHud(){
   hudMiss.textContent=missCount;
   hudMissWrap.classList.remove("hidden");
   const limit=document.getElementById("hudMissLimit");
-  if(limit) limit.style.display=gameMode==="survival" ? "" : "none";
+  if(limit) limit.style.display=isSurvivalRulesMode() ? "" : "none";
 }
 
 
@@ -1508,37 +2435,53 @@ function updateStartButtonLabel(){
 }
 
 function updatePauseButtons(){
-  const label=paused ? "再開" : "一時停止";
+  const label=paused && !countdownActive ? "再開" : "一時停止";
 
   const topPause=document.getElementById("pause");
-  if(topPause) topPause.textContent=paused ? "再開" : "停止";
+  if(topPause){
+    topPause.textContent=paused && !countdownActive ? "再開" : "停止";
+    topPause.disabled=!!countdownActive;
+  }
 
   if(modeHudPause){
     modeHudPause.textContent=label;
-    modeHudPause.disabled=!running;
+    modeHudPause.disabled=!running || countdownActive;
   }
 }
 
 function updateModeUi(){
   updateHud();
-  const isSurvival=gameMode==="survival";
+  const isSurvivalRules=isSurvivalRulesMode();
+  const selectedIsNormal=selectedMode==="normal";
   const selectedIsSurvival=selectedMode==="survival";
-  modeLabel.textContent = isSurvival ? survivalLabelEn() : "NORMAL";
+  const selectedIsEndless=selectedMode==="endless";
+
+  modeLabel.textContent = isSurvivalRules ? survivalLabelEn() : "NORMAL";
   missEl.textContent = missCount;
 
   const missLimitTop=document.getElementById("missLimitTop");
-  if(missLimitTop) missLimitTop.style.display=isSurvival ? "" : "none";
+  if(missLimitTop) missLimitTop.style.display=isSurvivalRules ? "" : "none";
 
-  modeHudNormal.classList.toggle("active",!selectedIsSurvival);
+  modeHudNormal.classList.toggle("active",selectedIsNormal);
   modeHudSurvival.classList.toggle("active",selectedIsSurvival);
+  if(modeHudEndless) modeHudEndless.classList.toggle("active",selectedIsEndless);
 
   const topNormal=document.getElementById("startNormal");
   const topSurvival=document.getElementById("startSurvival");
-  if(topNormal) topNormal.classList.toggle("active",!selectedIsSurvival);
+  const topEndless=document.getElementById("startEndless");
+  if(topNormal) topNormal.classList.toggle("active",selectedIsNormal);
   if(topSurvival) topSurvival.classList.toggle("active",selectedIsSurvival);
+  if(topEndless) topEndless.classList.toggle("active",selectedIsEndless);
 
-  bpmMinusBtn.disabled = running && isSurvival;
-  bpmPlusBtn.disabled = running && isSurvival;
+  if(normalFrequencySettings){
+    normalFrequencySettings.style.display=selectedIsNormal ? "" : "none";
+  }
+  if(endlessSettings){
+    endlessSettings.style.display=selectedIsEndless ? "" : "none";
+  }
+
+  bpmMinusBtn.disabled = running && isSurvivalRules;
+  bpmPlusBtn.disabled = running && isSurvivalRules;
   updateSurvivalTopStatus();
   updatePauseButtons();
   updateStartButtonLabel();
@@ -1570,9 +2513,15 @@ function playSpeedUpSound(){
 }
 
 function registerResolvedQuestion(){
-  if(gameMode!=="survival") return;
+  if(!isSurvivalRulesMode()) return;
 
   survivalResolvedCount++;
+
+  // ENDLESSは開始時に選んだ頻度・スピードで固定。自動変化しない。
+  if(gameMode==="endless"){
+    survivalAtFrequencyCap=survivalFrequencyLevel>=SURVIVAL_MAX_FREQUENCY_LEVEL;
+    return;
+  }
 
   // Lv.4までは4問ごとに出題頻度アップ。
   // Lv.4到達後はFREQUENCY MAXとして、それ以降は速度下限のみ上げる。
@@ -1612,10 +2561,66 @@ function registerResolvedQuestion(){
     }
 
     fallSpeedValue.textContent=`${userFallSpeed.toFixed(1)}×`;
+    sessionMaxSpeed=Math.max(sessionMaxSpeed,userFallSpeed);
     updateSurvivalTopStatus();
     playSpeedUpSound();
     showProgressStatus(`SPEED UP  ${survivalMinFallSpeed.toFixed(1)}×`);
   }
+}
+
+function rewindAllNotesOnMiss(){
+  if(!isSurvivalRulesMode()) return;
+
+  const rewindPx=stage.clientHeight*1.00;
+  const now=performance.now();
+
+  activeNotes.forEach(n=>{
+    if(n.answered) return;
+    n.currentY=(n.currentY ?? 0)-rewindPx;
+    n.lastMoveTs=now;
+
+    const scale=n.scale ?? 1;
+    const visualScale=(tamechanSlowActive && tamechanFocusNote===n && n.focusScale)
+      ? n.focusScale
+      : scale;
+
+    n.el.style.transform=`translate(-50%, ${n.currentY}px) scale(${visualScale})`;
+  });
+
+  // MISS前に予約されていた次回出題は一旦破棄。
+  // 上へ戻した一番新しい問題が、出題入口から十分離れるまで待ってから再開する。
+  clearTimeout(spawnTimer);
+  spawnTimer=0;
+  spawnDueAt=0;
+  spawnDelayFactor=1;
+
+  const live=activeNotes.filter(n=>!n.answered && n.el && n.el.isConnected);
+  if(!live.length){
+    scheduleNextSpawn();
+    return;
+  }
+
+  const newest=live[live.length-1];
+  const scale=newest.scale ?? 1;
+  const visualHeight=Math.max(1,newest.el.offsetHeight*scale);
+  const gapPx=30;
+
+  // 新規問題はおおむね -高さ-20px から出る。
+  // 既存の一番上の問題が、そこから1問分＋隙間だけ下へ抜けるまで新規出題を待つ。
+  const safeY=gapPx;
+  const distanceToSafe=Math.max(0,safeY-(newest.currentY ?? 0));
+
+  const basePxPerSecond=150;
+  const actualSpeed=Math.max(
+    1,
+    basePxPerSecond*userFallSpeed*(tamechanSlowActive ? TAMECHAN_SLOW_MULTIPLIER : 1)
+  );
+
+  const waitForClear=(distanceToSafe/actualSpeed)*1000;
+  const regularDelay=minimumNonOverlapDelay();
+  const delay=Math.max(waitForClear,regularDelay);
+
+  armSpawnTimer(delay, tamechanSlowActive ? (1/Math.max(TAMECHAN_SLOW_MULTIPLIER,.01)) : 1);
 }
 
 function registerMiss(reason=""){
@@ -1624,7 +2629,14 @@ function registerMiss(reason=""){
   combo=0;
   comboEl.textContent=combo;
   missEl.textContent=missCount;
-  if(gameMode==="survival" && missCount>=SURVIVAL_MAX_MISS){
+
+  // SURVIVAL / ENDLESSでは、MISS時に残っている全問題を
+  // 画面高さの100%ぶん上へ戻して立て直す。
+  if(isSurvivalRulesMode()){
+    rewindAllNotesOnMiss();
+  }
+
+  if(isSurvivalRulesMode() && missCount>=SURVIVAL_MAX_MISS){
     finish(false, reason || "3 MISS");
   }
 }
@@ -1699,8 +2711,9 @@ function miniAnswerHtml(t){
 }
 function fallPixelsPerSecond(){
   const holdMultiplier=hold2xActive ? 2 : 1;
+  const slowMultiplier=tamechanSlowActive ? TAMECHAN_SLOW_MULTIPLIER : 1;
   const basePxPerSecond=150;
-  return basePxPerSecond*userFallSpeed*holdMultiplier;
+  return basePxPerSecond*userFallSpeed*holdMultiplier*slowMultiplier;
 }
 
 function duration(){
@@ -1741,35 +2754,49 @@ function createNote(q, qIndex){
   el.className=`note ${nextNoteGlowClass()}`;
   const multiPick = q.kind === "dualpick";
   if(multiPick) el.classList.add("dualpick-note");
+  if(q.kind==="tamechan") el.classList.add("tamechan-note");
   const miniTiles=nearbyAnswerTiles(q);
   const miniHtml=miniTiles.length ? `<div class="mini-answer-row">${miniTiles.map(miniAnswerHtml).join("")}</div>` : ``;
   const slotHtml = multiPick ? `<div class="pick-slots">${q.tiles.map((_,i)=>`<div class="pick-slot" data-slot="${i}"></div>`).join("")}</div>` : ``;
-  el.innerHTML=`${miniHtml}${slotHtml}<div class="note-row"><span class="arrow">◀</span><div class="tiles">${q.tiles.map((t,i)=>tileHtml(t,i)).join("")}</div><span class="arrow">▶</span></div>`;
+  const isDrawProblem = q.kind==="wait2" || q.kind==="tamechan";
+  const requiredCount = q.kind==="dualpick" ? 2 : (q.kind==="tamechan" ? q.answers.length : 1);
+  const countLabel = q.kind==="tamechan" ? "？" : requiredCount;
+  const countHtml = requiredCount>1 ? `<span class="action-count">×${countLabel}</span>` : ``;
+  const ariaCount = q.kind==="tamechan" ? " 複数枚" : (requiredCount>1 ? ` ${requiredCount}枚` : "");
+  const actionHtml = `<div class="action-marker ${isDrawProblem?"draw":"discard"}" aria-label="${isDrawProblem?"引く問題":"切る問題"}${ariaCount}">${isDrawProblem?"＋":"✂"}${countHtml}</div>`;
+  const tameTimerHtml = q.kind==="tamechan" ? `<div class="tamechan-timer">${(tamechanSlowDurationMs(q)/1000).toFixed(1)}秒</div>` : ``;
+  const leftArrow=q.kind==="tamechan" ? "◆" : "◀";
+  const rightArrow=q.kind==="tamechan" ? "◆" : "▶";
+  el.innerHTML=`${actionHtml}${tameTimerHtml}${miniHtml}${slotHtml}<div class="note-row"><span class="arrow">${leftArrow}</span><div class="tiles">${q.tiles.map((t,i)=>tileHtml(t,i)).join("")}</div><span class="arrow">${rightArrow}</span></div>`;
   el.style.visibility="hidden";
   el.style.opacity="1";
   el.style.transition="none";
   stage.appendChild(el);
 
   // 流れている手牌そのものをクリックしても回答できる。
-  const answerThisNote=(code,clientX=null,clientY=null)=>{
+  const answerThisNote=(code,clientX=null,clientY=null,sourceEl=null)=>{
     if(!running||paused)return;
     const n=activeNotes.find(x=>x.el===el);
     if(!n)return;
+
+    // タメンチャンの3秒スロー中は、その問題以外を押せない。
+    if(tamechanSlowActive && tamechanFocusNote && tamechanFocusNote!==n) return;
+
     if(Number.isFinite(clientX) && Number.isFinite(clientY)){
       n.lastAnswerPoint={clientX,clientY};
     }
     reactJudgeLine();
     glowNoteArrows(n);
-    judgeAnswer(code,n);
+    judgeAnswer(code,n,sourceEl);
   };
 
   el.querySelectorAll(".tile-cell").forEach(cell=>{
-    const answerFromHand=()=>answerThisNote(cell.dataset.code);
+    const answerFromHand=()=>answerThisNote(cell.dataset.code,null,null,cell);
     cell.addEventListener("pointerdown", e=>{
       e.preventDefault();
       emitClickRing(e.clientX,e.clientY,false);
       playClickSound();
-      answerThisNote(cell.dataset.code,e.clientX,e.clientY);
+      answerThisNote(cell.dataset.code,e.clientX,e.clientY,cell);
     });
     cell.addEventListener("keydown", e=>{
       if(e.key==="Enter"||e.key===" "){
@@ -1785,7 +2812,7 @@ function createNote(q, qIndex){
       e.preventDefault();
       emitClickRing(e.clientX,e.clientY,false);
       playClickSound();
-      answerThisNote(btn.dataset.code,e.clientX,e.clientY);
+      answerThisNote(btn.dataset.code,e.clientX,e.clientY,btn);
     });
   });
 
@@ -1812,6 +2839,7 @@ function createNote(q, qIndex){
     answered:false,
     scale,
     selectedAnswers:[],
+    tamechanSlowUsed:false,
     currentY:from,
     lastMoveTs:now,
     // PERFECT基準 = 手牌列（◀ ▶ の先端が向いている高さ）の中央
@@ -1847,41 +2875,113 @@ function minimumNonOverlapDelay(){
   return (visualHeight+gapPx)/Math.max(normalPxPerMs,.001);
 }
 
+function fireScheduledSpawn(){
+  spawnTimer=0;
+  spawnDueAt=0;
+  spawnDelayFactor=1;
+
+  if(!running || paused) return;
+
+  if(isSurvivalRulesMode()){
+    const q=nextSurvivalQuestion();
+    if(!q) return;
+    createNote(q,survivalSpawnCount);
+    survivalSpawnCount++;
+    progressEl.textContent=`${survivalSpawnCount} 問`;
+  }else{
+    if(idx>=gameQuestions.length) return;
+    createNote(gameQuestions[idx],idx);
+    idx++;
+    progressEl.textContent=`${idx} / ${gameQuestions.length}`;
+  }
+
+  scheduleNextSpawn();
+}
+
+function armSpawnTimer(delay,factor=1){
+  clearTimeout(spawnTimer);
+  const safeDelay=Math.max(0,delay);
+  spawnDelayFactor=Math.max(.01,factor);
+  spawnDueAt=performance.now()+safeDelay;
+  spawnTimer=setTimeout(fireScheduledSpawn,safeDelay);
+}
+
+function retimePendingSpawnForSlowState(){
+  if(!spawnTimer || !spawnDueAt || !running || paused) return;
+
+  const now=performance.now();
+  const remaining=Math.max(0,spawnDueAt-now);
+  const oldFactor=Math.max(.01,spawnDelayFactor || 1);
+  const newFactor=tamechanSlowActive ? (1/Math.max(TAMECHAN_SLOW_MULTIPLIER,.01)) : 1;
+
+  // すでに進んだ分はそのままにし、「残り時間」だけを新しい速度比へ変換する。
+  const normalEquivalentRemaining=remaining/oldFactor;
+  const adjustedRemaining=normalEquivalentRemaining*newFactor;
+
+  armSpawnTimer(adjustedRemaining,newFactor);
+}
+
+
+function normalFrequencyRequestedDelay(){
+  // Lv.1〜6。Lv.3は従来NORMALの約900ms相当。
+  const table={1:1160,2:1030,3:900,4:770,5:640,6:510};
+  return table[normalFrequencyLevel] || 900;
+}
+
+function updateNormalFrequencyWarning(nonOverlapDelay=null){
+  if(!normalFrequencyWarning) return;
+
+  const requested=normalFrequencyRequestedDelay();
+  const runtimeUnsafe=Number.isFinite(nonOverlapDelay) && nonOverlapDelay>0 && requested<nonOverlapDelay;
+  const guidelineUnsafe=normalFrequencyLevel>=5;
+  normalFrequencyUnsafe=runtimeUnsafe || guidelineUnsafe;
+
+  normalFrequencyWarning.style.display=normalFrequencyUnsafe ? "" : "none";
+
+  if(runtimeUnsafe){
+    normalFrequencyWarning.textContent="⚠ 現在の速度・問題サイズでは、重ならない最低間隔を超える設定です";
+  }else{
+    normalFrequencyWarning.textContent="⚠ 高頻度設定です。問題同士が重なる可能性があります";
+  }
+}
+
 function scheduleNextSpawn(){
   clearTimeout(spawnTimer);
+  spawnTimer=0;
+  spawnDueAt=0;
+  spawnDelayFactor=1;
+
   if(!running || paused) return;
-  if(gameMode!=="survival" && idx>=gameQuestions.length) return;
+  if(!isSurvivalRulesMode() && idx>=gameQuestions.length) return;
 
-  const requestedDelay = gameMode==="survival"
+  const requestedDelay = isSurvivalRulesMode()
     ? Math.max(80, 1200-(survivalFrequencyLevel-1)*130)
-    : 900;
+    : normalFrequencyRequestedDelay();
 
-  // 頻度は上がるが、問題同士が重なるところまでは上げない。
+  // 現在の問題サイズと速度から、重ならない最低間隔を計算。
   const nonOverlapDelay=minimumNonOverlapDelay();
-  const nextDelay=Math.max(requestedDelay, nonOverlapDelay);
 
-  if(gameMode==="survival"){
+  // SURVIVAL / ENDLESSは従来どおり重なり防止を優先。
+  // NORMALはユーザーが高頻度を選んだ場合、その設定を優先して安全間隔より詰めることを許可する。
+  const baseDelay=isSurvivalRulesMode()
+    ? Math.max(requestedDelay, nonOverlapDelay)
+    : requestedDelay;
+
+  if(gameMode==="normal"){
+    updateNormalFrequencyWarning(nonOverlapDelay);
+  }
+
+  // スロー中は「間隔そのもの」を落下速度と同率で伸ばす。
+  const slowFactor=tamechanSlowActive
+    ? (1/Math.max(TAMECHAN_SLOW_MULTIPLIER,.01))
+    : 1;
+  const nextDelay=baseDelay*slowFactor;
+
+  if(isSurvivalRulesMode()){
     survivalAtFrequencyCap = survivalFrequencyLevel>=SURVIVAL_MAX_FREQUENCY_LEVEL;
   }
 
-  spawnTimer=setTimeout(()=>{
-    if(!running || paused) return;
-
-    if(gameMode==="survival"){
-      const q=nextSurvivalQuestion();
-      if(!q) return;
-      createNote(q,survivalSpawnCount);
-      survivalSpawnCount++;
-      progressEl.textContent=`${survivalSpawnCount} 問`;
-    }else{
-      if(idx>=gameQuestions.length) return;
-      createNote(gameQuestions[idx],idx);
-      idx++;
-      progressEl.textContent=`${idx} / ${gameQuestions.length}`;
-    }
-
-    scheduleNextSpawn();
-  }, nextDelay);
+  armSpawnTimer(nextDelay,slowFactor);
 }
 function animate(ts){
   if(!running||paused)return;
@@ -1904,7 +3004,8 @@ function animate(ts){
     const pxPerMs=fallPixelsPerSecond()/1000;
     n.currentY=(n.currentY ?? from)+(pxPerMs*dt);
 
-    n.el.style.transform=`translate(-50%, ${n.currentY}px) scale(${scale})`;
+    const visualScale=(tamechanSlowActive && tamechanFocusNote===n && n.focusScale) ? n.focusScale : scale;
+    n.el.style.transform=`translate(-50%, ${n.currentY}px) scale(${visualScale})`;
 
     // PERFECT判定範囲にいる間だけ左右の矢印の色を変える。
     const judgeY=stage.clientHeight*0.5;
@@ -1912,14 +3013,20 @@ function animate(ts){
     // 矢印のPERFECT色も、◀ ▶ が向いている手牌列中央と完全に同じ基準。
     const center=n.currentY+(n.renderedHandCenterOffset ?? n.handCenterOffset ?? 0)+(n.handLiftVisualDy || 0);
     const half=Math.max(1,n.renderedHandHalf ?? n.handHalf ?? 32);
-    const inPerfectRange=Math.abs(center-judgeY)<=half*0.38;
+    const perfectRatio=n.q.kind==="tamechan" ? 1 : 0.38;
+    const inPerfectRange=Math.abs(center-judgeY)<=half*perfectRatio;
 
     (n.arrows || []).forEach(a=>{
       a.classList.toggle("perfect-range",inPerfectRange);
     });
 
     if(n.currentY>=to){
+      if(tamechanFocusNote===n) clearTamechanSlow();
       n.answered=true;
+      if(sessionStats){
+        sessionStats.questionMiss++;
+        sessionStats.byKind[n.q.kind].miss++;
+      }
       n.el.remove();
       activeNotes=activeNotes.filter(x=>x!==n);
       registerResolvedQuestion();
@@ -1929,7 +3036,7 @@ function animate(ts){
     }
   }
 
-  if(gameMode!=="survival" && idx>=gameQuestions.length && activeNotes.length===0){
+  if(!isSurvivalRulesMode() && idx>=gameQuestions.length && activeNotes.length===0){
     finish(true);
     return;
   }
@@ -2024,7 +3131,11 @@ function emitHandCenterRing(n){
 
 function successDisappear(n){
   n.answered=true;
-  if(gameMode==="survival") survivalSolvedCount++;
+  if(sessionStats){
+    sessionStats.questionCorrect++;
+    sessionStats.byKind[n.q.kind].correct++;
+  }
+  if(isSurvivalRulesMode()) survivalSolvedCount++;
   registerResolvedQuestion();
   successWave();
   emitHandCenterRing(n);
@@ -2041,7 +3152,7 @@ function successDisappear(n){
   setTimeout(()=>{
     n.el.remove();
     activeNotes=activeNotes.filter(x=>x!==n);
-    if(gameMode!=="survival" && idx>=gameQuestions.length && activeNotes.length===0) finish();
+    if(!isSurvivalRulesMode() && idx>=gameQuestions.length && activeNotes.length===0) finish();
   },340);
 }
 function shuffleQuestions(arr){
@@ -2109,12 +3220,23 @@ function returnDualPickHand(n, done){
 }
 
 let audioCtx=null;
+let seMasterCompressor=null;
 
 function getAudioCtx(){
   if(!audioCtx){
     const AC=window.AudioContext||window.webkitAudioContext;
     if(!AC) return null;
     audioCtx=new AC();
+
+    // SE全体を軽くまとめるコンプレッサー。
+    // 複数SEが重なった時のピークを抑えて、3倍ゲインでも割れにくくする。
+    seMasterCompressor=audioCtx.createDynamicsCompressor();
+    seMasterCompressor.threshold.value=-18;
+    seMasterCompressor.knee.value=18;
+    seMasterCompressor.ratio.value=5;
+    seMasterCompressor.attack.value=0.003;
+    seMasterCompressor.release.value=0.12;
+    seMasterCompressor.connect(audioCtx.destination);
   }
   if(audioCtx.state==="suspended") audioCtx.resume();
   return audioCtx;
@@ -2165,16 +3287,23 @@ const TILE_SUCCESS_SOUND = {
 };
 
 function playTone(ctx,freq,start,duration,type,gainValue,detune=0){
+  if(audioMuted || seVolume<=0) return;
+
+  // 表示100%=従来300%相当を維持しつつ、
+  // 単音ピークが極端に大きくならないよう軽く制限。
+  gainValue*=seVolume*SE_OUTPUT_GAIN;
+  gainValue=Math.min(gainValue,0.19);
+
   const osc=ctx.createOscillator();
   const gain=ctx.createGain();
   osc.type=type;
   osc.frequency.setValueAtTime(freq,start);
   osc.detune.setValueAtTime(detune,start);
   gain.gain.setValueAtTime(0.0001,start);
-  gain.gain.exponentialRampToValueAtTime(gainValue,start+0.012);
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.0002,gainValue),start+0.012);
   gain.gain.exponentialRampToValueAtTime(0.0001,start+duration);
   osc.connect(gain);
-  gain.connect(ctx.destination);
+  gain.connect(seMasterCompressor || ctx.destination);
   osc.start(start);
   osc.stop(start+duration+0.03);
 }
@@ -2183,8 +3312,8 @@ function playClickSound(){
   const ctx=getAudioCtx();
   if(!ctx) return;
   const t=ctx.currentTime+0.003;
-  playTone(ctx,520,t,0.055,"sine",0.018);
-  playTone(ctx,780,t+0.008,0.045,"triangle",0.010);
+  playTone(ctx,520,t,0.055,"sine",0.026);
+  playTone(ctx,780,t+0.008,0.045,"triangle",0.016);
 }
 
 function playModeSwitchSound(){
@@ -2208,8 +3337,8 @@ function playMissSound(){
   const ctx=getAudioCtx();
   if(!ctx) return;
   const t=ctx.currentTime+0.003;
-  playTone(ctx,220,t,0.11,"sawtooth",0.020);
-  playTone(ctx,165,t+0.035,0.14,"triangle",0.018);
+  playTone(ctx,220,t,0.11,"sawtooth",0.028);
+  playTone(ctx,165,t+0.035,0.14,"triangle",0.024);
 }
 
 function playTileSuccess(tile,strong=false){
@@ -2222,7 +3351,7 @@ function playTileSuccess(tile,strong=false){
 
   if(spec.ch){
     spec.ch.forEach((f,i)=>{
-      playTone(ctx,f*boost,t+i*0.012,dur+(i*0.015),"sine",strong?0.055:0.042);
+      playTone(ctx,f*boost,t+i*0.012,dur+(i*0.015),"sine",strong?0.046:0.038);
     });
     // きらっとした上音
     playTone(ctx,spec.ch[spec.ch.length-1]*2*boost,t+0.025,0.11,"triangle",strong?0.025:0.018);
@@ -2231,7 +3360,7 @@ function playTileSuccess(tile,strong=false){
 
   const f=spec.f*boost;
   const type=spec.w||"sine";
-  const g=strong?0.065:0.048;
+  const g=strong?0.052:0.043;
 
   playTone(ctx,f,t,dur,type,g);
   // 倍音を薄く重ねて「正解感」を出す。
@@ -2252,8 +3381,10 @@ function scoreForQuestion(q,isPerfect){
   const table={
     2:{good:400,perfect:700},
     5:{good:600,perfect:1000},
+    7:{good:700,perfect:1150},
     8:{good:800,perfect:1300},
-    11:{good:1000,perfect:1600}
+    11:{good:1000,perfect:1600},
+    14:{good:1200,perfect:1900}
   };
 
   const row=table[count] || {good:600,perfect:1000};
@@ -2264,9 +3395,9 @@ function playPerfectEffect(){
   const ctx=getAudioCtx();
   if(ctx){
     const t=ctx.currentTime+0.01;
-    playTone(ctx,880,t,0.16,"triangle",0.055);
-    playTone(ctx,1174.66,t+0.045,0.18,"sine",0.05);
-    playTone(ctx,1760,t+0.09,0.22,"triangle",0.035);
+    playTone(ctx,880,t,0.16,"triangle",0.031);
+    playTone(ctx,1174.66,t+0.045,0.18,"sine",0.027);
+    playTone(ctx,1760,t+0.09,0.22,"triangle",0.019);
   }
 
   judgeEl.classList.remove("perfect-hit");
@@ -2283,7 +3414,108 @@ function playPerfectEffect(){
   }
 }
 
-function judgeAnswer(tile,n){
+
+
+function hideTamechanTimer(n){
+  if(!n?.el) return;
+  const timerEl=n.el.querySelector(".tamechan-timer");
+  if(timerEl){
+    timerEl.classList.remove("show");
+    timerEl.textContent="0.0秒";
+  }
+}
+
+function runTamechanTimerDisplay(n,startMs,durationMs){
+  cancelAnimationFrame(tamechanTimerRaf);
+  const timerEl=n?.el?.querySelector(".tamechan-timer");
+  if(!timerEl) return;
+
+  timerEl.classList.add("show");
+
+  const tick=(now)=>{
+    if(!n?.el?.isConnected || !tamechanSlowActive || tamechanFocusNote!==n){
+      hideTamechanTimer(n);
+      return;
+    }
+
+    const remaining=Math.max(0,durationMs-(now-startMs));
+    timerEl.textContent=`${(remaining/1000).toFixed(1)}秒`;
+
+    if(remaining>0){
+      tamechanTimerRaf=requestAnimationFrame(tick);
+    }else{
+      timerEl.textContent="0.0秒";
+    }
+  };
+
+  tamechanTimerRaf=requestAnimationFrame(tick);
+}
+
+function clearTamechanSlow(){
+  clearTimeout(tamechanSlowTimer);
+  cancelAnimationFrame(tamechanTimerRaf);
+  tamechanSlowTimer=0;
+  tamechanTimerRaf=0;
+  if(tamechanFocusNote) hideTamechanTimer(tamechanFocusNote);
+  tamechanSlowActive=false;
+  retimePendingSpawnForSlowState();
+  if(tamechanFocusNote?.el){
+    tamechanFocusNote.el.classList.remove("tamechan-focus");
+    tamechanFocusNote.focusScale=null;
+  }
+  stage.classList.remove("tamechan-cinematic");
+  tamechanFocusNote=null;
+  activeNotes.forEach(n=>n.lastMoveTs=performance.now());
+  updateSurvivalTopStatus();
+}
+
+function activateTamechanSlow(n){
+  if(!n || n.q.kind!=="tamechan") return;
+
+  // この問題ではスローモーションは最初の1回だけ。
+  if(n.tamechanSlowUsed) return;
+  n.tamechanSlowUsed=true;
+
+  clearTimeout(tamechanSlowTimer);
+  cancelAnimationFrame(tamechanTimerRaf);
+  if(tamechanFocusNote?.el && tamechanFocusNote!==n){
+    tamechanFocusNote.el.classList.remove("tamechan-focus");
+  }
+
+  tamechanFocusNote=n;
+  tamechanSlowActive=true;
+  retimePendingSpawnForSlowState();
+  n.el.classList.add("tamechan-focus");
+  stage.classList.add("tamechan-cinematic");
+
+  // 対象問題を少し拡大してフォーカス感を出す。
+  n.focusBaseScale=n.scale ?? 1;
+  n.focusScale=Math.min(1.18,(n.scale ?? 1)*1.12);
+
+  const slowDuration=tamechanSlowDurationMs(n.q);
+  const slowStart=performance.now();
+  runTamechanTimerDisplay(n,slowStart,slowDuration);
+
+  activeNotes.forEach(x=>x.lastMoveTs=performance.now());
+  updateSurvivalTopStatus();
+
+  tamechanSlowTimer=setTimeout(()=>{
+    clearTamechanSlow();
+  },slowDuration);
+}
+
+function highlightTamechanChoice(n, tile, sourceEl=null){
+  // タメンチャンは、正解した牌コードと同じ牌を
+  // 手牌・補助牌の両方で同時に光らせる。
+  const candidates=[
+    ...n.el.querySelectorAll(`.tile-cell[data-code="${tile}"]`),
+    ...n.el.querySelectorAll(`.mini-answer[data-code="${tile}"]`)
+  ];
+
+  candidates.forEach(el=>el.classList.add("tamechan-selected"));
+}
+
+function judgeAnswer(tile,n,sourceEl=null){
   if(!n||n.answered)return;
 
   const judgeCurrentHand=({finish=false}={})=>{
@@ -2297,7 +3529,9 @@ function judgeAnswer(tile,n){
     const half=Math.max(1,n.renderedHandHalf ?? n.handHalf ?? 32);
     const centerDiff=Math.abs(center-judgeY);
 
-    const isPerfect=centerDiff<=half*0.38;
+    // タメンチャンだけは補助牌を除いた「◀ 手牌 ▶」の高さ全体をPERFECT範囲にする。
+    const perfectRatio=n.q.kind==="tamechan" ? 1 : 0.38;
+    const isPerfect=centerDiff<=half*perfectRatio;
     const gained=scoreForQuestion(n.q,isPerfect);
 
     score+=gained;
@@ -2305,9 +3539,13 @@ function judgeAnswer(tile,n){
     combo++;
 
     if(isPerfect){
+      sessionStats.perfect++;
+      sessionStats.byKind[n.q.kind].perfect++;
       playPerfectEffect();
       showProblemFlash(`PERFECT +${gained}`,"perfect",n);
     }else{
+      sessionStats.good++;
+      sessionStats.byKind[n.q.kind].good++;
       showProblemFlash(`GOOD +${gained}`,"good",n);
     }
 
@@ -2321,6 +3559,41 @@ function judgeAnswer(tile,n){
     return {isPerfect,gained};
   };
 
+  // タメンチャン:
+  // 5種類の正解牌を1回ずつ押す。押した場所はその場で光るだけ。
+  // 全5種類を押し切るまで問題自体は移動・消失させない。
+  if(n.q.kind==="tamechan"){
+    activateTamechanSlow(n);
+
+    if(!n.q.answers.includes(tile)){
+      score=Math.max(0,score-100);
+      sessionStats.missClicks++;
+      updateHud();
+      showProblemFlash("MISS CLICK  -100","misclick",n);
+      return;
+    }
+
+    if(n.selectedAnswers.includes(tile)){
+      return;
+    }
+
+    n.selectedAnswers.push(tile);
+    highlightTamechanChoice(n,tile,sourceEl);
+    playTileSuccess(tile,false);
+
+    const isLast=n.selectedAnswers.length>=n.q.answers.length;
+    judgeCurrentHand({finish:isLast});
+
+    if(isLast && tamechanFocusNote===n){
+      // 全回答できたら、5秒を待たずにスロー/暗転/ぼかし/ズームを即解除。
+      hideTamechanTimer(n);
+      n.el.classList.remove("tamechan-focus");
+      n.focusScale=null;
+      clearTamechanSlow();
+    }
+    return;
+  }
+
   // 弱ターツ落とし:
   // 1枚目・2枚目をそれぞれ独立してGOOD/PERFECT判定。
   // 1枚目後は ◀ 手牌 ▶ 全体が点線枠へ移動し、
@@ -2328,6 +3601,7 @@ function judgeAnswer(tile,n){
   if(n.q.kind==="dualpick"){
     if(!n.q.answers.includes(tile)){
       score=Math.max(0,score-100);
+      sessionStats.missClicks++;
       updateHud();
       showProblemFlash("MISS CLICK  -100","misclick",n);
       return;
@@ -2361,6 +3635,7 @@ function judgeAnswer(tile,n){
 
   if(!n.q.answers.includes(tile)){
     score=Math.max(0,score-100);
+    sessionStats.missClicks++;
     updateHud();
     showProblemFlash("MISS CLICK  -100","misclick",n);
     return;
@@ -2468,9 +3743,75 @@ function nextSurvivalQuestion(){
   return takeNextFromSurvivalKind(kind);
 }
 
+
+function spawnSpaceParticle(){
+  if(!spaceParticleLayer) return;
+
+  const p=document.createElement("div");
+  const isStreak=Math.random()<0.55;
+  p.className=`space-particle ${isStreak ? "streak" : "drift"}`;
+
+  const startY=8+Math.random()*68;
+  const travelY=(Math.random()-.5)*(isStreak ? 120 : 70);
+  const duration=isStreak
+    ? 1100+Math.random()*1300
+    : 2400+Math.random()*2600;
+
+  p.style.top=`${startY}%`;
+  p.style.left=`${-8-Math.random()*10}%`;
+
+  spaceParticleLayer.appendChild(p);
+
+  const start=performance.now();
+  const distance=stage.clientWidth*1.25+120;
+
+  const animateParticle=(now)=>{
+    const t=Math.min(1,(now-start)/duration);
+    const eased=1-Math.pow(1-t,2);
+    const x=distance*eased;
+    const y=travelY*eased;
+
+    let opacity=1;
+    if(t<.12) opacity=t/.12;
+    else if(t>.78) opacity=(1-t)/.22;
+
+    p.style.opacity=String(Math.max(0,Math.min(1,opacity*(isStreak?.9:.68))));
+    p.style.transform=`translate3d(${x}px, ${y}px, 0)`;
+
+    if(t<1){
+      requestAnimationFrame(animateParticle);
+    }else{
+      p.remove();
+    }
+  };
+
+  requestAnimationFrame(animateParticle);
+}
+
+function scheduleSpaceParticle(){
+  clearTimeout(spaceParticleTimer);
+  const delay=2200+Math.random()*5200;
+  spaceParticleTimer=setTimeout(()=>{
+    if(running && !paused && Math.random()<.82){
+      spawnSpaceParticle();
+
+      // ごく稀に2個目を少し遅らせて、遠くを並走する光のように見せる。
+      if(Math.random()<.16){
+        setTimeout(()=>{
+          if(running && !paused) spawnSpaceParticle();
+        },180+Math.random()*420);
+      }
+    }
+    scheduleSpaceParticle();
+  },delay);
+}
+
 function bootGame(mode="normal"){
+  clearTamechanSlow();
+  pauseBgm();
   cancelAnimationFrame(raf);
   clearTimeout(spawnTimer);
+  spawnTimer=0; spawnDueAt=0; spawnDelayFactor=1;
   activeNotes.forEach(n=>n.el.remove());
   activeNotes=[];
 
@@ -2484,17 +3825,21 @@ function bootGame(mode="normal"){
   }
 
   gameMode=mode;
-  survivalWasCustom = gameMode==="survival" && selectedKinds.size < PROBLEM_KIND_ORDER.length;
+  survivalWasCustom = isSurvivalRulesMode() && selectedKinds.size < PROBLEM_KIND_ORDER.length;
+  sessionStats=emptyKindStats();
+  sessionMaxSpeed=gameMode==="endless" ? endlessChosenSpeed : (gameMode==="survival" ? 0.5 : userFallSpeed);
+  if(finalStats) finalStats.innerHTML="";
+  if(finalBest) finalBest.innerHTML="";
   missCount=0;
   survivalResolvedCount=0;
   survivalSolvedCount=0;
-  survivalFrequencyLevel=1;
-  survivalAtFrequencyCap=false;
+  survivalFrequencyLevel=gameMode==="endless" ? endlessChosenFrequency : 1;
+  survivalAtFrequencyCap=gameMode==="endless" && endlessChosenFrequency>=SURVIVAL_MAX_FREQUENCY_LEVEL;
   survivalPostCapResolved=0;
-  survivalMinFallSpeed=0.5;
+  survivalMinFallSpeed=gameMode==="endless" ? endlessChosenSpeed : 0.5;
   survivalSpawnCount=0;
 
-  if(gameMode==="survival"){
+  if(isSurvivalRulesMode()){
     gameQuestions=[];
     buildSurvivalKindDecks(pool);
   }else{
@@ -2506,30 +3851,31 @@ function bootGame(mode="normal"){
   if(typeof fallSpeedSlider!=="undefined" && fallSpeedSlider){
     fallSpeedSlider.min=survivalMinFallSpeed.toFixed(1);
 
-    if(gameMode==="survival"){
-      // サバイバル開始時は必ず最小速度からスタート。
+    if(isSurvivalRulesMode()){
+      // サバイバル系モード開始時は各モードの最小速度からスタート。
       fallSpeedSlider.value=survivalMinFallSpeed.toFixed(1);
       userFallSpeed=survivalMinFallSpeed;
     }else{
-      if(parseFloat(fallSpeedSlider.value)<survivalMinFallSpeed){
-        fallSpeedSlider.value=survivalMinFallSpeed.toFixed(1);
-      }
-      userFallSpeed=parseFloat(fallSpeedSlider.value)||1;
+      // NORMALは保存してある通常速度へ戻す。
+      userFallSpeed=Math.max(survivalMinFallSpeed,normalSavedSpeed||1);
+      fallSpeedSlider.value=userFallSpeed.toFixed(1);
     }
 
     fallSpeedValue.textContent=`${userFallSpeed.toFixed(1)}×`;
   }
-  idx=0;score=0;combo=0;running=true;paused=false;
+  idx=0;score=0;combo=0;running=true;paused=true;
+  countdownActive=false;
+  countdownToken++;
   updatePauseButtons();
   updateStartButtonLabel();
 
-  if(gameMode==="survival"){
+  if(isSurvivalRulesMode()){
     setBpm(SURVIVAL_START_BPM);
   }
 
   scoreEl.textContent=0;
   comboEl.textContent=0;
-  progressEl.textContent = gameMode==="survival" ? "0 問" : `0 / ${gameQuestions.length}`;
+  progressEl.textContent = isSurvivalRulesMode() ? "0 問" : `0 / ${gameQuestions.length}`;
   doneTitle.textContent="終了！";
   finalSub.textContent="";
   retrySurvivalBtn.style.display="none";
@@ -2539,8 +3885,7 @@ function bootGame(mode="normal"){
   document.getElementById("pause").textContent="停止";
   updateModeUi();
 
-  scheduleNextSpawn();
-  raf=requestAnimationFrame(animate);
+  startCountdown();
 }
 function startGame(){
   bootGame("normal");
@@ -2548,8 +3893,11 @@ function startGame(){
 function startSurvival(){
   bootGame("survival");
 }
+function startEndless(){
+  bootGame("endless");
+}
 function switchMode(mode){
-  selectedMode=mode==="survival" ? "survival" : "normal";
+  selectedMode=(mode==="survival" || mode==="endless") ? mode : "normal";
   playModeSwitchSound();
   updateModeUi();
 }
@@ -2561,6 +3909,7 @@ function startSelectedMode(){
   paused=false;
   cancelAnimationFrame(raf);
   clearTimeout(spawnTimer);
+  spawnTimer=0; spawnDueAt=0; spawnDelayFactor=1;
   activeNotes.forEach(n=>n.el?.remove());
   activeNotes=[];
 
@@ -2573,6 +3922,7 @@ function pauseGame(){
     pauseStarted=performance.now();
     cancelAnimationFrame(raf);
     clearTimeout(spawnTimer);
+    pauseBgm();
     document.getElementById("pause").textContent="再開";
     updatePauseButtons();
   }else{
@@ -2586,7 +3936,8 @@ function pauseGame(){
     hideFocusPauseOverlay();
     document.getElementById("pause").textContent="停止";
     updatePauseButtons();
-    if(gameMode==="survival" || idx<gameQuestions.length) scheduleNextSpawn();
+    playBgm();
+    if(isSurvivalRulesMode() || idx<gameQuestions.length) scheduleNextSpawn();
     raf=requestAnimationFrame(animate);
   }
 }
@@ -2598,6 +3949,7 @@ function autoPauseForFocusLoss(){
   pauseStarted=performance.now();
   cancelAnimationFrame(raf);
   clearTimeout(spawnTimer);
+  pauseBgm();
 
   const pauseBtn=document.getElementById("pause");
   if(pauseBtn) pauseBtn.textContent="再開";
@@ -2629,6 +3981,7 @@ function resumeFromFocusPause(){
 
   paused=false;
   hideFocusPauseOverlay();
+  playBgm();
 
   const pauseBtn=document.getElementById("pause");
   if(pauseBtn) pauseBtn.textContent="停止";
@@ -2647,14 +4000,16 @@ if(focusResumeBtn){
 
 function finish(cleared=true, reason=""){
   if(!running)return;
+  clearTamechanSlow();
+  pauseBgm();
   running=false;
   updatePauseButtons();
   updateStartButtonLabel();
   cancelAnimationFrame(raf);
   clearTimeout(spawnTimer);
-  progressEl.textContent = gameMode==="survival" ? `${survivalSpawnCount} 問` : `${Math.min(idx,gameQuestions.length)} / ${gameQuestions.length}`;
+  progressEl.textContent = isSurvivalRulesMode() ? `${survivalSpawnCount} 問` : `${Math.min(idx,gameQuestions.length)} / ${gameQuestions.length}`;
   document.getElementById("done").style.display="block";
-  if(gameMode==="survival"){
+  if(isSurvivalRulesMode()){
     doneTitle.textContent = "ゲームオーバー";
     const finalFrequencyText = survivalFrequencyLevel>=SURVIVAL_MAX_FREQUENCY_LEVEL
       ? "MAX"
@@ -2669,6 +4024,18 @@ function finish(cleared=true, reason=""){
     postXResultBtn.style.display = "none";
   }
   document.getElementById("finalScore").textContent=`${score} 点`;
+  renderFinalStats();
+
+  if(gameMode==="survival"){
+    const bestResult=updateBestAfterGame();
+    if(finalBest && bestResult.record){
+      finalBest.innerHTML=(bestResult.isNew?'<div class="new-best">NEW BEST!</div>':'')+
+        `BEST ${bestResult.record.score}点 / ${bestResult.record.solved}問 / SPEED ${Number(bestResult.record.speed||0).toFixed(1)}×`;
+    }
+  }else if(finalBest){
+    finalBest.innerHTML="";
+  }
+
   updateModeUi();
 }
 const bpmLabel=document.getElementById("bpmLabel");
@@ -2685,7 +4052,12 @@ fallSpeedSlider.addEventListener("input",()=>{
   userFallSpeed=Math.max(sliderMin, parseFloat(fallSpeedSlider.value)||1);
   fallSpeedSlider.value=userFallSpeed.toFixed(1);
   fallSpeedValue.textContent=`${userFallSpeed.toFixed(1)}×`;
+  sessionMaxSpeed=Math.max(sessionMaxSpeed,userFallSpeed);
   updateSurvivalTopStatus();
+  if(gameMode!=="survival"){
+    normalSavedSpeed=userFallSpeed;
+    saveSettings();
+  }
 });
 
 const hold2xBtn=document.getElementById("hold2x");
@@ -2716,11 +4088,47 @@ document.addEventListener("keyup",e=>{
   }
 });
 
+if(normalFrequencySetting){
+  normalFrequencySetting.addEventListener("input",()=>{
+    normalFrequencyLevel=Math.max(1,Math.min(6,parseInt(normalFrequencySetting.value,10)||3));
+    normalFrequencySetting.value=String(normalFrequencyLevel);
+    normalFrequencySettingValue.textContent=`Lv.${normalFrequencyLevel}`;
+    updateNormalFrequencyWarning();
+
+    // NORMALプレイ中に変更した場合は、次回出題から即反映。
+    if(running && gameMode==="normal" && !paused){
+      scheduleNextSpawn();
+    }
+  });
+  updateNormalFrequencyWarning();
+}
+
+if(endlessSpeedSetting){
+  endlessSpeedSetting.addEventListener("input",()=>{
+    endlessChosenSpeed=Math.max(0.5,Math.min(3.0,parseFloat(endlessSpeedSetting.value)||endlessBaseSpeed));
+    endlessSpeedSetting.value=endlessChosenSpeed.toFixed(1);
+    endlessSpeedSettingValue.textContent=`${endlessChosenSpeed.toFixed(1)}×`;
+    endlessSettingsCustom=(Math.abs(endlessChosenSpeed-endlessBaseSpeed)>0.001) || (endlessChosenFrequency!==endlessBaseFrequency);
+    updateModeUi();
+  });
+}
+if(endlessFrequencySetting){
+  endlessFrequencySetting.addEventListener("input",()=>{
+    endlessChosenFrequency=Math.max(1,Math.min(endlessBaseFrequency,parseInt(endlessFrequencySetting.value,10)||endlessBaseFrequency));
+    endlessFrequencySetting.value=String(endlessChosenFrequency);
+    endlessFrequencySettingValue.textContent=`Lv.${endlessChosenFrequency}`;
+    endlessSettingsCustom=(Math.abs(endlessChosenSpeed-endlessBaseSpeed)>0.001) || (endlessChosenFrequency!==endlessBaseFrequency);
+    updateModeUi();
+  });
+}
+
 document.getElementById("startNormal").onclick=()=>switchMode("normal");
 document.getElementById("startSurvival").onclick=()=>switchMode("survival");
-retrySurvivalBtn.onclick=startSurvival;
+document.getElementById("startEndless").onclick=()=>switchMode("endless");
+retrySurvivalBtn.onclick=()=>bootGame(gameMode==="endless" ? "endless" : "survival");
 modeHudNormal.onclick=()=>switchMode("normal");
 modeHudSurvival.onclick=()=>switchMode("survival");
+modeHudEndless.onclick=()=>switchMode("endless");
 modeHudStart.onclick=startSelectedMode;
 stage.addEventListener("pointerdown",e=>{
   if(!running || paused) return;
@@ -2732,11 +4140,15 @@ stage.addEventListener("pointerdown",e=>{
   playClickSound();
 });
 
+scheduleSpaceParticle();
+
 postXResultBtn.addEventListener("click",()=>{
   const text=[
     `麻雀牌トレーニング ${survivalLabelJa()}`,
-    `解いた問題数：${survivalSolvedCount}問`,
+    `${survivalSolvedCount}問突破！`,
     `SCORE：${score}`,
+    `PERFECT：${sessionStats?.perfect||0}回 / GOOD：${sessionStats?.good||0}回`,
+    `最高SPEED：${sessionMaxSpeed.toFixed(1)}×`,
     "",
     "#麻雀 #麻雀牌トレーニング"
   ].join("\n");
@@ -2746,9 +4158,53 @@ postXResultBtn.addEventListener("click",()=>{
   window.open(intent,"_blank","noopener,noreferrer");
 });
 
+if(seVolumeInput){
+  seVolumeInput.addEventListener("input",()=>{
+    seVolume=parseFloat(seVolumeInput.value)||0;
+    seVolumeValue.textContent=`${Math.round(seVolume*100)}%`;
+    saveSettings();
+  });
+}
+if(bgmVolumeInput){
+  bgmVolumeInput.addEventListener("input",()=>{
+    bgmVolume=parseFloat(bgmVolumeInput.value)||0;
+    bgmVolumeValue.textContent=`${Math.round(bgmVolume*100)}%`;
+    syncBgmAudioState();
+    if(running && !paused && !audioMuted && bgmVolume>0) playBgm();
+    saveSettings();
+  });
+}
+if(bgmTrackSelect){
+  bgmTrackSelect.addEventListener("change",()=>{
+    selectedBgmTrack=bgmTrackSelect.value;
+    if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
+    pauseBgm();
+    if(running && !paused) restartBgm();
+    saveSettings();
+  });
+}
+if(muteAudioInput){
+  muteAudioInput.addEventListener("change",()=>{
+    audioMuted=muteAudioInput.checked;
+    syncBgmAudioState();
+    if(audioMuted) pauseBgm();
+    else if(running && !paused) playBgm();
+    saveSettings();
+  });
+}
+
 document.getElementById("pause").onclick=pauseGame;
-document.getElementById("typesAll").onclick=()=>document.querySelectorAll(".problem-kind-toggle").forEach(el=>el.checked=true);
-document.getElementById("typesNone").onclick=()=>document.querySelectorAll(".problem-kind-toggle").forEach(el=>el.checked=false);
+document.getElementById("typesAll").onclick=()=>{
+  document.querySelectorAll(".problem-kind-toggle").forEach(el=>el.checked=true);
+  saveSettings();
+};
+document.getElementById("typesNone").onclick=()=>{
+  document.querySelectorAll(".problem-kind-toggle").forEach(el=>el.checked=false);
+  saveSettings();
+};
+document.getElementById("problemTypeGrid").addEventListener("change",e=>{
+  if(e.target.classList.contains("problem-kind-toggle")) saveSettings();
+});
 speed.oninput=()=>speedLabel.textContent=parseFloat(speed.value).toFixed(2)+"倍";
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&running&&!paused)pauseGame();});
 
@@ -3025,6 +4481,8 @@ window.addEventListener("resize",resizeWave);
 animateWave();
 
 renderProblemTypeSettings();
+applySavedSettings();
+updateBestRecordSummary();
 updateModeUi();
 progressEl.textContent=`0 / ${QUESTIONS.length}`;
 
@@ -3048,6 +4506,7 @@ if(modeHudPause){
 
 
 updateStartButtonLabel();
+window.addEventListener("beforeunload",saveSettings);
 </script>
 </body>
 </html>
