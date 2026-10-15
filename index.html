@@ -1854,17 +1854,13 @@ body[data-bg-theme="space"]{
 <div class="wrap">
   <div class="top">
     <h1>麻雀牌リズム</h1>
-    <div class="ctrl">
-      <span>テンポ</span>
-    </div>
     <button id="startNormal" class="btn mode-switch-top">ノーマル</button>
     <button id="startSurvival" class="btn mode-switch-top">サバイバル</button>
     <button id="startEndless" class="btn mode-switch-top">エンドレス</button>
     <button id="pause" class="btn">停止</button>
-    <div class="ctrl"><span>流れる速度</span><input id="speed" type="range" min=".5" max="8" step=".25" value="1"><b id="speedLabel">1.00倍</b></div>
     <div class="stat"><span id="score">0</span> 点</div>
     <div class="stat"><span id="combo">0</span> COMBO</div>
-    <div class="stat"><span id="progress">0 / 166</span></div>
+    <div class="stat"><span id="progress">0 / 190</span></div>
     <div class="stat"><span id="modeLabel">NORMAL</span></div>
     <div class="stat"><span id="missLabelTop">MISS </span><span id="miss">0</span><span id="missLimitTop"> / 3</span></div>
   </div>
@@ -1987,7 +1983,6 @@ body[data-bg-theme="space"]{
     <div id="judge" class="judge"></div>
     <div id="tamechanJudgeGuide" class="tamechan-judge-guide" aria-hidden="true"></div>
     <div id="flash" class="flash"></div>
-    <div id="note" class="note" style="display:none"></div>
     <button id="hold2x" class="hold2x-btn" type="button" aria-label="押している間だけ2倍速">⌨ Shift ×2</button>
 <div id="focusPauseOverlay" class="focus-pause-overlay" aria-hidden="true">
   <div class="focus-pause-card">
@@ -2098,7 +2093,6 @@ function selectedProblemKinds(){
 const stage = document.getElementById('stage'), flash = document.getElementById('flash');
 const judgeEl = document.getElementById('judge');
 const scoreEl=document.getElementById('score'),comboEl=document.getElementById('combo'),progressEl=document.getElementById('progress');
-const speed=document.getElementById('speed'),speedLabel=document.getElementById('speedLabel');
 const missEl=document.getElementById('miss'), modeLabel=document.getElementById('modeLabel');
 const doneTitle=document.getElementById('doneTitle'), finalSub=document.getElementById('finalSub'), retrySurvivalBtn=document.getElementById('retrySurvival');
 const postXResultBtn=document.getElementById('postXResult');
@@ -2201,7 +2195,6 @@ const BEST_KEY="mahjongRhythmBestV1";
 const SURVIVAL_STEP_QUESTIONS=4;
 const SURVIVAL_MAX_FREQUENCY_LEVEL=4;
 const SURVIVAL_MAX_MISS=3;
-const travelBase=5200; // 落下速度の基準。他のテンポ設定とは独立
 const honors=["東","南","西","北","白","發","中"];
 
 function emptyKindStats(){
@@ -2809,21 +2802,9 @@ function fallPixelsPerSecond(){
   return basePxPerSecond*userFallSpeed*holdMultiplier*slowMultiplier;
 }
 
-function duration(){
-  // 表示用の概算。実際の移動は fallPixelsPerSecond() を使う。
-  return (stage.clientHeight+120)/Math.max(fallPixelsPerSecond(),1)*1000;
-}
-function spawnDelay(){
-  return Math.max(80, 60000/bpm);
-}
-function questionExtraGap(q){
-  // 弱ターツ落とし問題は、1枚目正解後に手牌が上段へ移動する分を最初から空ける。
-  // PCの上段＋下段の縦差を基準に、現在の流速へ換算して次問の出現を遅らせる。
-  if(!q || q.kind!=="dualpick") return 0;
-  const visualGap = window.matchMedia("(max-width:700px)").matches ? 60 : 72;
-  const pxPerMs=(stage.clientHeight+40)/duration();
-  return visualGap/Math.max(pxPerMs,0.001);
-}
+
+
+
 const NOTE_GLOW_CLASSES=[
   "glow-cyan",
   "glow-purple",
@@ -4300,7 +4281,6 @@ document.getElementById("typesNone").onclick=()=>{
 document.getElementById("problemTypeGrid").addEventListener("change",e=>{
   if(e.target.classList.contains("problem-kind-toggle")) saveSettings();
 });
-speed.oninput=()=>speedLabel.textContent=parseFloat(speed.value).toFixed(2)+"倍";
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&running&&!paused)pauseGame();});
 
 
