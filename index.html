@@ -1962,6 +1962,104 @@ body[data-outer-theme="ice"] select{
   border-color:rgba(35,60,75,.2);
 }
 
+
+/* アイスホワイトの視認性を再調整 */
+body[data-bg-theme="ice"]{
+  --bg-base-1:#dfe8ec;
+  --bg-base-2:#cbd9df;
+  --bg-glow-1:rgba(72,135,165,.16);
+  --bg-glow-2:rgba(110,150,168,.12);
+  --bg-wave-filter:saturate(.42) brightness(.82) contrast(1.12);
+  --bg-city-filter:saturate(.35) brightness(.58) contrast(1.15);
+}
+body[data-bg-theme="ice"] .stage{ color:#0e1820 !important; }
+body[data-bg-theme="ice"] .score-hud,
+body[data-bg-theme="ice"] .survival-top-status,
+body[data-bg-theme="ice"] .progress-status,
+body[data-bg-theme="ice"] .speed-slider-hud,
+body[data-bg-theme="ice"] .lite-mode-toggle,
+body[data-bg-theme="ice"] .mode-hud-switch,
+body[data-bg-theme="ice"] .mode-hud-start,
+body[data-bg-theme="ice"] .mode-hud-pause,
+body[data-bg-theme="ice"] .hold2x-btn{
+  color:#0b151c !important;
+  text-shadow:none !important;
+}
+body[data-bg-theme="ice"] .score-hud,
+body[data-bg-theme="ice"] .survival-top-status,
+body[data-bg-theme="ice"] .speed-slider-hud,
+body[data-bg-theme="ice"] .lite-mode-toggle{
+  background:rgba(238,245,248,.82) !important;
+  border-color:rgba(30,55,70,.22) !important;
+}
+body[data-bg-theme="ice"] .mode-hud-btn,
+body[data-bg-theme="ice"] .mode-hud-start,
+body[data-bg-theme="ice"] .mode-hud-pause,
+body[data-bg-theme="ice"] .hold2x-btn{
+  background:rgba(244,249,251,.94) !important;
+  color:#0a141b !important;
+  border-color:rgba(24,52,68,.30) !important;
+  box-shadow:none !important;
+}
+body[data-bg-theme="ice"] .mode-hud-btn.active{
+  background:#b9d9e7 !important;
+  border-color:#6ea6bd !important;
+}
+body[data-bg-theme="ice"] .judge{
+  background:#f0c928 !important;
+  box-shadow:0 0 5px rgba(100,78,0,.34) !important;
+}
+body[data-bg-theme="ice"] .tamechan-judge-guide{
+  background:#d9b700 !important;
+  box-shadow:0 0 5px rgba(110,88,0,.28) !important;
+}
+body[data-bg-theme="ice"] .action-marker{
+  background:rgba(234,242,246,.96) !important;
+  border-color:rgba(25,55,72,.28) !important;
+  box-shadow:none !important;
+}
+body[data-bg-theme="ice"] .action-marker.draw{ color:#005f78 !important; }
+body[data-bg-theme="ice"] .action-marker.discard{ color:#8f3228 !important; }
+
+body[data-outer-theme="ice"]{
+  --outer-bg-1:#e7ecef;
+  --outer-bg-2:#d6e0e5;
+  color:#101a21 !important;
+}
+body[data-outer-theme="ice"] .wrap{ color:#101a21 !important; }
+body[data-outer-theme="ice"] h1,
+body[data-outer-theme="ice"] h2,
+body[data-outer-theme="ice"] h3,
+body[data-outer-theme="ice"] b,
+body[data-outer-theme="ice"] .problem-types-title,
+body[data-outer-theme="ice"] .game-settings-title,
+body[data-outer-theme="ice"] .endless-settings-title{
+  color:#0b151c !important;
+  text-shadow:none !important;
+}
+body[data-outer-theme="ice"] .help,
+body[data-outer-theme="ice"] .rules-panel,
+body[data-outer-theme="ice"] .game-settings,
+body[data-outer-theme="ice"] .endless-settings,
+body[data-outer-theme="ice"] .problem-types{
+  background:rgba(246,249,250,.92) !important;
+  border-color:rgba(26,50,64,.18) !important;
+  color:#16242d !important;
+  box-shadow:none !important;
+}
+body[data-outer-theme="ice"] .settings-note,
+body[data-outer-theme="ice"] .rules-note,
+body[data-outer-theme="ice"] .asset-credit{
+  color:#465860 !important;
+}
+body[data-outer-theme="ice"] .btn,
+body[data-outer-theme="ice"] select{
+  background:#f8fafb !important;
+  color:#0f1b22 !important;
+  border-color:rgba(28,54,68,.24) !important;
+}
+body[data-outer-theme="ice"] input[type="range"]{ accent-color:#447d96; }
+
 </style>
 </head>
 <body>
