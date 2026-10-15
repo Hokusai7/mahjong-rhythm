@@ -1782,6 +1782,72 @@ body.lite-mode .space-particle{
   color:rgba(255,255,255,.9);
 }
 
+
+body{
+  --bg-base-1:#07111d;
+  --bg-base-2:#0b1c2b;
+  --bg-glow-1:rgba(58,130,210,.22);
+  --bg-glow-2:rgba(34,82,145,.16);
+  --bg-wave-filter:hue-rotate(0deg) saturate(1);
+  --bg-city-filter:hue-rotate(0deg) saturate(1);
+}
+body[data-bg-theme="purple"]{
+  --bg-base-1:#12091f;
+  --bg-base-2:#24103b;
+  --bg-glow-1:rgba(151,78,255,.24);
+  --bg-glow-2:rgba(95,50,180,.18);
+  --bg-wave-filter:hue-rotate(55deg) saturate(1.35);
+  --bg-city-filter:hue-rotate(45deg) saturate(1.25);
+}
+body[data-bg-theme="sunset"]{
+  --bg-base-1:#1a0c0b;
+  --bg-base-2:#3b1a10;
+  --bg-glow-1:rgba(255,112,62,.22);
+  --bg-glow-2:rgba(210,72,34,.16);
+  --bg-wave-filter:hue-rotate(155deg) saturate(1.3);
+  --bg-city-filter:hue-rotate(145deg) saturate(1.25);
+}
+body[data-bg-theme="teal"]{
+  --bg-base-1:#061617;
+  --bg-base-2:#0a2c2d;
+  --bg-glow-1:rgba(45,210,202,.22);
+  --bg-glow-2:rgba(32,120,125,.17);
+  --bg-wave-filter:hue-rotate(-45deg) saturate(1.3);
+  --bg-city-filter:hue-rotate(-35deg) saturate(1.25);
+}
+body[data-bg-theme="mono"]{
+  --bg-base-1:#0c0c0c;
+  --bg-base-2:#1a1a1a;
+  --bg-glow-1:rgba(255,255,255,.08);
+  --bg-glow-2:rgba(255,255,255,.04);
+  --bg-wave-filter:grayscale(1) saturate(.2) brightness(.8);
+  --bg-city-filter:grayscale(1) saturate(.15) brightness(.75);
+}
+body[data-bg-theme="space"]{
+  --bg-base-1:#030713;
+  --bg-base-2:#07142e;
+  --bg-glow-1:rgba(44,89,190,.20);
+  --bg-glow-2:rgba(22,42,108,.18);
+  --bg-wave-filter:hue-rotate(10deg) saturate(.9) brightness(.8);
+  --bg-city-filter:hue-rotate(5deg) saturate(.75) brightness(.75);
+}
+
+.stage{
+  background:
+    radial-gradient(circle at 50% 18%, var(--bg-glow-1), transparent 42%),
+    radial-gradient(circle at 20% 82%, var(--bg-glow-2), transparent 48%),
+    linear-gradient(180deg,var(--bg-base-2),var(--bg-base-1)) !important;
+  transition:background .28s ease;
+}
+.city-lights-bg{
+  filter:var(--bg-city-filter);
+  transition:filter .28s ease;
+}
+.wave-bg{
+  filter:var(--bg-wave-filter);
+  transition:filter .28s ease;
+}
+
 </style>
 </head>
 <body>
@@ -1842,6 +1908,17 @@ body.lite-mode .space-particle{
           <option value="3">3：Somehow (Prod. Khaim)</option>
         </select>
         <b id="bgmTrackLabel">1/3</b>
+      </label>
+      <label><span>BACKGROUND</span>
+        <select id="backgroundThemeSelect">
+          <option value="night">夜青</option>
+          <option value="purple">紫ネオン</option>
+          <option value="sunset">赤橙</option>
+          <option value="teal">青緑</option>
+          <option value="mono">モノクロ</option>
+          <option value="space">宇宙紺</option>
+        </select>
+        <b id="backgroundThemeLabel">夜青</b>
       </label>
       <label class="mute-setting"><input id="muteAudio" type="checkbox"><span>MUTE</span></label>
     </div>
@@ -2058,6 +2135,8 @@ const bgmTrackSelect=document.getElementById("bgmTrackSelect"), bgmTrackLabel=do
 const bgmPlayer=document.getElementById("bgmPlayer");
 const bgmPlayer2=document.getElementById("bgmPlayer2");
 const bgmPlayer3=document.getElementById("bgmPlayer3");
+const backgroundThemeSelect=document.getElementById("backgroundThemeSelect");
+const backgroundThemeLabel=document.getElementById("backgroundThemeLabel");
 const muteAudioInput=document.getElementById("muteAudio");
 let idx=0,score=0,combo=0,bpm=50,running=false,paused=false,raf=0,spawnTimer=0,pauseStarted=0;
 let spawnDueAt=0;
@@ -2118,6 +2197,7 @@ let seVolume=1;
 const SE_OUTPUT_GAIN=4.0;
 let bgmVolume=.7;
 let selectedBgmTrack="1";
+let backgroundTheme="night";
 let audioMuted=false;
 let sessionStats=null;
 const SETTINGS_KEY="mahjongRhythmSettingsV1";
@@ -2194,6 +2274,23 @@ function restartBgm(){
   playBgm();
 }
 
+const BACKGROUND_THEME_LABELS={
+  night:"夜青",
+  purple:"紫ネオン",
+  sunset:"赤橙",
+  teal:"青緑",
+  mono:"モノクロ",
+  space:"宇宙紺"
+};
+
+function applyBackgroundTheme(theme){
+  const safe=BACKGROUND_THEME_LABELS[theme] ? theme : "night";
+  backgroundTheme=safe;
+  document.body.setAttribute("data-bg-theme",safe);
+  if(backgroundThemeSelect) backgroundThemeSelect.value=safe;
+  if(backgroundThemeLabel) backgroundThemeLabel.textContent=BACKGROUND_THEME_LABELS[safe];
+}
+
 function currentSettings(){
   return {
     liteMode:!!liteMode,
@@ -2202,6 +2299,7 @@ function currentSettings(){
     seVolume,
     bgmVolume,
     bgmTrack:selectedBgmTrack,
+    backgroundTheme,
     muted:audioMuted
   };
 }
@@ -2241,6 +2339,7 @@ function applySavedSettings(){
     seVolume:1,
     bgmVolume:.7,
     bgmTrack:"1",
+    backgroundTheme:"night",
     muted:false
   };
   const s=loadJsonStorage(SETTINGS_KEY,defaults);
@@ -2258,6 +2357,7 @@ function applySavedSettings(){
   bgmVolume=Math.max(0,Math.min(1,Number(s.bgmVolume ?? .7)));
   selectedBgmTrack=String(s.bgmTrack||"1");
   if(!["1","2","3"].includes(selectedBgmTrack)) selectedBgmTrack="1";
+  backgroundTheme=BACKGROUND_THEME_LABELS[s.backgroundTheme] ? s.backgroundTheme : "night";
   audioMuted=!!s.muted;
 
   if(seVolumeInput) seVolumeInput.value=seVolume;
@@ -2269,6 +2369,7 @@ function applySavedSettings(){
     bgmTrackSelect.value=selectedBgmTrack;
   }
   if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
+  applyBackgroundTheme(backgroundTheme);
   if(muteAudioInput) muteAudioInput.checked=audioMuted;
   if(seVolumeValue) seVolumeValue.textContent=`${Math.round(seVolume*100)}%`;
   if(bgmVolumeValue) bgmVolumeValue.textContent=`${Math.round(bgmVolume*100)}%`;
@@ -4180,6 +4281,12 @@ if(bgmTrackSelect){
     if(bgmTrackLabel) bgmTrackLabel.textContent=`${selectedBgmTrack}/3`;
     pauseBgm();
     if(running && !paused) restartBgm();
+    saveSettings();
+  });
+}
+if(backgroundThemeSelect){
+  backgroundThemeSelect.addEventListener("change",()=>{
+    applyBackgroundTheme(backgroundThemeSelect.value);
     saveSettings();
   });
 }
