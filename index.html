@@ -3215,7 +3215,6 @@ function scheduleNextSpawn(){
 }
 function animate(ts){
   if(!running||paused)return;
-  const d=duration();
   const to=stage.clientHeight+20;
 
   for(const n of activeNotes.slice()){
