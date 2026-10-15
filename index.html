@@ -2076,6 +2076,53 @@ body[data-outer-theme="ice"] .asset-credit{
   color:#344852 !important;
 }
 
+
+.action-guide{
+  margin:10px 0 12px;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  background:rgba(10,16,26,.62);
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 16px;
+  align-items:center;
+  font-size:13px;
+}
+.action-guide > div{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.action-guide-icon{
+  min-width:27px;
+  height:24px;
+  padding:0 6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  font-weight:1000;
+  background:rgba(7,12,20,.78);
+  border:1px solid rgba(255,255,255,.25);
+}
+.action-guide-icon.draw{ color:#8fe5ff; border-color:rgba(105,215,255,.55); }
+.action-guide-icon.discard{ color:#ffb3a8; border-color:rgba(255,135,120,.55); }
+.action-guide-note{
+  flex-basis:100%;
+  opacity:.78;
+  font-size:12px;
+}
+body[data-outer-theme="ice"] .action-guide{
+  background:rgba(246,249,250,.92);
+  border-color:rgba(26,50,64,.18);
+  color:#24343e;
+}
+body[data-outer-theme="ice"] .action-guide-icon{
+  background:#f3f7f9;
+  border-color:rgba(25,55,72,.24);
+}
+
 </style>
 </head>
 <body>
@@ -2096,6 +2143,12 @@ body[data-outer-theme="ice"] .asset-credit{
   <div class="help">
     流れてくる麻雀の形を見て、正解牌をクリックするトレーニング。手牌・補助牌のどちらからでも回答できます。<br>
     正解はGOOD、◀ 手牌 ▶ の中央が判定ライン付近ならPERFECT。手牌枚数が多い問題ほど高得点です。NORMALは選択した問題を1周し、FREQUENCYをSAFEまたはLv.1〜6で調整できます。SAFEはSPEED 0.5×でも重ならない間隔を自動確保し、高頻度では警告が表示されます。SURVIVALはMISS 3回まで無限に続きます。ENDLESSはサバイバルルールのまま、標準はFREQUENCY Lv.4・SPEED 1.4×です。開始前にSPEEDは0.5×〜3.0×、FREQUENCYはLv.1〜4で調整でき、標準設定から変更するとCUSTOM扱いになります。
+  </div>
+
+  <div class="action-guide" aria-label="回答マークの説明">
+    <div><span class="action-guide-icon discard">✂</span><b>切る問題</b><span>手牌から切る牌を選びます</span></div>
+    <div><span class="action-guide-icon draw">＋</span><b>要る問題</b><span>完成・待ちに必要な牌を選びます</span></div>
+    <div class="action-guide-note">※「×2」などは選ぶ枚数です。「×？」は正解枚数を伏せた多メンチャン問題です。</div>
   </div>
 
   <div class="problem-types">
@@ -2164,8 +2217,8 @@ body[data-outer-theme="ice"] .asset-credit{
     <div class="endless-settings-title">NORMAL設定</div>
     <label>
       <span>FREQUENCY</span>
-      <input id="normalFrequencySetting" type="range" min="0" max="6" step="1" value="3">
-      <b id="normalFrequencySettingValue">Lv.3</b>
+      <input id="normalFrequencySetting" type="range" min="0" max="6" step="1" value="0">
+      <b id="normalFrequencySettingValue">SAFE</b>
     </label>
     <div id="normalFrequencyWarning" class="normal-frequency-warning" style="display:none">
       ⚠ この設定は重ならない最低間隔を超える可能性があります
@@ -2246,7 +2299,7 @@ body[data-outer-theme="ice"] .asset-credit{
   <section class="rules-panel" aria-label="ゲームルール">
     <h2>ルール</h2>
     <div class="rules-grid">
-      <div><b>回答</b><span>流れてくる問題の正解牌をクリックします。手牌そのものと、上に表示される補助牌のどちらからでも回答できます。</span></div>
+      <div><b>回答</b><span>流れてくる問題の正解牌をクリックします。✂は切る牌、＋は完成・待ちに必要な牌を選ぶ問題です。手牌そのものと、上に表示される補助牌のどちらからでも回答できます。</span></div>
       <div><b>GOOD</b><span>正解するとGOOD。問題の手牌枚数に応じて得点が入り、14枚問題が最高配点です。</span></div>
       <div><b>PERFECT</b><span>◀ 手牌 ▶ の中央が画面中央の判定ライン付近にあるとPERFECT。GOODより高得点です。</span></div>
       <div><b>MISS CLICK</b><span>誤った牌を押しても問題は続行します。MISS回数には入りませんが、SCORE -100です。</span></div>
@@ -2380,7 +2433,7 @@ let survivalSpawnCount = 0;
 let survivalWasCustom=false;
 let gameMode="normal";
 let selectedMode="normal";
-let normalFrequencyLevel=3;
+let normalFrequencyLevel=0;
 let normalFrequencyUnsafe=false;
 let endlessBaseSpeed=1.4;
 let endlessBaseFrequency=4;
@@ -4421,7 +4474,7 @@ document.addEventListener("keyup",e=>{
 if(normalFrequencySetting){
   normalFrequencySetting.addEventListener("input",()=>{
     const raw=parseInt(normalFrequencySetting.value,10);
-    normalFrequencyLevel=Math.max(0,Math.min(6,Number.isFinite(raw)?raw:3));
+    normalFrequencyLevel=Math.max(0,Math.min(6,Number.isFinite(raw)?raw:0));
     normalFrequencySetting.value=String(normalFrequencyLevel);
     normalFrequencySettingValue.textContent=normalFrequencyLevel===0 ? "SAFE" : `Lv.${normalFrequencyLevel}`;
     updateNormalFrequencyWarning();
