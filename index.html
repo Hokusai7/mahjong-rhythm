@@ -4464,6 +4464,47 @@ body.lite-mode .tutorial-live-note .mini-answer.tamechan-selected::after{
   border-color:rgba(120,225,255,.95) !important;
 }
 
+
+/* ===== チュートリアル：「次へ」有効時を強調 ===== */
+#tutorialNext.tutorial-next-ready:not(:disabled){
+  position:relative;
+  z-index:3;
+  animation:tutorialNextReadyPulse .9s ease-in-out infinite alternate;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.32),
+    0 0 10px rgba(120,225,255,.72),
+    0 0 22px rgba(120,225,255,.52);
+  filter:brightness(1.16);
+}
+@keyframes tutorialNextReadyPulse{
+  from{
+    transform:scale(1);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.22),
+      0 0 7px rgba(120,225,255,.48),
+      0 0 14px rgba(120,225,255,.30);
+  }
+  to{
+    transform:scale(1.035);
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,.42),
+      0 0 13px rgba(120,225,255,.90),
+      0 0 28px rgba(120,225,255,.64);
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #tutorialNext.tutorial-next-ready:not(:disabled){
+    animation:none;
+    transform:none;
+  }
+}
+
+
+/* ===== 多メンチャンのスロー中は問題を速度UIより前面へ ===== */
+.tutorial-live-note.tutorial-slow{
+  z-index:30 !important;
+}
+
 </style>
 </head>
 <body>
@@ -7136,6 +7177,7 @@ function renderTutorialLesson(){
   if(tutorialTopic) tutorialTopic.textContent=lesson.topic || "";
   tutorialMessage.innerHTML=formatTutorialMessage(lesson.message);
   tutorialNext.disabled=!lesson.infoOnly;
+  tutorialNext.classList.toggle("tutorial-next-ready", !!lesson.infoOnly);
   tutorialNext.textContent=tutorialLessonIndex===TUTORIAL_LESSONS.length-1 ? "完了" : "次へ";
 
   if(tutorialPlayfield){
@@ -7153,6 +7195,7 @@ function renderTutorialLesson(){
   if(lesson.infoOnly){
     tutorialCompleted=true;
     tutorialNext.disabled=false;
+    tutorialNext.classList.add("tutorial-next-ready");
     if(tutorialPerfectNotice) tutorialPerfectNotice.style.display="none";
     return;
   }else{
@@ -7283,6 +7326,7 @@ function tutorialSuccessDisappear(resultText="GOOD",type="good"){
 
   setTimeout(()=>{
     tutorialNext.disabled=false;
+    tutorialNext.classList.add("tutorial-next-ready");
     tutorialMessage.innerHTML=formatTutorialMessage(
       tutorialLessonIndex===TUTORIAL_LESSONS.length-1
         ? "クリア！。基本操作はこれで完了です。"
@@ -7309,6 +7353,7 @@ function completeTutorialLesson(resultText="GOOD",type="good"){
 
   setTimeout(()=>{
     tutorialNext.disabled=false;
+    tutorialNext.classList.add("tutorial-next-ready");
     tutorialMessage.innerHTML=formatTutorialMessage(
       tutorialLessonIndex===TUTORIAL_LESSONS.length-1
         ? "クリア！。基本操作はこれで完了です。"
@@ -7431,7 +7476,7 @@ function handleTutorialTileClick(btn){
 
     if(!perfectNow){
       showTutorialResult("もう一度","bad");
-      tutorialMessage.innerHTML=formatTutorialMessage("△が黄色く光ったらクリックしてください。");
+      tutorialMessage.innerHTML=formatTutorialMessage("手牌横の△が黄色く光ったらクリックしてください。");
       return;
     }
 
@@ -7476,7 +7521,7 @@ function animateTutorial(ts){
   });
   if(tutorialPerfectNotice){
     tutorialPerfectNotice.classList.add("show");
-    tutorialPerfectNotice.textContent="△がライン上で黄色く光っている間はPERFECT！";
+    tutorialPerfectNotice.textContent="手牌横の△がライン上で黄色く光っている間はPERFECT！";
   }
 
   const limit=tutorialPlayfield.clientHeight+80;
@@ -7588,6 +7633,7 @@ if(tutorialClose) tutorialClose.addEventListener("click",closeTutorial);
 if(tutorialRetry) tutorialRetry.addEventListener("click",renderTutorialLesson);
 
 if(tutorialNext) tutorialNext.addEventListener("click",()=>{
+  tutorialNext.classList.remove("tutorial-next-ready");
   if(!tutorialCompleted) return;
 
   if(tutorialLessonIndex>=TUTORIAL_LESSONS.length-1){
