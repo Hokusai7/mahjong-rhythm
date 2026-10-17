@@ -4616,6 +4616,7 @@ body.lite-mode .tutorial-live-note .mini-answer.tamechan-selected::after{
   <audio id="bgmPlayer" loop preload="auto" src="timebend.mp3" aria-hidden="true"></audio>
   <audio id="bgmPlayer2" loop preload="auto" src="meteorite.mp3" aria-hidden="true"></audio>
   <audio id="bgmPlayer3" loop preload="auto" src="somehow_khaim.mp3" aria-hidden="true"></audio>
+  <audio id="tutorialBgmPlayer" loop preload="auto" src="timebend.mp3" aria-hidden="true"></audio>
 
   <div id="stage" class="stage">
 <div class="speed-slider-hud">
@@ -4877,6 +4878,7 @@ const bgmTrackSelect=document.getElementById("bgmTrackSelect");
 const bgmPlayer=document.getElementById("bgmPlayer");
 const bgmPlayer2=document.getElementById("bgmPlayer2");
 const bgmPlayer3=document.getElementById("bgmPlayer3");
+const tutorialBgmPlayer=document.getElementById("tutorialBgmPlayer");
 const backgroundThemeSelect=document.getElementById("backgroundThemeSelect");
 const outerThemeSelect=document.getElementById("outerThemeSelect");
 const muteAudioInput=document.getElementById("muteAudio");
@@ -5006,6 +5008,9 @@ function syncBgmAudioState(){
     // SE側は変更せず、BGMだけ約12%の出力に抑える。
     player.volume=audioMuted ? 0 : Math.min(1,bgmVolume*BGM_OUTPUT_GAIN);
   });
+  if(tutorialBgmPlayer){
+    tutorialBgmPlayer.volume=audioMuted ? 0 : Math.min(1,bgmVolume*BGM_OUTPUT_GAIN);
+  }
 }
 
 function playBgm(){
@@ -5027,6 +5032,20 @@ function pauseBgm(){
   allBgmPlayers().forEach(player=>{
     if(!player.paused) player.pause();
   });
+}
+
+function playTutorialBgm(){
+  if(!tutorialBgmPlayer) return;
+  tutorialBgmPlayer.volume=audioMuted ? 0 : Math.min(1,bgmVolume*BGM_OUTPUT_GAIN);
+  if(!audioMuted && bgmVolume>0){
+    tutorialBgmPlayer.play().catch(()=>{});
+  }
+}
+
+function stopTutorialBgm(){
+  if(!tutorialBgmPlayer) return;
+  if(!tutorialBgmPlayer.paused) tutorialBgmPlayer.pause();
+  tutorialBgmPlayer.currentTime=0;
 }
 
 function restartBgm(){
@@ -7513,6 +7532,12 @@ function openTutorial(){
   tutorialLessonIndex=0;
   tutorialOverlay.classList.add("show");
   tutorialOverlay.setAttribute("aria-hidden","false");
+
+  if(tutorialBgmPlayer){
+    tutorialBgmPlayer.currentTime=0;
+    playTutorialBgm();
+  }
+
   renderTutorialLesson();
 }
 
@@ -7522,6 +7547,8 @@ function closeTutorial(){
   tutorialRaf=0;
   tutorialOverlay.classList.remove("show");
   tutorialOverlay.setAttribute("aria-hidden","true");
+
+  stopTutorialBgm();
 
   if(tutorialPausedGame && running && paused){
     pauseGame();
